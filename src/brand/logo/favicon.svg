@@ -6,9 +6,14 @@
     </linearGradient>
   </defs>
   <rect width="32" height="32" rx="7" fill="url(#g)"/>
-  <!-- TH mark at 32px — simplified, bolder strokes -->
-  <rect x="4" y="6" width="24" height="5" rx="2.5" fill="white"/>
-  <rect x="13" y="6" width="5" height="20" rx="2.5" fill="white"/>
-  <rect x="23" y="6" width="5" height="20" rx="2.5" fill="white"/>
-  <rect x="13" y="15" width="15" height="4" fill="white"/>
+
+  <!-- Graduation cap — simplified for 32px -->
+  <polygon points="16,3 25.5,7.5 16,12 6.5,7.5" fill="white"/>
+  <line x1="25.5" y1="7.5" x2="25.5" y2="12" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- Cloud — bold blob -->
+  <circle cx="10.5" cy="21.5" r="5" fill="white"/>
+  <circle cx="16" cy="19" r="6.5" fill="white"/>
+  <circle cx="22" cy="22" r="4.5" fill="white"/>
+  <rect x="6.5" y="21" width="20" height="6" rx="3" fill="white"/>
 </svg>

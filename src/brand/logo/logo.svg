@@ -14,22 +14,36 @@
     </style>
   </defs>
 
-  <!-- Icon (120×120) -->
+  <!-- Icon tile (120×120) -->
   <rect x="0" y="0" width="120" height="120" rx="26" fill="url(#bg-grad)"/>
   <rect x="0" y="0" width="120" height="120" rx="26" fill="url(#glow)"/>
-  <!-- Geometric mark scaled to 120px -->
-  <rect x="17" y="24" width="86" height="17" rx="8" fill="white"/>
-  <rect x="52" y="24" width="17" height="78" rx="8" fill="white"/>
-  <rect x="86" y="24" width="17" height="78" rx="8" fill="white"/>
-  <rect x="52" y="53" width="51" height="14" fill="white"/>
 
-  <!-- Wordmark -->
+  <!-- Graduation cap (academy) floating above the cloud -->
+  <polygon points="60,12 92,26 60,40 28,26" fill="white"/>
+  <!-- Tassel — amber accent -->
+  <line x1="92" y1="26" x2="92" y2="42" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="92" cy="46" r="3.5" fill="#fbbf24"/>
+
+  <!-- Cloud (cloud certification training) -->
+  <circle cx="40" cy="80" r="17" fill="white"/>
+  <circle cx="62" cy="70" r="22" fill="white"/>
+  <circle cx="84" cy="82" r="14" fill="white"/>
+  <rect x="26" y="78" width="72" height="20" rx="10" fill="white"/>
+
+  <!-- Wordmark — two-tone -->
   <text
     x="140"
     y="62"
     class="wordmark"
     font-size="36"
     font-weight="800"
-    fill="#0f172a"
-    letter-spacing="-0.5">BD Cloud Academy</text>
+    letter-spacing="-0.5"><tspan fill="#2563eb">BD</tspan><tspan fill="#0f172a"> Cloud Academy</tspan></text>
+  <text
+    x="141"
+    y="88"
+    class="wordmark"
+    font-size="13"
+    font-weight="500"
+    fill="#64748b"
+    letter-spacing="2.6">CLOUD CERTIFICATION TRAINING</text>
 </svg>

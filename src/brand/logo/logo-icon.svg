@@ -4,7 +4,6 @@
       <stop offset="0%" stop-color="#3b82f6"/>
       <stop offset="100%" stop-color="#1e3a8a"/>
     </linearGradient>
-    <!-- Subtle inner glow -->
     <radialGradient id="glow" cx="35%" cy="30%" r="60%">
       <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
@@ -15,13 +14,14 @@
   <rect width="200" height="200" rx="44" fill="url(#bg-grad)"/>
   <rect width="200" height="200" rx="44" fill="url(#glow)"/>
 
-  <!-- TH monogram — white geometric mark -->
-  <!-- T crossbar (full width) -->
-  <rect x="28" y="40" width="144" height="28" rx="14" fill="white"/>
-  <!-- T stem / H left post — full height, rounded bottom -->
-  <rect x="86" y="40" width="28" height="130" rx="14" fill="white"/>
-  <!-- H right post -->
-  <rect x="144" y="40" width="28" height="130" rx="14" fill="white"/>
-  <!-- H crossbar — connects the two vertical posts -->
-  <rect x="86" y="88" width="86" height="24" fill="white"/>
+  <!-- Graduation cap -->
+  <polygon points="100,20 153,43 100,66 47,43" fill="white"/>
+  <line x1="153" y1="43" x2="153" y2="70" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="153" cy="77" r="6" fill="#fbbf24"/>
+
+  <!-- Cloud -->
+  <circle cx="67" cy="133" r="28" fill="white"/>
+  <circle cx="103" cy="117" r="37" fill="white"/>
+  <circle cx="140" cy="137" r="23" fill="white"/>
+  <rect x="43" y="130" width="120" height="33" rx="16" fill="white"/>
 </svg>
