@@ -90,20 +90,20 @@ Lab pages use a single-column layout. The architecture diagram renders centered 
 **Status:** Accepted
 
 ### Decision
-Migrate hosting from Azure Storage static website to **Azure Static Web Apps (Free tier)**. Use SWA's built-in `/.auth/` endpoints (no server code) to enforce Microsoft sign-in before learners can access `/courses/*`. A `login.html` page serves as the unauthenticated entry point. `staticwebapp.config.json` declares route rules.
+Migrate hosting from Azure Storage static website to **Azure Static Web Apps (Standard tier, $9/month)**. Use SWA's built-in `/.auth/` endpoints (no server code) to enforce Microsoft sign-in before learners can access the site. A `login.html` page serves as the unauthenticated entry point. `staticwebapp.config.json` declares route rules.
 
 ### Rationale
-- SWA Free tier ($0/month) includes managed OAuth2 with AAD — zero server code, zero Function App.
-- Route protection is declarative in `staticwebapp.config.json`; `/courses/*` requires `authenticated` role; 401s redirect to `/login.html`.
-- AAD issuer `https://login.microsoftonline.com/common/v2.0` accepts both personal Microsoft accounts and work/school accounts — appropriate for a public training platform.
+- SWA Standard tier ($9/month) required — the `auth` block in `staticwebapp.config.json` (custom AAD provider config) is not supported on Free tier.
+- Route protection is declarative in `staticwebapp.config.json`; `/*` requires `authenticated` role; 401s redirect to `/login.html`.
 - `/.auth/me` returns `clientPrincipal.userDetails` (email) for the nav chip; no custom token logic needed.
 - All pages call `/.auth/me` on load and fail silently when absent (local `http-server`) — zero dev workflow disruption.
 - `npm run start:auth` launches the SWA CLI emulator (`localhost:4280`) for full auth testing locally.
 
-### App registration (manual, per tenant)
-- Supported account types: "Accounts in any organizational directory and personal Microsoft accounts"
+### App registration (created via `az ad app create`, per tenant)
+- Supported account types: `AzureADandPersonalMicrosoftAccount`
 - Redirect URI: `https://<swa-hostname>/.auth/login/aad/callback`
 - SWA app settings: `AAD_CLIENT_ID`, `AAD_CLIENT_SECRET` (set via `az staticwebapp appsettings set`)
+- **Issuer must be tenant-specific** — see ADR-008 for the `common/v2.0` failure and fix
 
 ## ADR-007: Blob Storage for course assets — private containers, build-time SAS tokens
 
@@ -120,3 +120,31 @@ Add an Azure Storage Account (Standard_LRS) alongside the SWA resource in `infra
 - **Graceful degradation** — if `AZURE_MEDIA_STORAGE_ACCOUNT`/`AZURE_MEDIA_STORAGE_KEY` are absent, the generator silently falls back to relative local file paths. Local dev (`npm start`) is unaffected.
 - **CORS** on blob service: `*.azurestaticapps.net`, `localhost:4280`, `localhost:8080` — browser can load blob images from SWA pages without preflight errors.
 - Blob path convention: `diagrams/{course}/slides/{slug}.png` | `videos/{course}/` | `questionbanks/{course}/questions.json`
+
+## ADR-008: AAD auth hardening — tenant issuer, ID token, service principal, access group
+
+**Date:** 2026-06-12
+**Status:** Accepted
+
+### Decision
+Four fixes applied after the initial AAD wiring failed silently post-password-entry:
+
+1. **Tenant-specific issuer** — `openIdIssuer` changed from `https://login.microsoftonline.com/common/v2.0` to `https://login.microsoftonline.com/<tenantId>/v2.0` in `staticwebapp.config.json`.
+2. **ID token issuance enabled** — `az ad app update --enable-id-token-issuance true` (off by default for new registrations; SWA's built-in auth requires it).
+3. **Service principal created** — `az ad sp create --id <appId>` (not auto-provisioned for multi-tenant app registrations; required for token issuance in the home tenant).
+4. **Entra access group** — security group `sg-training-hub-learners` created; `appRoleAssignmentRequired=true` on the service principal; group assigned to the app. Only members can sign in.
+
+### Rationale
+- `common/v2.0` issuer fails SWA's JWT validation because the actual `iss` claim in the token is the tenant-specific URL — they never match. Root cause found via `az rest .../auditLogs/signIns` (error code 700054).
+- ID token issuance is disabled by default on new app registrations since 2023 — SWA's implicit-flow auth requires it explicitly enabled.
+- Multi-tenant app registrations do not auto-create a service principal in the home tenant — must be created manually.
+- `appRoleAssignmentRequired=true` + group assignment controls who can sign in without adding per-user conditional access policies.
+
+### Current group members
+- `admin@bdcloudacademy.com` (Cloud Academy)
+- `suruz.ahammed@outlook.com` (external/guest user)
+
+### Add new learners
+```bash
+az ad group member add --group sg-training-hub-learners --member-id <user-object-id>
+```

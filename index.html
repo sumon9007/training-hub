@@ -3,711 +3,897 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Training Hub</title>
+  <title>Training Hub — Cloud Certification Training</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     body { font-family: 'Inter', sans-serif; }
-    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(15,23,42,0.10); }
-    .badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 9999px; }
+
+    /* Card interactions */
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15,23,42,0.12); }
+
+    /* Badges */
+    .badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 9999px; }
+
+    /* Tab bar */
     .tab-btn { transition: color 0.15s, border-color 0.15s; }
-    .tab-btn.active { color: #1d4ed8; border-bottom-color: #1d4ed8; }
+    .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
     .tab-btn:not(.active) { color: #64748b; border-bottom-color: transparent; }
     .tab-btn:not(.active):hover { color: #334155; }
+
+    /* Hero gradient */
+    .hero-gradient {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    }
+
+    /* Stat number animation feel */
+    .stat-number { font-variant-numeric: tabular-nums; }
+
+    /* Ribbon badge */
+    .ribbon {
+      position: absolute;
+      top: -1px;
+      right: 16px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Floating dot decoration */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Feature card accent border */
+    .feature-card { border-top: 3px solid transparent; transition: border-color 0.2s, box-shadow 0.2s; }
+    .feature-card:hover { box-shadow: 0 12px 32px rgba(15,23,42,0.10); }
+    .feature-card-blue:hover { border-top-color: #3b82f6; }
+    .feature-card-green:hover { border-top-color: #10b981; }
+    .feature-card-purple:hover { border-top-color: #8b5cf6; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Header shadow on scroll (added via JS) */
+    header { transition: box-shadow 0.2s; }
+
+    /* Mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen">
 
-  <!-- Header -->
-  <header class="border-b border-slate-200 bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <!-- ═══════════════════════════════════════════
+       STICKY HEADER
+  ════════════════════════════════════════════ -->
+  <header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-sm shadow-sm">TH</div>
+        <span class="font-bold text-lg tracking-tight text-slate-900">Training Hub</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
+        <a href="#courses" onclick="switchTabAndScroll('courses')" class="text-slate-600 hover:text-blue-600 transition-colors">Courses</a>
+        <a href="#labs" onclick="switchTabAndScroll('labs')" class="text-slate-600 hover:text-blue-600 transition-colors">Labs</a>
+        <a href="#why-us" class="text-slate-600 hover:text-blue-600 transition-colors">Why Training Hub</a>
+      </nav>
+
+      <!-- Right side: auth + CTA -->
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">TH</div>
-        <span class="font-semibold text-lg tracking-tight text-slate-900">Training Hub</span>
-      </div>
-      <div class="flex items-center gap-6">
-        <nav class="flex items-center gap-6 text-sm text-slate-500">
-          <a href="#microsoft" class="hover:text-blue-600 transition-colors">Microsoft</a>
-          <a href="#aws" class="hover:text-blue-600 transition-colors">AWS</a>
-          <a href="#google" class="hover:text-blue-600 transition-colors">Google</a>
-        </nav>
-        <!-- User state: shown/hidden by auth JS below -->
-        <div id="user-nav" class="hidden items-center gap-3 pl-4 border-l border-slate-200">
+        <div id="user-nav" class="hidden items-center gap-3 pr-3 border-r border-slate-200">
           <span id="user-name" class="text-sm text-slate-600 font-medium max-w-[160px] truncate"></span>
           <a href="/.auth/logout?post_logout_redirect_uri=/login.html" class="text-xs text-slate-400 hover:text-red-500 transition-colors">Sign out</a>
         </div>
-        <a href="/login.html" id="login-btn" class="hidden text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-1.5 rounded-lg">Sign in</a>
+        <a href="/login.html" id="login-btn" class="hidden text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-2 rounded-lg shadow-sm">Sign in</a>
+        <!-- Mobile hamburger -->
+        <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden p-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile nav dropdown -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-slate-100 px-6 pb-4">
+      <nav class="flex flex-col gap-1 pt-3">
+        <a href="#courses" onclick="switchTabAndScroll('courses'); toggleMobileMenu();" class="text-sm font-medium text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">Courses</a>
+        <a href="#labs" onclick="switchTabAndScroll('labs'); toggleMobileMenu();" class="text-sm font-medium text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">Labs</a>
+        <a href="#why-us" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-700 hover:text-blue-600 py-2">Why Training Hub</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="max-w-7xl mx-auto px-6 pt-16 pb-10 text-center">
-    <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold tracking-wide uppercase px-4 py-1.5 rounded-full mb-6">
-      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-      Cloud Certification Training
+  <!-- Spacer for fixed header -->
+  <div class="h-[57px]"></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section class="hero-gradient dot-grid text-white pt-20 pb-24 overflow-hidden relative">
+    <!-- Subtle glow blobs -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative">
+
+      <!-- Trust badge -->
+      <div class="inline-flex items-center gap-2 bg-blue-500/15 border border-blue-400/25 text-blue-200 text-xs font-semibold tracking-wide uppercase px-4 py-1.5 rounded-full mb-7">
+        <span class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></span>
+        AI-Powered Cloud Certification Training
+      </div>
+
+      <!-- Outcome-first headline -->
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.08]">
+        Pass your cloud exam<br/>
+        <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">on the first attempt.</span>
+      </h1>
+
+      <!-- Pain-point subheadline -->
+      <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Not videos. Not flashcards. Real hands-on labs, AI-generated architecture diagrams, and timed exam simulators built for working professionals.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#content" onclick="document.getElementById('content').scrollIntoView({behavior:'smooth'}); return false;"
+           class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-all shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50 hover:-translate-y-0.5">
+          Browse Courses
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#labs" onclick="switchTabAndScroll('labs'); return false;"
+           class="inline-flex items-center gap-2 border border-slate-500 text-slate-200 hover:bg-white/5 hover:border-slate-300 px-7 py-3.5 rounded-xl font-semibold text-sm transition-all">
+          Explore Labs
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+        </a>
+      </div>
+
+      <!-- Provider logos pill row -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-10">
+        <span class="text-xs text-slate-500 mr-1">Covering</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/8 border border-white/10 text-slate-300 text-xs font-medium px-3 py-1 rounded-full">
+          <svg width="12" height="12" viewBox="0 0 23 23" fill="none"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="12" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/></svg>
+          Microsoft Azure
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white/8 border border-white/10 text-slate-300 text-xs font-medium px-3 py-1 rounded-full">
+          <svg width="12" height="10" viewBox="0 0 100 40"><path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6zM90 29.9c-.9-1.1-5.7-.5-7.8-.3-.7.1-.8-.5-.2-.9 3.8-2.7 10.1-1.9 10.9-.9.8.9-.2 7.3-3.8 10.3-.5.5-1.1.2-.8-.4.8-2 2.5-6.7 1.7-7.8z" fill="#FF9900"/></svg>
+          AWS
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white/8 border border-white/10 text-slate-300 text-xs font-medium px-3 py-1 rounded-full">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google Cloud
+        </span>
+      </div>
     </div>
-    <h1 class="text-5xl font-bold tracking-tight mb-4 text-slate-900">
-      Pass your cloud exam.<br/><span class="text-blue-600">Learn by doing.</span>
-    </h1>
-    <p class="text-xl text-slate-500 max-w-2xl mx-auto mb-2">
-      Interactive presentations with knowledge checks, timed exam simulators, CLI labs, and Azure architecture diagrams — built for working professionals.
-    </p>
   </section>
 
-  <!-- Tab Bar -->
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-center gap-0 border-b border-slate-200 bg-white rounded-t-lg">
-      <button id="tab-courses" onclick="switchTab('courses')"
-        class="tab-btn active px-5 py-3 text-sm font-semibold border-b-2 -mb-px flex items-center gap-2">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
-        </svg>
-        Courses
-      </button>
-      <button id="tab-labs" onclick="switchTab('labs')"
-        class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 -mb-px flex items-center gap-2">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>
-        </svg>
-        Labs
-        <span class="badge bg-blue-100 text-blue-600 text-[0.55rem]">16 live</span>
-      </button>
+
+  <!-- ═══════════════════════════════════════════
+       STATS BAR
+  ════════════════════════════════════════════ -->
+  <section class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-6 py-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="stat-number text-4xl font-extrabold text-blue-600 mb-1">2</div>
+          <p class="text-sm text-slate-500 font-medium">Live certifications</p>
+        </div>
+        <div>
+          <div class="stat-number text-4xl font-extrabold text-emerald-600 mb-1">17</div>
+          <p class="text-sm text-slate-500 font-medium">Hands-on labs</p>
+        </div>
+        <div>
+          <div class="stat-number text-4xl font-extrabold text-violet-600 mb-1">7</div>
+          <p class="text-sm text-slate-500 font-medium">AZ-104 modules</p>
+        </div>
+        <div>
+          <div class="stat-number text-4xl font-extrabold text-amber-600 mb-1">AI</div>
+          <p class="text-sm text-slate-500 font-medium">Generated diagrams</p>
+        </div>
+      </div>
     </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       WHY TRAINING HUB — BENEFITS
+  ════════════════════════════════════════════ -->
+  <section id="why-us" class="bg-slate-50 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 max-w-2xl mx-auto">
+        <p class="text-xs font-bold tracking-widest uppercase text-blue-600 mb-3">Why Training Hub</p>
+        <h2 class="text-4xl font-bold text-slate-900 tracking-tight mb-4">Built for professionals who learn by doing</h2>
+        <p class="text-lg text-slate-500 leading-relaxed">Not lectures you fast-forward through. Real cloud environments, official curricula, and AI-generated architecture diagrams that make concepts click.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Feature 1: Labs -->
+        <div class="feature-card feature-card-blue bg-white rounded-2xl p-8 border border-slate-200 cursor-default">
+          <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">17 Hands-On Labs</h3>
+          <p class="text-sm text-slate-500 mb-5 leading-relaxed">Deploy real Azure resources with CLI commands. Every lab has step-by-step validation and cleanup scripts — not just "click here" screenshots.</p>
+          <a href="#labs" onclick="switchTabAndScroll('labs')" class="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
+            Explore labs
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Feature 2: Exam Simulators -->
+        <div class="feature-card feature-card-green bg-white rounded-2xl p-8 border border-slate-200 cursor-default">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Timed Exam Simulators</h3>
+          <p class="text-sm text-slate-500 mb-5 leading-relaxed">Practice with exam-style questions built from the official Microsoft curriculum. Detailed rationales for every answer — understand WHY, not just WHAT.</p>
+          <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-emerald-600 font-semibold text-sm hover:text-emerald-700 transition-colors">
+            Try AZ-104 course
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Feature 3: Architecture Diagrams -->
+        <div class="feature-card feature-card-purple bg-white rounded-2xl p-8 border border-slate-200 cursor-default">
+          <div class="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Azure-Icon Diagrams</h3>
+          <p class="text-sm text-slate-500 mb-5 leading-relaxed">AI-generated architecture diagrams using official Azure icons. Visually understand how services connect before you deploy them.</p>
+          <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-violet-600 font-semibold text-sm hover:text-violet-700 transition-colors">
+            View AZ-104 slides
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CONTENT: COURSES + LABS TABS
+  ════════════════════════════════════════════ -->
+  <div id="content" class="bg-slate-50 pt-4 pb-4">
+
+    <!-- Tab Bar -->
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center gap-0 border-b-2 border-slate-200">
+        <button id="tab-courses" onclick="switchTab('courses')"
+          class="tab-btn active px-6 py-3.5 text-sm font-semibold border-b-2 -mb-px flex items-center gap-2 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+          </svg>
+          Courses
+        </button>
+        <button id="tab-labs" onclick="switchTab('labs')"
+          class="tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 -mb-px flex items-center gap-2 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>
+          </svg>
+          Labs
+          <span class="badge bg-blue-100 text-blue-600">17 live</span>
+        </button>
+      </div>
+    </div>
+
   </div>
+
 
   <!-- ═══════════════════════════════════════════
        COURSES VIEW
   ════════════════════════════════════════════ -->
-  <div id="view-courses" class="max-w-7xl mx-auto px-6 py-12 space-y-16">
+  <div id="view-courses" class="bg-slate-50">
+    <div id="courses" class="max-w-7xl mx-auto px-6 py-12 space-y-14">
 
-    <!-- ── MICROSOFT ── -->
-    <div id="microsoft">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="22" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="10" height="10" fill="#F25022"/>
-            <rect x="12" y="1" width="10" height="10" fill="#7FBA00"/>
-            <rect x="1" y="12" width="10" height="10" fill="#00A4EF"/>
-            <rect x="12" y="12" width="10" height="10" fill="#FFB900"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">Microsoft</h2>
+      <!-- ── MICROSOFT ── -->
+      <div id="microsoft">
+        <!-- Section header -->
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 23 23" fill="none"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="12" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/></svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Microsoft Azure</h2>
+          </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">4 courses</span>
         </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">4 courses</span>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+          <!-- AZ-900 -->
+          <a href="courses/azure/presentation.html" class="card-hover group relative block bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-400 shadow-sm">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+              <svg width="22" height="22" viewBox="0 0 96 96" fill="none"><path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="white" opacity="0.9"/></svg>
+            </div>
+            <span class="badge bg-blue-100 text-blue-700 mb-3">Azure Fundamentals</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">Azure Fundamentals</h3>
+            <p class="text-sm text-slate-500 mb-4 line-clamp-2">Cloud concepts, core services, identity, governance, pricing, and support.</p>
+            <div class="flex items-center gap-3 text-xs text-slate-400 border-t border-slate-100 pt-3 mb-3">
+              <span>8 modules</span><span>·</span><span>~4 hours</span><span>·</span><span class="font-semibold text-slate-500">AZ-900</span>
+            </div>
+            <span class="text-blue-600 font-semibold text-xs group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+              Start course <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- AZ-104 — Most Popular ribbon -->
+          <a href="courses/az104/presentation.html" class="card-hover group relative block bg-white border border-slate-200 rounded-2xl p-6 hover:border-indigo-400 shadow-sm">
+            <div class="ribbon">Most Popular</div>
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+              <svg width="22" height="22" viewBox="0 0 96 96" fill="none"><path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="white" opacity="0.9"/></svg>
+            </div>
+            <span class="badge bg-indigo-100 text-indigo-700 mb-3">Azure Administrator</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">Azure Administrator Associate</h3>
+            <p class="text-sm text-slate-500 mb-4 line-clamp-2">Official AZ-104T00 curriculum — knowledge checks, exam simulators, CLI labs, and architecture diagrams.</p>
+            <div class="flex items-center gap-3 text-xs text-slate-400 border-t border-slate-100 pt-3 mb-3">
+              <span>7 modules · 17 labs</span><span>·</span><span>~18 hours</span><span>·</span><span class="font-semibold text-slate-500">AZ-104</span>
+            </div>
+            <span class="text-indigo-600 font-semibold text-xs group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+              Start course <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- AI-900 coming soon -->
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#9333EA" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#9333EA" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <span class="badge bg-purple-100 text-purple-700 mb-3">AI Fundamentals</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">AI &amp; Machine Learning</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">Generative AI, Azure OpenAI, prompt engineering, RAG, and responsible AI.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">AI-900</span>
+            </div>
+          </div>
+
+          <!-- DP-900 coming soon -->
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3" stroke="#0D9488" stroke-width="1.5"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="#0D9488" stroke-width="1.5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6" stroke="#0D9488" stroke-width="1.5"/></svg>
+            </div>
+            <span class="badge bg-teal-100 text-teal-700 mb-3">Data Fundamentals</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">Data &amp; Analytics</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">Modern data pipelines, lakehouse architecture, Microsoft Fabric, and Power BI.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">DP-900</span>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
 
-        <!-- AZ-900 -->
-        <a href="courses/azure/presentation.html" class="card-hover group block bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-400 shadow-sm">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="#0078D4"/>
-              <path d="M54 6L33 60.8l17.6 31.2H85L96 60.8 75 6H54z" fill="#50E6FF" opacity="0.5"/>
+      <!-- ── AWS ── -->
+      <div id="aws-courses">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="22" height="18" viewBox="0 0 100 40" fill="none">
+              <path d="M28.5 22.2c0 .8.1 1.4.2 1.8.2.4.4.9.8 1.3.1.2.2.4.2.5 0 .2-.1.4-.4.7l-1.4 1c-.2.1-.4.2-.5.2-.2 0-.4-.1-.6-.3-.3-.3-.5-.6-.7-1-.2-.4-.4-.8-.6-1.3-1.6 1.9-3.6 2.8-6 2.8-1.7 0-3.1-.5-4-1.5-.9-1-1.4-2.3-1.4-3.9 0-1.7.6-3.1 1.8-4.1 1.2-1 2.9-1.5 5-1.5.7 0 1.4.1 2.2.2.8.1 1.5.3 2.3.5v-1.5c0-1.5-.3-2.6-1-3.2-.6-.6-1.7-.9-3.2-.9-.7 0-1.4.1-2.1.3-.7.2-1.4.4-2.1.8-.3.2-.6.3-.7.3-.3 0-.4-.2-.4-.6v-1c0-.3.1-.5.2-.7.2-.2.4-.3.8-.5.7-.3 1.5-.6 2.4-.8 1-.2 2-.3 3.1-.3 2.3 0 4 .5 5 1.6 1 1 1.5 2.6 1.5 4.7v6.2zm-8.3 3.1c.7 0 1.4-.1 2.1-.4.8-.3 1.5-.8 2-1.5.3-.4.5-.9.6-1.4.1-.5.2-1.1.2-1.8v-.9c-.6-.1-1.2-.3-1.9-.3-.7-.1-1.3-.1-2-.1-1.4 0-2.5.3-3.2.9-.7.6-1 1.4-1 2.5 0 1 .3 1.7.8 2.2.5.6 1.3.8 2.4.8zm17.2 2.3c-.3 0-.6-.1-.7-.2-.2-.2-.3-.4-.5-.8L31 7.8c-.2-.5-.2-.8-.2-1 0-.4.2-.6.6-.6h2.3c.4 0 .6.1.8.2.2.2.3.4.4.8l4.4 17.4 4.1-17.4c.1-.4.2-.7.4-.8.2-.2.5-.2.8-.2h1.9c.4 0 .6.1.8.2.2.2.3.4.4.8l4.1 17.6L55.8 7c.1-.4.3-.7.4-.8.2-.2.5-.2.8-.2h2.2c.4 0 .6.2.6.6 0 .1 0 .3-.1.5 0 .2-.1.4-.2.6L52.7 27.8c-.1.4-.3.7-.5.8-.2.2-.5.2-.7.2h-2c-.4 0-.6-.1-.8-.2-.2-.2-.3-.5-.4-.8l-4.1-17-4.1 17c-.1.4-.3.6-.4.8-.2.2-.5.2-.8.2h-2.1zm28.4.6c-1.3 0-2.6-.1-3.8-.4-1.2-.3-2.2-.6-2.8-.9-.4-.2-.6-.5-.7-.7-.1-.2-.1-.4-.1-.7v-1c0-.4.2-.6.5-.6.1 0 .3 0 .4.1.1.1.3.1.5.2.7.3 1.5.6 2.4.7.9.2 1.7.3 2.7.3 1.4 0 2.5-.2 3.3-.7.8-.5 1.2-1.1 1.2-2 0-.6-.2-1.1-.6-1.5-.4-.4-1.1-.8-2.2-1.1l-3.1-.9c-1.6-.5-2.8-1.2-3.5-2.2-.7-1-.1-2.1-.1-3.3 0-.9.2-1.7.6-2.4.4-.7.9-1.3 1.5-1.7.6-.5 1.3-.8 2.2-1.1.8-.2 1.7-.3 2.7-.3.5 0 1 0 1.4.1.5.1.9.2 1.3.3.4.1.8.2 1.2.4.4.1.6.3.8.4.3.2.5.3.6.5.1.2.2.4.2.7v.9c0 .4-.2.6-.5.6-.2 0-.5-.1-.9-.3-.6-.3-1.3-.5-2-.7-.7-.2-1.5-.3-2.2-.3-1.3 0-2.3.2-3 .7-.7.5-1 1.1-1 2 0 .6.2 1.1.6 1.5.5.4 1.2.8 2.5 1.2l3 .9c1.6.5 2.7 1.1 3.4 2 .7.9 1.1 1.9 1.1 3.1 0 .9-.2 1.8-.6 2.5-.4.7-1 1.3-1.6 1.8-.7.5-1.5.8-2.4 1.1-.9.2-1.9.4-3 .4z" fill="#FF9900"/>
+              <path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6zM90 29.9c-.9-1.1-5.7-.5-7.8-.3-.7.1-.8-.5-.2-.9 3.8-2.7 10.1-1.9 10.9-.9.8.9-.2 7.3-3.8 10.3-.5.5-1.1.2-.8-.4.8-2 2.5-6.7 1.7-7.8z" fill="#FF9900"/>
             </svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">AWS</h2>
           </div>
-          <span class="badge bg-blue-100 text-blue-700 mb-3">Azure Fundamentals</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-900 group-hover:text-blue-600 transition-colors">Azure Fundamentals</h3>
-          <p class="text-sm text-slate-500 mb-4">Cloud concepts, core services, identity, governance, pricing, and support.</p>
-          <div class="flex items-center gap-3 text-xs text-slate-400">
-            <span>📊 8 modules</span>
-            <span>⏱ ~4 hours</span>
-            <span>🎯 AZ-900</span>
-          </div>
-        </a>
-
-        <!-- AZ-104 -->
-        <a href="courses/az104/presentation.html" class="card-hover group block bg-white border border-slate-200 rounded-2xl p-6 hover:border-indigo-400 shadow-sm">
-          <div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="#6366F1"/>
-              <path d="M54 6L33 60.8l17.6 31.2H85L96 60.8 75 6H54z" fill="#A5B4FC" opacity="0.5"/>
-            </svg>
-          </div>
-          <span class="badge bg-indigo-100 text-indigo-700 mb-3">Azure Administrator</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-900 group-hover:text-indigo-600 transition-colors">Azure Administrator Associate</h3>
-          <p class="text-sm text-slate-500 mb-4">Official AZ-104T00 curriculum — per-lesson knowledge checks, timed exam simulators, CLI labs, and Azure-icon architecture diagrams.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
-            <span>📋 7 modules · 16 labs</span>
-            <span>⏱ ~18 hours</span>
-            <span>🎯 AZ-104</span>
-          </div>
-        </a>
-
-        <!-- AI-900 (coming soon) -->
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#9333EA" stroke-width="1.5"/>
-              <path d="M8 12h8M12 8v8" stroke="#9333EA" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="badge bg-purple-100 text-purple-700 mb-3">AI Fundamentals</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">AI & Machine Learning</h3>
-          <p class="text-sm text-slate-400 mb-4">Generative AI, Azure OpenAI, prompt engineering, RAG, and responsible AI.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 AI-900</span>
-          </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">2 courses</span>
         </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
 
-        <!-- DP-900 (coming soon) -->
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="12" cy="5" rx="9" ry="3" stroke="#0D9488" stroke-width="1.5"/>
-              <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="#0D9488" stroke-width="1.5"/>
-              <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6" stroke="#0D9488" stroke-width="1.5"/>
-            </svg>
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 100 100" fill="none"><path d="M29 67c-8-4-13-12-13-21a24 24 0 0148 0c0 9-5 17-13 21" stroke="#FF9900" stroke-width="5" stroke-linecap="round"/><path d="M20 75l30 8 30-8" stroke="#FF9900" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="badge bg-orange-100 text-orange-700 mb-3">Solutions Architect</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">AWS Solutions Architect</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">Core services, architecture best practices, security, and cost optimization.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">SAA-C03</span>
+            </div>
           </div>
-          <span class="badge bg-teal-100 text-teal-700 mb-3">Data Fundamentals</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">Data & Analytics</h3>
-          <p class="text-sm text-slate-400 mb-4">Modern data pipelines, lakehouse architecture, Microsoft Fabric, and Power BI.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 DP-900</span>
+
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-yellow-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 22V12h6v10" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="badge bg-yellow-100 text-yellow-700 mb-3">Cloud Practitioner</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">AWS Cloud Practitioner</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">AWS cloud fundamentals, billing, compliance, and global infrastructure essentials.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">CLF-C02</span>
+            </div>
           </div>
+
         </div>
-
       </div>
+
+      <!-- ── GOOGLE ── -->
+      <div id="google-courses">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Google Cloud</h2>
+          </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">2 courses</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.5 9.5L12 4l7.5 5.5V20H4.5V9.5z" stroke="#4285F4" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 20v-6h6v6" stroke="#4285F4" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10" r="2" stroke="#4285F4" stroke-width="1.5"/></svg>
+            </div>
+            <span class="badge bg-blue-100 text-blue-700 mb-3">Cloud Engineer</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">Associate Cloud Engineer</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">GCP core services, Kubernetes, IAM, networking, and deploying cloud-native apps.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">ACE</span>
+            </div>
+          </div>
+
+          <div class="group relative block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
+            <div class="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 12l10 5 10-5" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="badge bg-green-100 text-green-700 mb-3">Digital Leader</span>
+            <h3 class="font-bold text-base mb-1.5 text-slate-700 leading-snug">Cloud Digital Leader</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">Google Cloud fundamentals, AI/ML products, data solutions, and cloud strategy.</p>
+            <div class="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-100 pt-3">
+              <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
+              <span class="font-semibold text-slate-400">CDL</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-
-    <!-- ── AWS ── -->
-    <div id="aws">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M28.5 22.2c0 .8.1 1.4.2 1.8.2.4.4.9.8 1.3.1.2.2.4.2.5 0 .2-.1.4-.4.7l-1.4 1c-.2.1-.4.2-.5.2-.2 0-.4-.1-.6-.3-.3-.3-.5-.6-.7-1-.2-.4-.4-.8-.6-1.3-1.6 1.9-3.6 2.8-6 2.8-1.7 0-3.1-.5-4-1.5-.9-1-1.4-2.3-1.4-3.9 0-1.7.6-3.1 1.8-4.1 1.2-1 2.9-1.5 5-1.5.7 0 1.4.1 2.2.2.8.1 1.5.3 2.3.5v-1.5c0-1.5-.3-2.6-1-3.2-.6-.6-1.7-.9-3.2-.9-.7 0-1.4.1-2.1.3-.7.2-1.4.4-2.1.8-.3.2-.6.3-.7.3-.3 0-.4-.2-.4-.6v-1c0-.3.1-.5.2-.7.2-.2.4-.3.8-.5.7-.3 1.5-.6 2.4-.8 1-.2 2-.3 3.1-.3 2.3 0 4 .5 5 1.6 1 1 1.5 2.6 1.5 4.7v6.2zm-8.3 3.1c.7 0 1.4-.1 2.1-.4.8-.3 1.5-.8 2-1.5.3-.4.5-.9.6-1.4.1-.5.2-1.1.2-1.8v-.9c-.6-.1-1.2-.3-1.9-.3-.7-.1-1.3-.1-2-.1-1.4 0-2.5.3-3.2.9-.7.6-1 1.4-1 2.5 0 1 .3 1.7.8 2.2.5.6 1.3.8 2.4.8zm17.2 2.3c-.3 0-.6-.1-.7-.2-.2-.2-.3-.4-.5-.8L31 7.8c-.2-.5-.2-.8-.2-1 0-.4.2-.6.6-.6h2.3c.4 0 .6.1.8.2.2.2.3.4.4.8l4.4 17.4 4.1-17.4c.1-.4.2-.7.4-.8.2-.2.5-.2.8-.2h1.9c.4 0 .6.1.8.2.2.2.3.4.4.8l4.1 17.6L55.8 7c.1-.4.3-.7.4-.8.2-.2.5-.2.8-.2h2.2c.4 0 .6.2.6.6 0 .1 0 .3-.1.5 0 .2-.1.4-.2.6L52.7 27.8c-.1.4-.3.7-.5.8-.2.2-.5.2-.7.2h-2c-.4 0-.6-.1-.8-.2-.2-.2-.3-.5-.4-.8l-4.1-17-4.1 17c-.1.4-.3.6-.4.8-.2.2-.5.2-.8.2h-2.1zm28.4.6c-1.3 0-2.6-.1-3.8-.4-1.2-.3-2.2-.6-2.8-.9-.4-.2-.6-.5-.7-.7-.1-.2-.1-.4-.1-.7v-1c0-.4.2-.6.5-.6.1 0 .3 0 .4.1.1.1.3.1.5.2.7.3 1.5.6 2.4.7.9.2 1.7.3 2.7.3 1.4 0 2.5-.2 3.3-.7.8-.5 1.2-1.1 1.2-2 0-.6-.2-1.1-.6-1.5-.4-.4-1.1-.8-2.2-1.1l-3.1-.9c-1.6-.5-2.8-1.2-3.5-2.2-.7-1-.1-2.1-.1-3.3 0-.9.2-1.7.6-2.4.4-.7.9-1.3 1.5-1.7.6-.5 1.3-.8 2.2-1.1.8-.2 1.7-.3 2.7-.3.5 0 1 0 1.4.1.5.1.9.2 1.3.3.4.1.8.2 1.2.4.4.1.6.3.8.4.3.2.5.3.6.5.1.2.2.4.2.7v.9c0 .4-.2.6-.5.6-.2 0-.5-.1-.9-.3-.6-.3-1.3-.5-2-.7-.7-.2-1.5-.3-2.2-.3-1.3 0-2.3.2-3 .7-.7.5-1 1.1-1 2 0 .6.2 1.1.6 1.5.5.4 1.2.8 2.5 1.2l3 .9c1.6.5 2.7 1.1 3.4 2 .7.9 1.1 1.9 1.1 3.1 0 .9-.2 1.8-.6 2.5-.4.7-1 1.3-1.6 1.8-.7.5-1.5.8-2.4 1.1-.9.2-1.9.4-3 .4z" fill="#FF9900"/>
-            <path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6zM90 29.9c-.9-1.1-5.7-.5-7.8-.3-.7.1-.8-.5-.2-.9 3.8-2.7 10.1-1.9 10.9-.9.8.9-.2 7.3-3.8 10.3-.5.5-1.1.2-.8-.4.8-2 2.5-6.7 1.7-7.8z" fill="#FF9900"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">AWS</h2>
-        </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">2 courses</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M29 67c-8-4-13-12-13-21a24 24 0 0148 0c0 9-5 17-13 21" stroke="#FF9900" stroke-width="5" stroke-linecap="round"/>
-              <path d="M20 75l30 8 30-8" stroke="#FF9900" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="badge bg-orange-100 text-orange-700 mb-3">Solutions Architect</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">AWS Solutions Architect</h3>
-          <p class="text-sm text-slate-400 mb-4">Core services, architecture best practices, security, and cost optimization.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 SAA-C03</span>
-          </div>
-        </div>
-
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M9 22V12h6v10" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="badge bg-yellow-100 text-yellow-700 mb-3">Cloud Practitioner</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">AWS Cloud Practitioner</h3>
-          <p class="text-sm text-slate-400 mb-4">AWS cloud fundamentals, billing, compliance, and global infrastructure essentials.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 CLF-C02</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ── GOOGLE ── -->
-    <div id="google">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">Google</h2>
-        </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">2 courses</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.5 9.5L12 4l7.5 5.5V20H4.5V9.5z" stroke="#4285F4" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M9 20v-6h6v6" stroke="#4285F4" stroke-width="1.5" stroke-linejoin="round"/>
-              <circle cx="12" cy="10" r="2" stroke="#4285F4" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="badge bg-blue-100 text-blue-700 mb-3">Cloud Engineer</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">Associate Cloud Engineer</h3>
-          <p class="text-sm text-slate-400 mb-4">GCP core services, Kubernetes, IAM, networking, and deploying cloud-native apps.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 ACE</span>
-          </div>
-        </div>
-
-        <div class="group block bg-white border border-slate-200 border-dashed rounded-2xl p-6 opacity-60 cursor-not-allowed">
-          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M2 17l10 5 10-5" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M2 12l10 5 10-5" stroke="#34A853" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="badge bg-green-100 text-green-700 mb-3">Digital Leader</span>
-          <h3 class="font-semibold text-lg mb-2 text-slate-700">Cloud Digital Leader</h3>
-          <p class="text-sm text-slate-400 mb-4">Google Cloud fundamentals, AI/ML products, data solutions, and cloud strategy for business leaders.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span class="badge bg-slate-100 text-slate-500">Coming soon</span>
-            <span>🎯 CDL</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div><!-- /view-courses -->
 
 
   <!-- ═══════════════════════════════════════════
        LABS VIEW
   ════════════════════════════════════════════ -->
-  <div id="view-labs" class="hidden max-w-7xl mx-auto px-6 py-12 space-y-16">
+  <div id="view-labs" class="hidden bg-slate-50">
+    <div id="labs" class="max-w-7xl mx-auto px-6 py-12 space-y-14">
 
-    <!-- ── MICROSOFT LABS ── -->
-    <div>
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="22" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="10" height="10" fill="#F25022"/>
-            <rect x="12" y="1" width="10" height="10" fill="#7FBA00"/>
-            <rect x="1" y="12" width="10" height="10" fill="#00A4EF"/>
-            <rect x="12" y="12" width="10" height="10" fill="#FFB900"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">Microsoft</h2>
+      <!-- ── MICROSOFT LABS ── -->
+      <div>
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 23 23" fill="none"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="12" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/></svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Microsoft Azure</h2>
+          </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">17 labs · AZ-104</span>
         </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">16 labs · AZ-104</span>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+
+          <a href="courses/az104/labs/lab-01.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">01</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Manage Azure AD Identities</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create and manage users, groups, and bulk user operations.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-blue-500 font-medium">Beginner</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-02a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02a</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Subscriptions &amp; RBAC</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Manage subscriptions and implement role-based access control.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-02b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02b</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Governance via Azure Policy</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create and assign policies, manage compliance, configure locks.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-03a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03a</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Resources via Azure Portal</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create resource groups and manage resources using the Azure Portal.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>20 min</span><span>·</span><span class="text-blue-500 font-medium">Beginner</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-03b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03b</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Resources via ARM Templates</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Deploy and manage Azure resources using ARM JSON templates.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-03c.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03c</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Resources via PowerShell</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Manage Azure resources using Azure PowerShell and Cloud Shell.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-03d.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03d</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Resources via Azure CLI</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Use the Azure CLI in Cloud Shell to deploy and manage resources.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-04.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">04</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Implement Virtual Networking</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create VNets, subnets, NSGs, and configure DNS settings.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>40 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-05.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">05</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Intersite Connectivity</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Configure VNet peering and test connectivity between virtual networks.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-06.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-red-500 flex items-center justify-center text-xs font-bold text-white">06</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Traffic Management</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Deploy and configure Azure Load Balancer and Application Gateway.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>45 min</span><span>·</span><span class="text-red-500 font-medium">Advanced</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-07.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">07</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Manage Azure Storage</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create storage accounts, configure access and replication, use AzCopy.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>40 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-08.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">08</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Manage Virtual Machines</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Deploy VMs, configure scale sets, and manage VM extensions.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>45 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-09a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09a</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Implement Web Apps</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create Azure App Service web apps, configure deployment slots.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>30 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-09b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09b</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Azure Container Instances</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Deploy containerized workloads using Azure Container Instances.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>20 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-09c.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-red-500 flex items-center justify-center text-xs font-bold text-white">09c</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Azure Kubernetes Service</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Create an AKS cluster, deploy applications, and scale workloads.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>40 min</span><span>·</span><span class="text-red-500 font-medium">Advanced</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-10.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">10</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Implement Data Protection</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Configure Azure Backup and Azure Site Recovery for VMs.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>45 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="courses/az104/labs/lab-11.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-300 shadow-sm">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">11</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-semibold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors truncate">Implement Monitoring</span>
+                <span class="badge bg-emerald-100 text-emerald-700 shrink-0">Live</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 line-clamp-1">Configure Azure Monitor, Log Analytics, and Application Insights.</p>
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span>45 min</span><span>·</span><span class="text-amber-500 font-medium">Intermediate</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 
-        <!-- Lab 01 -->
-        <a href="courses/az104/labs/lab-01.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">01</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Manage Azure AD Identities</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create and manage users, groups, and bulk user operations.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🔵 Beginner</span>
-            </div>
+      <!-- ── AWS LABS ── -->
+      <div>
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="22" height="18" viewBox="0 0 100 40" fill="none"><path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6zM90 29.9c-.9-1.1-5.7-.5-7.8-.3-.7.1-.8-.5-.2-.9 3.8-2.7 10.1-1.9 10.9-.9.8.9-.2 7.3-3.8 10.3-.5.5-1.1.2-.8-.4.8-2 2.5-6.7 1.7-7.8z" fill="#FF9900"/></svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">AWS</h2>
           </div>
-        </a>
-
-        <!-- Lab 02a -->
-        <a href="courses/az104/labs/lab-02a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">02a</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Subscriptions & RBAC</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Manage subscriptions and implement role-based access control.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">Labs coming soon</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">01</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Launch an EC2 Instance</p><p class="text-xs text-slate-400">Configure, launch, and connect to a virtual machine.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 02b -->
-        <a href="courses/az104/labs/lab-02b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">02b</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Governance via Azure Policy</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create and assign policies, manage compliance, configure locks.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">02</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Configure S3 Buckets &amp; Policies</p><p class="text-xs text-slate-400">Create buckets, set permissions, and enable versioning.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 03a -->
-        <a href="courses/az104/labs/lab-03a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">03a</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Resources via Azure Portal</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create resource groups and manage resources using the Azure Portal.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 20 min</span><span>🔵 Beginner</span>
-            </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">03</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">IAM Users, Roles &amp; Policies</p><p class="text-xs text-slate-400">Create IAM entities and apply least-privilege policies.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 03b -->
-        <a href="courses/az104/labs/lab-03b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">03b</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Resources via ARM Templates</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Deploy and manage Azure resources using ARM JSON templates.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">04</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Build a VPC from Scratch</p><p class="text-xs text-slate-400">Subnets, route tables, internet gateway, and security groups.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 03c -->
-        <a href="courses/az104/labs/lab-03c.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">03c</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Resources via PowerShell</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Manage Azure resources using Azure PowerShell and Cloud Shell.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">05</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Deploy with CloudFormation</p><p class="text-xs text-slate-400">Write and deploy an IaC stack using CloudFormation templates.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 03d -->
-        <a href="courses/az104/labs/lab-03d.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">03d</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Resources via Azure CLI</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Use the Azure CLI in Cloud Shell to deploy and manage resources.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-400">06</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">RDS Database Setup</p><p class="text-xs text-slate-400">Provision a managed relational database with Multi-AZ failover.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
           </div>
-        </a>
-
-        <!-- Lab 04 -->
-        <a href="courses/az104/labs/lab-04.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">04</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Implement Virtual Networking</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create VNets, subnets, NSGs, and configure DNS settings.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 40 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 05 -->
-        <a href="courses/az104/labs/lab-05.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">05</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Intersite Connectivity</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Configure VNet peering and test connectivity between virtual networks.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 06 -->
-        <a href="courses/az104/labs/lab-06.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">06</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Traffic Management</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Deploy and configure Azure Load Balancer and Application Gateway.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 45 min</span><span>🔴 Advanced</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 07 -->
-        <a href="courses/az104/labs/lab-07.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">07</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Manage Azure Storage</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create storage accounts, configure access and replication, use AzCopy.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 40 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 08 -->
-        <a href="courses/az104/labs/lab-08.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">08</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Manage Virtual Machines</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Deploy VMs, configure scale sets, and manage VM extensions.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 45 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 09a -->
-        <a href="courses/az104/labs/lab-09a.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">09a</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Implement Web Apps</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create Azure App Service web apps, configure deployment slots.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 30 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 09b -->
-        <a href="courses/az104/labs/lab-09b.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">09b</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Azure Container Instances</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Deploy containerized workloads using Azure Container Instances.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 20 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 09c -->
-        <a href="courses/az104/labs/lab-09c.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">09c</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Azure Kubernetes Service</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Create an AKS cluster, deploy applications, and scale workloads.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 40 min</span><span>🔴 Advanced</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 10 -->
-        <a href="courses/az104/labs/lab-10.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">10</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Implement Data Protection</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Configure Azure Backup and Azure Site Recovery for VMs.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 45 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Lab 11 -->
-        <a href="courses/az104/labs/lab-11.html" class="card-hover group flex gap-4 bg-white border border-slate-200 rounded-xl p-4 hover:border-indigo-400 shadow-sm">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">11</div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="font-medium text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Implement Monitoring</span>
-              <span class="badge bg-green-100 text-green-700">Live</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Configure Azure Monitor, Log Analytics, and Application Insights.</p>
-            <div class="flex items-center gap-3 text-xs text-slate-400">
-              <span>⏱ 45 min</span><span>🟡 Intermediate</span>
-            </div>
-          </div>
-        </a>
-
+        </div>
       </div>
+
+      <!-- ── GOOGLE LABS ── -->
+      <div>
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500">Google Cloud</h2>
+          </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="text-xs text-slate-400 font-medium">Labs coming soon</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">01</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Create a VM in Compute Engine</p><p class="text-xs text-slate-400">Launch and SSH into a Compute Engine instance via gcloud CLI.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">02</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Cloud Storage &amp; IAM Bindings</p><p class="text-xs text-slate-400">Create buckets, upload objects, and configure IAM permissions.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">03</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">Deploy App to Cloud Run</p><p class="text-xs text-slate-400">Containerize an app and deploy serverlessly with Cloud Run.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">04</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">GKE Cluster &amp; Deployments</p><p class="text-xs text-slate-400">Create a GKE cluster, deploy workloads, and expose services.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">05</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">VPC Networks &amp; Firewall Rules</p><p class="text-xs text-slate-400">Create custom VPC networks and control traffic with firewall rules.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+          <div class="flex gap-4 bg-white border border-dashed border-slate-200 rounded-xl p-4 opacity-50 cursor-not-allowed">
+            <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-400">06</div>
+            <div><p class="font-semibold text-sm text-slate-600 mb-0.5">BigQuery Data Analysis</p><p class="text-xs text-slate-400">Load datasets, run SQL queries, and visualize results in BigQuery.</p><div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <!-- ── AWS LABS ── -->
-    <div>
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="18" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6zM90 29.9c-.9-1.1-5.7-.5-7.8-.3-.7.1-.8-.5-.2-.9 3.8-2.7 10.1-1.9 10.9-.9.8.9-.2 7.3-3.8 10.3-.5.5-1.1.2-.8-.4.8-2 2.5-6.7 1.7-7.8z" fill="#FF9900"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">AWS</h2>
-        </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">Labs coming soon</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">01</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Launch an EC2 Instance</p>
-            <p class="text-xs text-slate-400">Configure, launch, and connect to a virtual machine.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">02</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Configure S3 Buckets & Policies</p>
-            <p class="text-xs text-slate-400">Create buckets, set permissions, and enable versioning.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">03</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">IAM Users, Roles & Policies</p>
-            <p class="text-xs text-slate-400">Create IAM entities and apply least-privilege policies.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">04</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Build a VPC from Scratch</p>
-            <p class="text-xs text-slate-400">Subnets, route tables, internet gateway, and security groups.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">05</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Deploy with CloudFormation</p>
-            <p class="text-xs text-slate-400">Write and deploy an IaC stack using CloudFormation templates.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-orange-50 flex items-center justify-center text-xs font-bold text-orange-400">06</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">RDS Database Setup</p>
-            <p class="text-xs text-slate-400">Provision a managed relational database with Multi-AZ failover.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ── GOOGLE LABS ── -->
-    <div>
-      <div class="flex items-center gap-4 mb-8">
-        <div class="flex items-center gap-3">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          <h2 class="text-sm font-semibold uppercase tracking-widest text-slate-500">Google</h2>
-        </div>
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="text-xs text-slate-400">Labs coming soon</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">01</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Create a VM in Compute Engine</p>
-            <p class="text-xs text-slate-400">Launch and SSH into a Compute Engine instance via gcloud CLI.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">02</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Cloud Storage & IAM Bindings</p>
-            <p class="text-xs text-slate-400">Create buckets, upload objects, and configure IAM permissions.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">03</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">Deploy App to Cloud Run</p>
-            <p class="text-xs text-slate-400">Containerize an app and deploy serverlessly with Cloud Run.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">04</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">GKE Cluster & Deployments</p>
-            <p class="text-xs text-slate-400">Create a GKE cluster, deploy workloads, and expose services.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">05</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">VPC Networks & Firewall Rules</p>
-            <p class="text-xs text-slate-400">Create custom VPC networks and control traffic with firewall rules.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-        <div class="flex gap-4 bg-white border border-slate-200 border-dashed rounded-xl p-4 opacity-50 cursor-not-allowed">
-          <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-50 flex items-center justify-center text-xs font-bold text-blue-400">06</div>
-          <div class="min-w-0">
-            <p class="font-medium text-sm text-slate-600 mb-1">BigQuery Data Analysis</p>
-            <p class="text-xs text-slate-400">Load datasets, run SQL queries, and visualize results in BigQuery.</p>
-            <div class="mt-2"><span class="badge bg-slate-100 text-slate-500">Coming soon</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div><!-- /view-labs -->
 
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="bg-slate-900 text-slate-400 mt-8">
+    <div class="max-w-7xl mx-auto px-6 pt-14 pb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+        <!-- Brand column -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm">TH</div>
+            <span class="font-bold text-white text-base">Training Hub</span>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">AI-powered cloud certification training. Real labs, not lectures.</p>
+        </div>
+
+        <!-- Courses column -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Courses</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="courses/azure/presentation.html" class="text-slate-500 hover:text-blue-400 transition-colors">Azure Fundamentals (AZ-900)</a></li>
+            <li><a href="courses/az104/presentation.html" class="text-slate-500 hover:text-blue-400 transition-colors">Azure Administrator (AZ-104)</a></li>
+            <li><span class="text-slate-600">AI-900 — Coming soon</span></li>
+            <li><span class="text-slate-600">SAA-C03 — Coming soon</span></li>
+          </ul>
+        </div>
+
+        <!-- Labs column -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Labs</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#labs" onclick="switchTabAndScroll('labs')" class="text-slate-500 hover:text-blue-400 transition-colors">AZ-104 Labs (17 live)</a></li>
+            <li><span class="text-slate-600">AWS Labs — Coming soon</span></li>
+            <li><span class="text-slate-600">GCP Labs — Coming soon</span></li>
+          </ul>
+        </div>
+
+        <!-- Providers column -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Cloud Providers</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li>
+              <a href="#microsoft" onclick="switchTabAndScroll('courses')" class="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors">
+                <svg width="14" height="14" viewBox="0 0 23 23" fill="none"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="12" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/></svg>
+                Microsoft Azure
+              </a>
+            </li>
+            <li>
+              <a href="#aws-courses" onclick="switchTabAndScroll('courses')" class="flex items-center gap-2 text-slate-500 hover:text-orange-400 transition-colors">
+                <svg width="14" height="11" viewBox="0 0 100 40"><path d="M87.3 33c-6.5 4.8-15.9 7.3-24 7.3-11.4 0-21.6-4.2-29.3-11.2-.6-.6-.1-1.3.7-.9 8.3 4.9 18.6 7.8 29.2 7.8 7.2 0 15.1-1.5 22.3-4.6 1.1-.5 2 .7.1 1.6z" fill="#FF9900"/></svg>
+                Amazon AWS
+              </a>
+            </li>
+            <li>
+              <a href="#google-courses" onclick="switchTabAndScroll('courses')" class="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Google Cloud
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>&copy; 2026 Training Hub. All rights reserved.</p>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 bg-slate-800 px-3 py-1 rounded-full">
+            <svg class="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Built on official Microsoft curricula
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════ -->
   <script>
+    /* Tab switching */
     function switchTab(tab, pushState) {
       const coursesView = document.getElementById('view-courses');
       const labsView    = document.getElementById('view-labs');
@@ -728,21 +914,36 @@
       if (pushState !== false) {
         history.replaceState(null, '', tab === 'labs' ? '#labs' : '#courses');
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Restore tab from URL hash on load and on browser back/forward
+    function switchTabAndScroll(tab) {
+      switchTab(tab);
+      document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* Restore tab from URL hash on load and on browser back/forward */
     function restoreTab() {
       const hash = location.hash;
       switchTab(hash === '#labs' ? 'labs' : 'courses', false);
     }
     window.addEventListener('DOMContentLoaded', restoreTab);
     window.addEventListener('popstate', restoreTab);
-  </script>
 
-  <script>
-    // Show user name + sign-out OR sign-in button depending on SWA auth state.
-    // Silently no-ops on local http-server (no /.auth/me endpoint).
+    /* Header shadow on scroll */
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('site-header');
+      header.style.boxShadow = window.scrollY > 0
+        ? '0 1px 16px rgba(15,23,42,0.10)'
+        : 'none';
+    });
+
+    /* Mobile menu toggle */
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+    }
+
+    /* SWA auth state */
     fetch('/.auth/me')
       .then(r => r.json())
       .then(data => {
@@ -753,8 +954,9 @@
           nav.classList.remove('hidden');
           nav.classList.add('flex');
         } else {
-          document.getElementById('login-btn').classList.remove('hidden');
-          document.getElementById('login-btn').classList.add('inline-flex');
+          const btn = document.getElementById('login-btn');
+          btn.classList.remove('hidden');
+          btn.classList.add('inline-flex');
         }
       })
       .catch(() => {});

@@ -11,9 +11,9 @@ metadata:
 **Location:** `/data/workbench/training-hub`  
 **Type:** Static web app — AI-powered training presentation platform  
 **Version:** 1.0.0 (package.json)  
-**Git:** Git repo, branch `main`, no remote configured (initial commit 2026-06-10: AZ-104 rebuild)  
-**Last context sync:** 2026-06-12 (session 4)
-**CLAUDE.md:** ✅ exists at project root (untracked — not yet committed)
+**Git:** Git repo, branch `main`, remote `origin` → `https://github.com/sumon9007/training-hub` (force-pushed clean initial commit 2026-06-12)  
+**Last context sync:** 2026-06-12 (session 5)
+**CLAUDE.md:** ✅ exists at project root (committed in initial commit)
 
 ## Stack
 
@@ -57,7 +57,7 @@ Two resources deployed by `infra/main.bicep` in one `az deployment group create`
 
 | Resource | Type | Tier | Purpose |
 |----------|------|------|---------|
-| Azure Static Web Apps | `Microsoft.Web/staticSites` | Free ($0) | Hosts site, enforces auth routes, serves `/.auth/*` |
+| Azure Static Web Apps | `Microsoft.Web/staticSites` | Standard ($9/month) | Hosts site, enforces auth routes, serves `/.auth/*` |
 | Storage Account | `Microsoft.Storage/storageAccounts` | Standard_LRS | Private blob containers for course assets |
 
 **Storage containers** (all `publicAccess: None`):
@@ -67,14 +67,19 @@ Two resources deployed by `infra/main.bicep` in one `az deployment group create`
 
 **CORS** on blob service allows `https://*.azurestaticapps.net`, `http://localhost:4280`, `http://localhost:8080`.
 
-**`.env` keys** (written by `infra/deploy.sh`, never committed):
+**`.env` keys** (written by `infra/deploy.sh` + AAD setup step, never committed):
 - `AZURE_RESOURCE_GROUP`, `AZURE_SWA_NAME`, `AZURE_SWA_URL`, `AZURE_SWA_DEPLOYMENT_TOKEN`
 - `AZURE_MEDIA_STORAGE_ACCOUNT`, `AZURE_MEDIA_STORAGE_KEY`
+- `AAD_CLIENT_ID`, `AAD_CLIENT_SECRET`, `AAD_TENANT_ID` (reference only — runtime values live in SWA app settings)
 
-**AAD App Registration** (manual, one-time per tenant):
+**AAD App Registration** (created via `az ad app create`, one-time per tenant):
+- App name: `Training Hub` | Audience: `AzureADandPersonalMicrosoftAccount`
 - Redirect URI: `https://<swa-hostname>/.auth/login/aad/callback`
-- Issuer: `https://login.microsoftonline.com/common/v2.0` (personal + work accounts)
-- SWA app settings: `AAD_CLIENT_ID`, `AAD_CLIENT_SECRET`
+- **Issuer:** `https://login.microsoftonline.com/<tenantId>/v2.0` (tenant-specific — `common/v2.0` causes JWT issuer mismatch in SWA validation)
+- **ID token issuance:** must be enabled (`az ad app update --enable-id-token-issuance true`) — SWA uses implicit ID token flow; it is OFF by default
+- **Service principal:** must be created (`az ad sp create --id <appId>`) — not auto-created for multi-tenant apps
+- **Access group:** `sg-training-hub-learners` (Entra security group) assigned to the app; `appRoleAssignmentRequired=true` — only group members can sign in
+- SWA app settings: `AAD_CLIENT_ID`, `AAD_CLIENT_SECRET` (set via `az staticwebapp appsettings set`)
 
 ## Hub Page Structure (`index.html`)
 
@@ -124,10 +129,13 @@ Diagram assets: `courses/az104/assets/diagrams/labs/{slug}.png` (inline SVG-rend
 **`login.html`** — dark-themed Microsoft sign-in page at site root. "Sign in with Microsoft" button links to `/.auth/login/aad?post_login_redirect_uri=/`. Auto-redirects to `/` if already authenticated.
 
 **`staticwebapp.config.json`** — SWA route config:
-- `/courses/*` — requires `authenticated` role
+- `/*` — requires `authenticated` role (entire site gated, not just `/courses/*`)
+- `/login.html` — only page accessible to `anonymous`
 - `401` response → redirects to `/login.html`
-- AAD provider with `common/v2.0` issuer (personal + work Microsoft accounts)
+- AAD provider with tenant-specific issuer `https://login.microsoftonline.com/<tenantId>/v2.0`
 - `AAD_CLIENT_ID` / `AAD_CLIENT_SECRET` stored as SWA application settings (never in code)
+
+**Sign-out** — all sign-out links use `/.auth/logout?post_logout_redirect_uri=/login.html` (index, lab pages, presentation pages) to land on login page after sign-out, not the gated hub.
 
 **User nav pattern** — all pages call `/.auth/me` on load via a small inline `<script>`. Fails silently on `http-server` (no `/.auth/me` endpoint locally). Same pattern in `index.html`, `base.html` (presentation pages), and `build_labs.py` template (lab pages).
 
