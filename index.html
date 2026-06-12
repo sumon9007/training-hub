@@ -194,7 +194,7 @@
             <span class="ml-auto badge bg-emerald-500/15 text-emerald-300">Live lab</span>
           </div>
           <!-- Terminal body -->
-          <div class="px-5 py-4 text-[13px] leading-relaxed">
+          <div class="px-5 py-4 text-sm leading-relaxed">
             <p><span class="text-slate-400">$</span> <span class="text-slate-200">az group create --name rg-lab04 --location eastus</span></p>
             <p class="text-emerald-400">✓ Resource group created &nbsp;<span class="text-slate-400">(2.1s)</span></p>
             <p class="mt-1.5"><span class="text-slate-400">$</span> <span class="text-slate-200">az vm create --name vm-web01 --resource-group rg-lab04 \</span></p>
@@ -278,51 +278,101 @@
         <p class="text-lg text-slate-400 leading-relaxed">Not lectures you fast-forward through. Real cloud environments, official curricula, and AI-generated architecture diagrams that make concepts click.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="space-y-20">
 
-        <!-- Feature 1: Labs -->
-        <div class="feature-card feature-card-blue bg-[#0c1626] rounded-2xl p-8 border border-[#1e2d45] cursor-default">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>
-            </svg>
+        <!-- ── Feature 1: Labs — text left, terminal right ── -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <p class="text-xs font-bold tracking-widest uppercase text-blue-400 mb-3">Hands-on labs</p>
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">Deploy real Azure resources from day one</h3>
+            <p class="text-slate-400 leading-relaxed mb-6">17 guided labs run real CLI commands against real subscriptions. Every step has a validation command so you know it worked, and every lab ends with a cleanup script — no surprise bills, no "click here" screenshots.</p>
+            <a href="#labs" onclick="switchTabAndScroll('labs')" class="inline-flex items-center gap-1.5 text-blue-400 font-semibold text-sm hover:text-blue-300 transition-colors">
+              Explore the 17 labs
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">17 Hands-On Labs</h3>
-          <p class="text-sm text-slate-400 mb-5 leading-relaxed">Deploy real Azure resources with CLI commands. Every lab has step-by-step validation and cleanup scripts — not just "click here" screenshots.</p>
-          <a href="#labs" onclick="switchTabAndScroll('labs')" class="inline-flex items-center gap-1.5 text-blue-400 font-semibold text-sm hover:text-blue-300 transition-colors">
-            Explore labs
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </a>
+          <div class="term overflow-hidden">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#1e2d45]">
+              <span class="term-dot bg-red-400/80"></span><span class="term-dot bg-amber-400/80"></span><span class="term-dot bg-emerald-400/80"></span>
+              <span class="ml-3 text-xs text-slate-400 font-medium tracking-wide">Lab 10 — Manage Azure Storage</span>
+            </div>
+            <div class="px-5 py-4 text-sm leading-relaxed">
+              <p><span class="text-slate-400">$</span> <span class="text-slate-200">az storage account create --name stlab10 --sku Standard_LRS</span></p>
+              <p class="text-emerald-400">✓ Storage account created</p>
+              <p class="mt-1.5"><span class="text-slate-400">$</span> <span class="text-slate-200">az storage account show --name stlab10 --query provisioningState</span></p>
+              <p class="text-cyan-300">"Succeeded" <span class="text-slate-400">— validation passed, step 4 of 6</span></p>
+              <p class="mt-1.5"><span class="text-slate-400">$</span> <span class="term-cursor"></span></p>
+            </div>
+          </div>
         </div>
 
-        <!-- Feature 2: Exam Simulators -->
-        <div class="feature-card feature-card-green bg-[#0c1626] rounded-2xl p-8 border border-[#1e2d45] cursor-default">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
+        <!-- ── Feature 2: Exam simulator — question card left, text right ── -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div class="md:order-2">
+            <p class="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3">Timed exam simulator</p>
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">Walk into the exam already knowing your score</h3>
+            <p class="text-slate-400 leading-relaxed mb-6">Timed simulators built from the official Microsoft curriculum, with exam-style scoring. Every option — right or wrong — carries a written rationale, so you learn the WHY, not just the answer key.</p>
+            <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold text-sm hover:text-emerald-300 transition-colors">
+              Try the AZ-104 simulator
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">Timed Exam Simulators</h3>
-          <p class="text-sm text-slate-400 mb-5 leading-relaxed">Practice with exam-style questions built from the official Microsoft curriculum. Detailed rationales for every answer — understand WHY, not just WHAT.</p>
-          <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold text-sm hover:text-emerald-300 transition-colors">
-            Try AZ-104 course
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </a>
+          <div class="md:order-1 bg-[#0a1322] border border-[#1e2d45] rounded-2xl p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs text-slate-400 font-medium">Question 12 of 40</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-full">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>
+                38:12
+              </span>
+            </div>
+            <p class="text-sm text-slate-200 font-medium mb-4 leading-relaxed">You need to give a user the ability to manage VMs in one resource group only. Which approach follows least privilege?</p>
+            <div class="space-y-2 text-sm">
+              <div class="px-3.5 py-2.5 rounded-lg border border-[#1e2d45] text-slate-400">Owner role at the subscription scope</div>
+              <div class="px-3.5 py-2.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-200 font-medium flex items-center justify-between">
+                Virtual Machine Contributor at the resource group scope
+                <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-lg border border-[#1e2d45] text-slate-400">Contributor role at the subscription scope</div>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed mt-4 pt-4 border-t border-[#1e2d45]"><span class="text-emerald-400 font-semibold">Why:</span> VM Contributor grants exactly the VM-management permissions needed, and resource-group scope limits the blast radius — both subscription-wide roles over-grant.</p>
+          </div>
         </div>
 
-        <!-- Feature 3: Architecture Diagrams -->
-        <div class="feature-card feature-card-purple bg-[#0c1626] rounded-2xl p-8 border border-[#1e2d45] cursor-default">
-          <div class="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
-            </svg>
+        <!-- ── Feature 3: AI diagrams — text left, real diagram right ── -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <p class="text-xs font-bold tracking-widest uppercase text-violet-400 mb-3">AI architecture diagrams</p>
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">See the architecture before you build it</h3>
+            <p class="text-slate-400 leading-relaxed mb-6">Every course is illustrated with AI-generated architecture diagrams drawn with official Azure icons — hub-and-spoke topologies, load-balanced tiers, private endpoints. Concepts click when you can see how the services connect.</p>
+            <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-violet-400 font-semibold text-sm hover:text-violet-300 transition-colors">
+              View the AZ-104 slides
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
           </div>
-          <h3 class="text-lg font-bold text-white mb-2">Azure-Icon Diagrams</h3>
-          <p class="text-sm text-slate-400 mb-5 leading-relaxed">AI-generated architecture diagrams using official Azure icons. Visually understand how services connect before you deploy them.</p>
-          <a href="courses/az104/presentation.html" class="inline-flex items-center gap-1.5 text-violet-400 font-semibold text-sm hover:text-violet-300 transition-colors">
-            View AZ-104 slides
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </a>
+          <div class="bg-[#0a1322] border border-[#1e2d45] rounded-2xl p-4 shadow-xl">
+            <img src="/src/brand/showcase/hub-spoke-topology.png" alt="AI-generated hub-and-spoke VNet topology diagram with official Azure icons" class="w-full max-h-96 object-contain rounded-lg" loading="lazy"/>
+            <p class="text-sm text-slate-400 text-center mt-3">Hub-and-spoke VNet topology — generated for AZ-104 Module 4</p>
+          </div>
+        </div>
+
+        <!-- ── Comparison strip ── -->
+        <div class="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-[#1e2d45]">
+          <div class="p-8 bg-[#0a101c]">
+            <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-5">Typical video course</h4>
+            <ul class="space-y-3.5 text-sm text-slate-400">
+              <li class="flex gap-3"><svg class="w-4 h-4 text-slate-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Watch someone else click through the portal</li>
+              <li class="flex gap-3"><svg class="w-4 h-4 text-slate-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Memorize answer keys without context</li>
+              <li class="flex gap-3"><svg class="w-4 h-4 text-slate-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Static screenshots that age out of date</li>
+            </ul>
+          </div>
+          <div class="p-8 bg-blue-500/[0.06] border-t md:border-t-0 md:border-l border-[#1e2d45]">
+            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-300 mb-5">BD Cloud Academy</h4>
+            <ul class="space-y-3.5 text-sm text-slate-200">
+              <li class="flex gap-3"><svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Run the CLI yourself, with validation at every step</li>
+              <li class="flex gap-3"><svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>A written rationale for every option, right or wrong</li>
+              <li class="flex gap-3"><svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Diagrams regenerated with the course, never stale</li>
+            </ul>
+          </div>
         </div>
 
       </div>
