@@ -1,0 +1,60 @@
+{
+  "title": "Azure App Service - Production & Staging Slots with Traffic Routing",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "App Service Plan",
+      "nodes": [
+        {
+          "id": "prod",
+          "service": "app_service",
+          "label": "Production Slot\n(Sticky: App Settings,\nConnection Strings)"
+        },
+        {
+          "id": "staging",
+          "service": "app_service",
+          "label": "Staging Slot\n(Sticky: App Settings,\nConnection Strings)"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "users",
+      "service": "internet",
+      "label": "Web Traffic"
+    },
+    {
+      "id": "insights",
+      "service": "app_insights",
+      "label": "Application Insights"
+    }
+  ],
+  "edges": [
+    {
+      "from": "users",
+      "to": "prod",
+      "label": "90% Traffic"
+    },
+    {
+      "from": "users",
+      "to": "staging",
+      "label": "10% Traffic"
+    },
+    {
+      "from": "prod",
+      "to": "staging",
+      "label": "Slot Swap"
+    },
+    {
+      "from": "prod",
+      "to": "insights",
+      "label": "Logs/Metrics"
+    },
+    {
+      "from": "staging",
+      "to": "insights",
+      "label": "Logs/Metrics"
+    }
+  ]
+}

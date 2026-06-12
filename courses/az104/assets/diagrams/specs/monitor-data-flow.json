@@ -1,0 +1,140 @@
+{
+  "title": "Azure Monitor Data Flow: Metrics & Logs to Alerting",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Data Sources & Agents",
+      "nodes": [
+        {
+          "id": "vm",
+          "service": "vm",
+          "label": "Virtual Machines"
+        },
+        {
+          "id": "appsvc",
+          "service": "app_service",
+          "label": "App Services"
+        },
+        {
+          "id": "agent",
+          "service": "monitor",
+          "label": "Monitor Agent"
+        }
+      ]
+    },
+    {
+      "label": "Data Collection & Storage",
+      "nodes": [
+        {
+          "id": "metrics",
+          "service": "metrics",
+          "label": "Metrics"
+        },
+        {
+          "id": "logs",
+          "service": "logs",
+          "label": "Logs"
+        },
+        {
+          "id": "law",
+          "service": "log_analytics",
+          "label": "Log Analytics Workspace"
+        }
+      ]
+    },
+    {
+      "label": "Alerting & Actions",
+      "nodes": [
+        {
+          "id": "alerts",
+          "service": "alerts",
+          "label": "Alert Rules"
+        },
+        {
+          "id": "actgrp",
+          "service": "groups",
+          "label": "Action Groups"
+        }
+      ]
+    },
+    {
+      "label": "Notification Endpoints",
+      "nodes": [
+        {
+          "id": "email",
+          "service": "generic",
+          "label": "Email"
+        },
+        {
+          "id": "sms",
+          "service": "generic",
+          "label": "SMS"
+        },
+        {
+          "id": "webhook",
+          "service": "generic",
+          "label": "Webhook"
+        },
+        {
+          "id": "auto",
+          "service": "generic",
+          "label": "Automation"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "vm",
+      "to": "metrics"
+    },
+    {
+      "from": "vm",
+      "to": "logs"
+    },
+    {
+      "from": "appsvc",
+      "to": "metrics"
+    },
+    {
+      "from": "appsvc",
+      "to": "logs"
+    },
+    {
+      "from": "agent",
+      "to": "logs"
+    },
+    {
+      "from": "metrics",
+      "to": "law"
+    },
+    {
+      "from": "logs",
+      "to": "law"
+    },
+    {
+      "from": "law",
+      "to": "alerts"
+    },
+    {
+      "from": "alerts",
+      "to": "actgrp"
+    },
+    {
+      "from": "actgrp",
+      "to": "email"
+    },
+    {
+      "from": "actgrp",
+      "to": "sms"
+    },
+    {
+      "from": "actgrp",
+      "to": "webhook"
+    },
+    {
+      "from": "actgrp",
+      "to": "auto"
+    }
+  ]
+}

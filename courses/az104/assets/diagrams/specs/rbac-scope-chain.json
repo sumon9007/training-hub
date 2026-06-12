@@ -1,0 +1,93 @@
+{
+  "title": "Azure RBAC Inheritance Hierarchy",
+  "direction": "TB",
+  "clusters": [
+    {
+      "label": "Management Group Scope",
+      "nodes": [
+        {
+          "id": "mg",
+          "service": "management_group",
+          "label": "Management Group"
+        },
+        {
+          "id": "roles_mg",
+          "service": "policy",
+          "label": "RBAC Assignments"
+        }
+      ]
+    },
+    {
+      "label": "Subscription Scope",
+      "nodes": [
+        {
+          "id": "sub",
+          "service": "subscription",
+          "label": "Subscription"
+        },
+        {
+          "id": "roles_sub",
+          "service": "policy",
+          "label": "RBAC Assignments"
+        }
+      ]
+    },
+    {
+      "label": "Resource Group Scope",
+      "nodes": [
+        {
+          "id": "rg",
+          "service": "resource_group",
+          "label": "Resource Group"
+        },
+        {
+          "id": "roles_rg",
+          "service": "policy",
+          "label": "RBAC Assignments"
+        }
+      ]
+    },
+    {
+      "label": "Resource Level",
+      "nodes": [
+        {
+          "id": "vm",
+          "service": "vm",
+          "label": "Virtual Machine"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "mg",
+      "to": "sub",
+      "label": "contains"
+    },
+    {
+      "from": "roles_mg",
+      "to": "roles_sub",
+      "label": "inherited"
+    },
+    {
+      "from": "sub",
+      "to": "rg",
+      "label": "contains"
+    },
+    {
+      "from": "roles_sub",
+      "to": "roles_rg",
+      "label": "inherited"
+    },
+    {
+      "from": "rg",
+      "to": "vm",
+      "label": "contains"
+    },
+    {
+      "from": "roles_rg",
+      "to": "vm",
+      "label": "applies"
+    }
+  ]
+}

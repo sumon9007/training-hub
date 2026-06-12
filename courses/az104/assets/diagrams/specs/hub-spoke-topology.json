@@ -1,0 +1,128 @@
+{
+  "title": "Hub-and-Spoke VNet Topology with Firewall Routing",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Hub VNet",
+      "nodes": [
+        {
+          "id": "fw",
+          "service": "firewall",
+          "label": "Azure Firewall"
+        },
+        {
+          "id": "bastion",
+          "service": "bastion",
+          "label": "Bastion Host"
+        },
+        {
+          "id": "vpn",
+          "service": "vpn_gateway",
+          "label": "VPN Gateway"
+        }
+      ]
+    },
+    {
+      "label": "Spoke 1 VNet",
+      "nodes": [
+        {
+          "id": "vm1",
+          "service": "vm",
+          "label": "Web Server"
+        },
+        {
+          "id": "udr1",
+          "service": "route_table",
+          "label": "UDR"
+        }
+      ]
+    },
+    {
+      "label": "Spoke 2 VNet",
+      "nodes": [
+        {
+          "id": "vm2",
+          "service": "vm",
+          "label": "App Server"
+        },
+        {
+          "id": "udr2",
+          "service": "route_table",
+          "label": "UDR"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "users",
+      "service": "users",
+      "label": "Remote Users"
+    },
+    {
+      "id": "onprem",
+      "service": "on_premises",
+      "label": "On-Premises"
+    },
+    {
+      "id": "inet",
+      "service": "internet",
+      "label": "Internet"
+    }
+  ],
+  "edges": [
+    {
+      "from": "onprem",
+      "to": "vpn",
+      "label": "S2S VPN"
+    },
+    {
+      "from": "users",
+      "to": "bastion",
+      "label": "Management"
+    },
+    {
+      "from": "bastion",
+      "to": "vm1",
+      "label": "SSH/RDP"
+    },
+    {
+      "from": "bastion",
+      "to": "vm2",
+      "label": "SSH/RDP"
+    },
+    {
+      "from": "vm1",
+      "to": "udr1"
+    },
+    {
+      "from": "vm2",
+      "to": "udr2"
+    },
+    {
+      "from": "udr1",
+      "to": "fw",
+      "label": "Routes via"
+    },
+    {
+      "from": "udr2",
+      "to": "fw",
+      "label": "Routes via"
+    },
+    {
+      "from": "vm1",
+      "to": "vm2",
+      "label": "Via FW"
+    },
+    {
+      "from": "vm2",
+      "to": "vm1",
+      "label": "Via FW"
+    },
+    {
+      "from": "fw",
+      "to": "inet",
+      "label": "Egress"
+    }
+  ]
+}

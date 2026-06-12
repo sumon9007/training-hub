@@ -1,0 +1,23 @@
+    <mxfile host="arch-designer-agent">
+      <diagram name="AZ-104 Lab 02b: Governance via Azure Policy">
+        <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1"
+                      tooltips="1" connect="1" arrows="1" fold="1" page="1"
+                      pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+          <root>
+        <mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="n1" value="Policy Definition (Built-in)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="60" y="120" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n2" value="Policy Initiative (Custom Set)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="60" y="240" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n3" value="Policy Assignment (RG Scope)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="300" y="180" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n4" value="Subscription (Scope)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.subscriptions;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="540" y="60" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n5" value="Compliance Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="540" y="180" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n6" value="Resource Lock (CanNotDelete)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="540" y="300" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n1" target="n3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="scoped to" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n3" target="n4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="reports to" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n3" target="n5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="enforces" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n3" target="n6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+          </root>
+        </mxGraphModel>
+      </diagram>
+    </mxfile>

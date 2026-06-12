@@ -1,0 +1,547 @@
+/* Training Hub — Light Professional Theme for Reveal.js */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Root variables ── */
+:root {
+  --r-background-color: #F8FAFF;
+  --r-main-font: 'Inter', sans-serif;
+  --r-main-font-size: 28px;
+  --r-main-color: #1E293B;
+  --r-heading-font: 'Inter', sans-serif;
+  --r-heading-color: #0F172A;
+  --r-heading-font-weight: 700;
+  --r-heading-letter-spacing: -0.02em;
+  --r-heading-text-transform: none;
+  --r-link-color: #0078D4;
+  --r-link-color-hover: #005A9E;
+  --r-selection-background-color: #DBEAFE;
+  --r-code-font: 'JetBrains Mono', monospace;
+
+  /* Course accent colors */
+  --azure: #0078D4;
+  --azure-light: #0EA5E9;
+  --aws: #FF9900;
+  --data: #0D9488;
+  --ai: #7C3AED;
+
+  /* Layout */
+  --slide-padding: 56px;
+}
+
+/* ── Background ── */
+.reveal-viewport { background: var(--r-background-color); }
+.reveal .slides { text-align: left; }
+
+/* ── Override Reveal.js black theme uppercase on ALL headings ── */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none !important;
+  letter-spacing: -0.02em;
+}
+
+/* ── Fix slide overflow: prevent content clipping on right edge ── */
+.reveal .slides section {
+  padding: 36px var(--slide-padding);
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Remove double-padding on nested sections */
+.reveal .slides section section {
+  padding: 36px var(--slide-padding);
+}
+
+/* ── Constrain all text to slide width ── */
+.reveal p,
+.reveal li,
+.reveal blockquote {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* ── Headings ── */
+.reveal h1 { font-size: 1.9em; line-height: 1.1; margin-bottom: 0.25em; }
+.reveal h2 { font-size: 1.35em; line-height: 1.2; margin-bottom: 0.35em; color: var(--azure); }
+.reveal h3 { font-size: 0.6em; font-weight: 600; color: #64748B; text-transform: uppercase !important; letter-spacing: 0.1em; margin-bottom: 0.4em; }
+
+/* ── Body text ── */
+.reveal p  { font-size: 0.78em; line-height: 1.65; color: #334155; margin-bottom: 0.5em; }
+.reveal li { font-size: 0.78em; line-height: 1.7; color: #334155; margin-bottom: 0.25em; }
+.reveal strong { color: #0F172A; font-weight: 600; }
+
+/* ── Code ── */
+.reveal code { font-family: var(--r-code-font); background: #EFF6FF; color: #1D4ED8; padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.82em; border: 1px solid #BFDBFE; }
+.reveal pre { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 8px; padding: 1em 1.2em; margin: 0.6em 0; box-shadow: 0 2px 8px rgba(15,23,42,0.06); }
+.reveal pre code { background: transparent; color: #1E293B; font-size: 0.72em; line-height: 1.6; padding: 0; border: none; }
+
+/* ── Title slide ── */
+.reveal .title-slide { text-align: center; display: flex; flex-direction: column; justify-content: center; }
+.reveal .title-slide h1 {
+  font-size: 2em;
+  background: linear-gradient(135deg, #0F172A 0%, #0078D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.2em;
+}
+.reveal .title-slide .subtitle { font-size: 0.62em; color: #64748B; margin-top: 0.2em; line-height: 1.5; }
+.reveal .title-slide .course-badge {
+  display: inline-block;
+  background: rgba(0, 120, 212, 0.08);
+  border: 1px solid rgba(0, 120, 212, 0.3);
+  color: #0078D4;
+  font-size: 0.42em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase !important;
+  padding: 0.5em 1.4em;
+  border-radius: 999px;
+  margin-bottom: 0.8em;
+}
+
+/* ── Module header slide ── */
+.reveal .module-slide { position: relative; }
+.reveal .module-slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--azure) 0%, var(--azure-light) 100%);
+}
+.reveal .module-slide .module-number {
+  font-size: 0.5em;
+  font-weight: 700;
+  color: var(--azure);
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.2em;
+}
+.reveal .module-slide h1 { font-size: 1.7em; margin-bottom: 0.3em; }
+.reveal .module-slide p { font-size: 0.72em; color: #64748B; margin-bottom: 0.8em; }
+
+/* ── Lab slide (amber accent — distinct from lessons) ── */
+.reveal .lab-slide { position: relative; }
+.reveal .lab-slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #D97706 0%, #F59E0B 100%);
+}
+.reveal .lab-slide .lab-number {
+  font-size: 0.5em;
+  font-weight: 700;
+  color: #D97706;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.2em;
+}
+.reveal .lab-slide h1 { font-size: 1.6em; margin-bottom: 0.3em; }
+.reveal .lab-slide h2 { color: #B45309; }
+.reveal .lab-slide p { font-size: 0.72em; color: #64748B; margin-bottom: 0.8em; }
+.reveal .lab-slide .objectives li::before { color: #D97706; }
+
+/* ── Numbered lab steps ── */
+.reveal .steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 0.6em 0 0;
+}
+.reveal .steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0.4em 0 0.4em 2.4em;
+  font-size: 0.66em;
+  color: #334155;
+  border-bottom: 1px solid rgba(217,119,6,0.12);
+}
+.reveal .steps li:last-child { border-bottom: none; }
+.reveal .steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: 0.35em;
+  width: 1.5em; height: 1.5em;
+  display: flex; align-items: center; justify-content: center;
+  background: #D97706;
+  color: #fff;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  border-radius: 6px;
+}
+
+/* ── Content cards ── */
+.reveal .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8em;
+  margin-top: 0.8em;
+}
+.reveal .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.9em 1em; box-shadow: 0 1px 4px rgba(15,23,42,0.06); }
+.reveal .card .card-icon { font-size: 1.2em; margin-bottom: 0.3em; }
+.reveal .card h4 { font-size: 0.65em; font-weight: 600; color: #0F172A; margin-bottom: 0.25em; }
+.reveal .card p { font-size: 0.5em; color: #64748B; line-height: 1.5; margin: 0; }
+
+/* ── Two / three column layouts ── */
+.reveal .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8em; align-items: start; }
+.reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2em; align-items: start; }
+
+/* ── Diagram container ── */
+
+/* Make diagram-only slides use flex so the container fills remaining height */
+.reveal .slides section:has(.diagram-container) {
+  display: flex;
+  flex-direction: column;
+}
+
+.reveal .diagram-container {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 1.2em;
+  margin-top: 0.6em;
+  overflow: hidden;
+  flex: 1;                  /* fill remaining slide height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.reveal .diagram-container .mermaid {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override Mermaid's inline max-width so the SVG scales responsively */
+.reveal .diagram-container .mermaid svg {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 500px;
+}
+
+/* ── Quiz slides ── */
+.reveal .quiz-option {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.55em 0.9em;
+  margin: 0.35em 0;
+  cursor: pointer;
+  font-size: 0.65em;
+  color: #334155;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05);
+}
+.reveal .quiz-option:hover   { border-color: var(--azure); color: #0F172A; background: #EFF6FF; }
+.reveal .quiz-option.correct { border-color: #059669; background: #ECFDF5; color: #065F46; }
+.reveal .quiz-option.incorrect { border-color: #DC2626; background: #FEF2F2; color: #991B1B; }
+.reveal .quiz-option .option-key {
+  display: inline-flex;
+  width: 1.5em; height: 1.5em;
+  border-radius: 4px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-family: var(--r-code-font);
+  color: #475569;
+}
+.reveal .quiz-explanation {
+  display: none;
+  margin-top: 0.6em;
+  padding: 0.7em 0.9em;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 8px;
+  font-size: 0.55em;
+  color: #065F46;
+  line-height: 1.6;
+}
+.reveal .quiz-explanation.show { display: block; }
+
+/* ── Learning objectives list ── */
+.reveal .objectives { list-style: none; padding: 0; margin: 0; }
+.reveal .objectives li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  padding: 0.45em 0;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.72em;
+}
+.reveal .objectives li:last-child { border-bottom: none; }
+.reveal .objectives li::before { content: '✓'; color: var(--azure); font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+
+/* ── Callout boxes ── */
+.reveal .callout {
+  border-left: 3px solid var(--azure);
+  background: #EFF6FF;
+  border-radius: 0 8px 8px 0;
+  padding: 0.7em 1em;
+  margin: 0.6em 0;
+  font-size: 0.65em;
+  color: #1E40AF;
+  line-height: 1.5;
+}
+.reveal .callout.warning { border-color: #D97706; background: #FFFBEB; color: #92400E; }
+.reveal .callout.success { border-color: #059669; background: #ECFDF5; color: #065F46; }
+
+/* ── Progress bar & controls ── */
+.reveal .progress { height: 3px; background: rgba(0,0,0,0.06); }
+.reveal .progress span { background: linear-gradient(90deg, var(--azure) 0%, var(--azure-light) 100%); }
+.reveal .controls { color: var(--azure); }
+.reveal .slide-number {
+  font-family: var(--r-code-font);
+  font-size: 11px;
+  background: rgba(241,245,249,0.95);
+  color: #64748B;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ── Fragment animations ── */
+.reveal .fragment { opacity: 0; transition: opacity 0.3s ease; }
+.reveal .fragment.visible { opacity: 1; }
+
+/* ── Print / PDF ── */
+@media print {
+  .reveal .slide-background { background: #F8FAFF !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Engagement upgrade additions (append-only — deployed decks rely on the
+   selectors above rendering identically)
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Quiz: why-wrong breakdown ── */
+.reveal .quiz-why-wrong {
+  list-style: none;
+  padding: 0.4em 0 0 0;
+  margin: 0.4em 0 0 0;
+  border-top: 1px solid #A7F3D0;
+  color: #475569;
+  font-size: 0.95em;
+}
+.reveal .quiz-why-wrong li { padding: 0.15em 0; }
+.reveal .quiz-why-wrong li strong { color: #DC2626; font-family: var(--r-code-font); }
+
+/* ── Code copy button ── */
+.reveal pre { position: relative; }
+.reveal .code-copy-btn {
+  position: absolute;
+  top: 8px; right: 8px;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  color: #64748B;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+}
+.reveal pre:hover .code-copy-btn { opacity: 1; }
+.reveal .code-copy-btn:hover { color: #0F172A; border-color: #94A3B8; }
+.reveal .code-copy-btn.copied { color: #059669; border-color: #059669; opacity: 1; }
+
+/* ── Lab: expected output block ── */
+.reveal .expected-output {
+  background: #F0FDF4;
+  border-left: 3px solid #059669;
+  border-radius: 0 8px 8px 0;
+  padding: 0.9em 1em 0.6em 1em;
+  margin: 0.5em 0;
+  font-family: var(--r-code-font);
+  font-size: 0.5em;
+  color: #065F46;
+  line-height: 1.5;
+  position: relative;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.reveal .expected-output::before {
+  content: 'EXPECTED OUTPUT';
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #059669;
+  opacity: 0.8;
+  margin-bottom: 0.5em;
+}
+.reveal .expected-output code { background: none; color: inherit; padding: 0; font-size: inherit; border: none; }
+
+/* ── Lab: validate slide checkmarks ── */
+.reveal .lab-slide .validate { list-style: none; padding: 0; margin: 0; }
+.reveal .lab-slide .validate > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid rgba(217,119,6,0.12);
+  font-size: 0.62em;
+}
+.reveal .lab-slide .validate > li::before { content: '✅ ' attr(data-check); color: #059669; font-weight: 600; }
+.reveal .lab-slide .validate > li:last-child { border-bottom: none; }
+
+/* ── Azure-icon architecture diagrams (PNG) ── */
+.reveal .diagram-container.arch-diagram {
+  padding: 0.6em;
+  background: #F8FAFF;
+  border-color: #E2E8F0;
+}
+.reveal .arch-diagram img {
+  max-width: 100%;
+  max-height: 480px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+.reveal .diagram-caption {
+  font-size: 0.5em;
+  color: #94A3B8;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+/* ── Exam simulator ── */
+.reveal .exam-slide {
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #DC2626, #F87171) 1;
+  padding-top: 0.4em;
+}
+.reveal .exam-slide .exam-number {
+  font-family: var(--r-code-font);
+  font-size: 0.45em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #DC2626;
+  margin-bottom: 0.6em;
+}
+.reveal .exam-slide .exam-stem {
+  font-size: 0.68em;
+  color: #1E293B;
+  line-height: 1.55;
+  margin-bottom: 0.8em;
+}
+.reveal .exam-option {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0.55em 0.9em;
+  margin: 0.35em 0;
+  cursor: pointer;
+  font-size: 0.62em;
+  color: #334155;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05);
+}
+.reveal .exam-option:hover { border-color: #DC2626; color: #0F172A; background: #FEF2F2; }
+.reveal .exam-option.selected {
+  border-color: #6366F1;
+  background: #EEF2FF;
+  color: #3730A3;
+}
+.reveal .exam-option .option-key {
+  display: inline-flex;
+  width: 1.5em; height: 1.5em;
+  border-radius: 4px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-family: var(--r-code-font);
+  color: #475569;
+}
+.reveal button.exam-start, .reveal button.exam-retake {
+  font-family: Inter, sans-serif;
+  font-size: 0.55em;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #DC2626, #EF4444);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8em 1.8em;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(220,38,38,0.25);
+}
+.reveal button.exam-start:hover, .reveal button.exam-retake:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.reveal button.exam-retake { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; box-shadow: none; }
+.exam-timer {
+  display: none;
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 999;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E293B;
+  background: rgba(255,255,255,0.97);
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.1);
+}
+.exam-timer.warning { color: #DC2626; border-color: #DC2626; animation: exam-pulse 1s infinite; }
+@keyframes exam-pulse { 50% { opacity: 0.6; } }
+.reveal .exam-score { margin: 0.4em 0 0.6em 0; }
+.reveal .exam-score .pct { font-size: 2.2em; font-weight: 700; line-height: 1.1; }
+.reveal .exam-score .pct.pass { color: #059669; }
+.reveal .exam-score .pct.fail { color: #DC2626; }
+.reveal .exam-score .verdict { font-size: 0.65em; color: #64748B; margin-top: 0.2em; }
+.reveal .exam-review {
+  max-height: 380px;
+  overflow-y: auto;
+  text-align: left;
+  margin-top: 0.4em;
+}
+.reveal .exam-review-row {
+  display: flex;
+  gap: 0.6em;
+  padding: 0.45em 0.2em;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.5em;
+  line-height: 1.45;
+}
+.reveal .exam-review-row:last-child { border-bottom: none; }
+.reveal .exam-review-row .mark { font-weight: 700; flex-shrink: 0; }
+.reveal .exam-review-row.right .mark { color: #059669; }
+.reveal .exam-review-row.wrong .mark { color: #DC2626; }
+.reveal .exam-review-row .q { color: #0F172A; font-weight: 600; }
+.reveal .exam-review-row .a { color: #64748B; margin-top: 0.15em; }
+.reveal .exam-review-row .r { color: #059669; margin-top: 0.15em; }
+
+/* ── Print / PDF: hide interactive chrome ── */
+@media print {
+  .exam-timer, .reveal .code-copy-btn, .reveal button.exam-start, .reveal button.exam-retake { display: none !important; }
+}

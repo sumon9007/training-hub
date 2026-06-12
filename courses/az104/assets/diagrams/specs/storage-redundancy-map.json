@@ -1,0 +1,91 @@
+{
+  "title": "Azure Storage Redundancy: LRS/ZRS vs GRS/GZRS with RA",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Primary Region (East US)",
+      "nodes": [
+        {
+          "id": "lrs",
+          "service": "storage_account",
+          "label": "LRS Storage"
+        },
+        {
+          "id": "zrs",
+          "service": "storage_account",
+          "label": "ZRS Storage"
+        },
+        {
+          "id": "ep_pri",
+          "service": "public_ip",
+          "label": "Primary Endpoint"
+        }
+      ]
+    },
+    {
+      "label": "Paired Region (West US)",
+      "nodes": [
+        {
+          "id": "grs",
+          "service": "storage_account",
+          "label": "GRS Replica"
+        },
+        {
+          "id": "gzrs",
+          "service": "storage_account",
+          "label": "GZRS Replica"
+        },
+        {
+          "id": "ep_sec",
+          "service": "public_ip",
+          "label": "Secondary Endpoint (RA)"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "client",
+      "service": "users",
+      "label": "Client Applications"
+    }
+  ],
+  "edges": [
+    {
+      "from": "client",
+      "to": "ep_pri",
+      "label": "Read-Write"
+    },
+    {
+      "from": "ep_pri",
+      "to": "lrs"
+    },
+    {
+      "from": "ep_pri",
+      "to": "zrs"
+    },
+    {
+      "from": "lrs",
+      "to": "grs",
+      "label": "Async"
+    },
+    {
+      "from": "zrs",
+      "to": "gzrs",
+      "label": "Async"
+    },
+    {
+      "from": "client",
+      "to": "ep_sec",
+      "label": "Read-Only"
+    },
+    {
+      "from": "ep_sec",
+      "to": "grs"
+    },
+    {
+      "from": "ep_sec",
+      "to": "gzrs"
+    }
+  ]
+}

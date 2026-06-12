@@ -1,0 +1,37 @@
+{
+  "routes": [
+    {
+      "route": "/courses/*",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/login.html",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/*",
+      "allowedRoles": ["anonymous", "authenticated"]
+    }
+  ],
+  "responseOverrides": {
+    "401": {
+      "redirect": "/login.html",
+      "statusCode": 302
+    }
+  },
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/common/v2.0",
+          "clientIdSettingName": "AAD_CLIENT_ID",
+          "clientSecretSettingName": "AAD_CLIENT_SECRET"
+        }
+      }
+    }
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/courses/*", "*.{css,js,png,svg,json,html}"]
+  }
+}

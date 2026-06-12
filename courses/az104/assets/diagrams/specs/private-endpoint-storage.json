@@ -1,0 +1,99 @@
+{
+  "title": "Azure Storage Security: Private Endpoint vs Service Endpoint vs Firewall Rules",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Virtual Network",
+      "nodes": [
+        {
+          "id": "vm",
+          "service": "vm_windows",
+          "label": "Test VM"
+        },
+        {
+          "id": "subnet",
+          "service": "subnet",
+          "label": "Default Subnet"
+        }
+      ]
+    },
+    {
+      "label": "Private Access (Recommended)",
+      "nodes": [
+        {
+          "id": "pe",
+          "service": "private_endpoint",
+          "label": "Private Endpoint"
+        },
+        {
+          "id": "pdns",
+          "service": "private_dns",
+          "label": "Private DNS Zone"
+        }
+      ]
+    },
+    {
+      "label": "Storage & Security",
+      "nodes": [
+        {
+          "id": "storage",
+          "service": "storage_account",
+          "label": "Storage Account"
+        },
+        {
+          "id": "fw",
+          "service": "firewall",
+          "label": "Firewall Rules"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "internet",
+      "service": "internet",
+      "label": "Internet"
+    }
+  ],
+  "edges": [
+    {
+      "from": "vm",
+      "to": "subnet"
+    },
+    {
+      "from": "vm",
+      "to": "pe",
+      "label": "Path 1: Private"
+    },
+    {
+      "from": "pe",
+      "to": "pdns",
+      "label": "Private DNS"
+    },
+    {
+      "from": "pdns",
+      "to": "storage",
+      "label": "\u2192 Private IP (10.x)"
+    },
+    {
+      "from": "subnet",
+      "to": "storage",
+      "label": "Path 2: Service Endpoint"
+    },
+    {
+      "from": "vm",
+      "to": "internet",
+      "label": "Path 3: Public"
+    },
+    {
+      "from": "internet",
+      "to": "fw",
+      "label": "Firewall Rules"
+    },
+    {
+      "from": "fw",
+      "to": "storage",
+      "label": "Block/Allow"
+    }
+  ]
+}

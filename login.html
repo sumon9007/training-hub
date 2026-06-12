@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Training Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .ms-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0078d4;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 11px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .ms-btn:hover { background: #106ebe; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center" style="background:#080e18">
+
+  <div class="w-full max-w-sm mx-auto px-6">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center mb-10">
+      <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-4">TH</div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">Training Hub</h1>
+      <p class="text-slate-400 text-sm mt-1">Cloud certification training</p>
+    </div>
+
+    <!-- Card -->
+    <div class="rounded-2xl border border-slate-700 p-8 text-center" style="background:#0d1626">
+      <h2 class="text-lg font-semibold text-white mb-2">Sign in to continue</h2>
+      <p class="text-slate-400 text-sm mb-8">
+        Access AZ-900, AZ-104, and other courses by signing in with your Microsoft account.
+      </p>
+      <a href="/.auth/login/aad?post_login_redirect_uri=/" class="ms-btn">
+        <!-- Microsoft logo mark -->
+        <svg width="18" height="18" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+          <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+          <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+          <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+        </svg>
+        Sign in with Microsoft
+      </a>
+    </div>
+
+    <p class="text-center text-slate-600 text-xs mt-8">
+      By signing in you agree to use this platform for personal learning only.
+    </p>
+
+  </div>
+
+  <script>
+    // Already authenticated? Send them straight to the hub.
+    fetch('/.auth/me')
+      .then(r => r.json())
+      .then(data => { if (data.clientPrincipal) window.location.href = '/'; })
+      .catch(() => {});
+  </script>
+
+</body>
+</html>

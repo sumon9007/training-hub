@@ -1,0 +1,16 @@
+{
+  "name": "training-hub",
+  "version": "1.0.0",
+  "description": "AI-powered modular training presentation platform",
+  "scripts": {
+    "start": "npx http-server . -p 8080 -o",
+    "preview": "npx http-server . -p 8080",
+    "start:auth": "npx @azure/static-web-apps-cli@latest start . --port 4280",
+    "generate": "python3 src/generator/generate.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "http-server": "^14.1.1",
+    "playwright": "^1.60.0"
+  }
+}

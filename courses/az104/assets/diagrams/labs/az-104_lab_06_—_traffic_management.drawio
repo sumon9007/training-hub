@@ -1,0 +1,23 @@
+    <mxfile host="arch-designer-agent">
+      <diagram name="AZ-104 Lab 06 — Traffic Management">
+        <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1"
+                      tooltips="1" connect="1" arrows="1" fold="1" page="1"
+                      pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+          <root>
+        <mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="n1" value="Internet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.internet;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="60" y="240" width="120" height="60" as="geometry"/></mxCell>
+<mxCell id="n2" value="Application Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.application_gateways;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="280" y="140" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n3" value="Load Balancer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.load_balancers;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="280" y="340" width="160" height="60" as="geometry"/></mxCell>
+<mxCell id="n4" value="VM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.virtual_machine;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="560" y="140" width="140" height="60" as="geometry"/></mxCell>
+<mxCell id="n5" value="VM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.virtual_machine;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="560" y="340" width="140" height="60" as="geometry"/></mxCell>
+<mxCell id="e0" value="HTTP/HTTPS (L7)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n1" target="n2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e1" value="TCP (L4)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n1" target="n3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n3" target="n4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n3" target="n5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+          </root>
+        </mxGraphModel>
+      </diagram>
+    </mxfile>

@@ -1,0 +1,23 @@
+    <mxfile host="arch-designer-agent">
+      <diagram name="AZ-104 Lab 02a: Subscriptions & RBAC">
+        <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1"
+                      tooltips="1" connect="1" arrows="1" fold="1" page="1"
+                      pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+          <root>
+        <mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="n1" value="Management Group (Root)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="60" y="280" width="160" height="70" as="geometry"/></mxCell>
+<mxCell id="n2" value="Pay-As-You-Go Subscription" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.subscriptions;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="280" y="280" width="170" height="70" as="geometry"/></mxCell>
+<mxCell id="n3" value="Resource Group az104-rg1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.resource_groups;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="520" y="160" width="160" height="70" as="geometry"/></mxCell>
+<mxCell id="n4" value="Owner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="760" y="160" width="130" height="70" as="geometry"/></mxCell>
+<mxCell id="n5" value="Reader" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="760" y="280" width="130" height="70" as="geometry"/></mxCell>
+<mxCell id="n6" value="VM Operator (Custom)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.virtual_machine;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="760" y="400" width="130" height="70" as="geometry"/></mxCell>
+<mxCell id="e0" value="contains" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n1" target="n2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e1" value="resource group" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="assign" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="assign" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="assign" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="n2" target="n6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+          </root>
+        </mxGraphModel>
+      </diagram>
+    </mxfile>

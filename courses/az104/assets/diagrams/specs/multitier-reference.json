@@ -1,0 +1,147 @@
+{
+  "title": "Azure Multi-Tier Reference Architecture (WAF, VMSS, ILB, Storage, Monitoring, Backup)",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Public/Edge Tier",
+      "nodes": [
+        {
+          "id": "appgw",
+          "service": "app_gateway",
+          "label": "App Gateway (WAF)"
+        },
+        {
+          "id": "nsg_dmz",
+          "service": "nsg",
+          "label": "NSG (Public)"
+        }
+      ]
+    },
+    {
+      "label": "Web Tier (Multi-Zone)",
+      "nodes": [
+        {
+          "id": "vmss",
+          "service": "vmss",
+          "label": "VMSS Web Servers"
+        },
+        {
+          "id": "nsg_web",
+          "service": "nsg",
+          "label": "NSG (Web)"
+        }
+      ]
+    },
+    {
+      "label": "App Tier",
+      "nodes": [
+        {
+          "id": "ilb",
+          "service": "load_balancer",
+          "label": "Internal LB"
+        },
+        {
+          "id": "nsg_app",
+          "service": "nsg",
+          "label": "NSG (App)"
+        }
+      ]
+    },
+    {
+      "label": "Data & Platform Services",
+      "nodes": [
+        {
+          "id": "stor",
+          "service": "storage_account",
+          "label": "Storage Account"
+        },
+        {
+          "id": "vault",
+          "service": "recovery_vault",
+          "label": "Recovery Vault"
+        },
+        {
+          "id": "logs",
+          "service": "log_analytics",
+          "label": "Log Analytics"
+        },
+        {
+          "id": "appins",
+          "service": "app_insights",
+          "label": "App Insights"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "users",
+      "service": "internet",
+      "label": "Users / Internet"
+    },
+    {
+      "id": "privep",
+      "service": "private_endpoint",
+      "label": "Private Endpoints"
+    }
+  ],
+  "edges": [
+    {
+      "from": "users",
+      "to": "appgw",
+      "label": "HTTPS"
+    },
+    {
+      "from": "appgw",
+      "to": "nsg_dmz"
+    },
+    {
+      "from": "appgw",
+      "to": "vmss",
+      "label": "Routes to web"
+    },
+    {
+      "from": "vmss",
+      "to": "nsg_web"
+    },
+    {
+      "from": "vmss",
+      "to": "ilb",
+      "label": "Internal traffic"
+    },
+    {
+      "from": "ilb",
+      "to": "nsg_app"
+    },
+    {
+      "from": "ilb",
+      "to": "stor",
+      "label": "Data access"
+    },
+    {
+      "from": "stor",
+      "to": "privep",
+      "label": "Private link"
+    },
+    {
+      "from": "stor",
+      "to": "vault",
+      "label": "Backup"
+    },
+    {
+      "from": "vmss",
+      "to": "logs",
+      "label": "Diagnostics"
+    },
+    {
+      "from": "ilb",
+      "to": "appins",
+      "label": "Telemetry"
+    },
+    {
+      "from": "appins",
+      "to": "logs",
+      "label": "Integration"
+    }
+  ]
+}

@@ -1,0 +1,2641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Fundamentals — Training Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+  <link rel="stylesheet" href="../../src/theme/training.css" />
+  <style>
+    /* Inline path override when served standalone */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root { --course-color: #0078D4; --course-accent: #50E6FF; }
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    
+    <section class="title-slide" data-background-gradient="radial-gradient(ellipse at top, #0F1E3A 0%, #0B1120 100%)">
+      <div style="margin-top: 12%">
+        <div class="course-badge">Microsoft Azure · Fundamentals</div>
+        <h1>Azure Fundamentals</h1>
+        <p class="subtitle">Learn cloud computing fundamentals and Azure services in preparation for the Microsoft Azure Fundamentals (AZ-900) certification. This course covers cloud concepts, Azure architecture and services, and Azure management and governance.</p>
+        <p class="subtitle" style="margin-top:0.3em;font-size:0.8em;color:#475569">
+          3 modules · ~4 hours · AZ-900
+        </p>
+        <div style="margin-top:2em;display:flex;gap:2em;font-size:0.45em;color:#475569">
+          <span>📋 Structured curriculum</span>
+          <span>📊 Interactive diagrams</span>
+          <span>✅ Knowledge checks</span>
+          <span>🗒️ Speaker notes</span>
+        </div>
+      </div>
+      <aside class="notes">Welcome everyone. This presentation covers Azure Fundamentals. We have 3 modules to get through. Encourage questions throughout.</aside>
+    </section>
+
+<section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">Module 01</div>
+  <h1>Cloud Concepts</h1>
+  <p>Describe cloud computing, its benefits, and the cloud service and deployment models.</p>
+  <ul class="objectives">
+    <li>Understand cloud computing fundamentals and key characteristics</li>
+    <li>Explain the business benefits of cloud adoption</li>
+    <li>Distinguish between cloud service models (IaaS, PaaS, SaaS, FaaS)</li>
+    <li>Compare cloud deployment models and the shared responsibility model</li>
+  </ul>
+  <aside class="notes">Introduce Module 01: Cloud Concepts. Set expectations for the lessons ahead and why this domain matters for the exam.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Lesson 01 · Cloud Computing &amp; Benefits</h2>
+  <ul class="objectives">
+    <li>Define cloud computing and its five core NIST characteristics</li>
+    <li>Explain the key business benefits that drive cloud adoption</li>
+    <li>Understand how fault tolerance and distributed infrastructure deliver reliability</li>
+  </ul>
+  <aside class="notes">Welcome to Lesson 1. This lesson lays the conceptual foundation for the entire course — almost every AZ-900 exam question ties back to one of the characteristics or benefits covered here. Encourage attendees to connect each concept to a pain point they've experienced on-premises.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>What is Cloud Computing?</h2>
+  <p>The on-demand delivery of compute, storage, and networking over the internet — with pay-as-you-go pricing and no upfront capital investment in hardware.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🖥️</div>
+      <h4>Compute</h4>
+      <p>Virtual machines, containers, and serverless functions — provisioned in seconds</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💾</div>
+      <h4>Storage</h4>
+      <p>Blob, file, queue, and disk storage — petabyte-scale, globally durable</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>Networking</h4>
+      <p>Virtual networks, load balancers, and CDN — configurable via API or portal</p>
+    </div>
+  </div>
+  <aside class="notes">Emphasise that cloud computing is not simply "someone else's server." The key differentiator is on-demand self-service and the elasticity that follows. Azure provides all three resource pillars — compute, storage, and networking — as metered services accessible over the internet.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>The Five Core Characteristics</h2>
+  <p style="font-size:0.6em;color:#94A3B8;margin-bottom:0.6em">Defined by NIST — these are the properties that distinguish cloud from traditional hosting.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🙋</div>
+      <h4>On-demand self-service</h4>
+      <p>Provision compute unilaterally, without human interaction from the provider</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📡</div>
+      <h4>Broad network access</h4>
+      <p>Resources available over the internet via standard mechanisms from any device</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🏊</div>
+      <h4>Resource pooling</h4>
+      <p>Multi-tenant model — physical resources shared, logically isolated per customer</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📐</div>
+      <h4>Rapid elasticity</h4>
+      <p>Scale out or in automatically — to the consumer, capacity appears unlimited</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📊</div>
+      <h4>Measured service</h4>
+      <p>Usage is metered, monitored, and reported — you pay only for what you consume</p>
+    </div>
+  </div>
+  <aside class="notes">These five NIST characteristics are occasionally tested directly on AZ-900. The most commonly confused pair is rapid elasticity (automatic scaling) versus on-demand self-service (self-provisioning without calling the provider). Walk through a concrete example: spinning up an Azure VM from the portal with no call to Microsoft illustrates both characteristics at once.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Business Benefits of Cloud Adoption</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.65em;margin-bottom:0.5em">Availability &amp; Reliability</h4>
+      <ul style="font-size:0.62em">
+        <li><strong>High availability</strong> — SLA-backed uptime (Azure VMs: up to 99.99% with Availability Zones)</li>
+        <li><strong>Fault tolerance</strong> — redundant components absorb failures with no user impact</li>
+        <li><strong>Disaster recovery</strong> — geo-replicated backups and failover across Azure regions</li>
+        <li><strong>Geo-distribution</strong> — deploy close to users in 60+ regions worldwide</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.65em;margin-bottom:0.5em">Speed &amp; Scale</h4>
+      <ul style="font-size:0.62em">
+        <li><strong>Scalability</strong> — add capacity vertically (bigger VM) or horizontally (more instances)</li>
+        <li><strong>Elasticity</strong> — scale out during peaks, scale in during off-hours automatically</li>
+        <li><strong>Agility</strong> — deploy new apps in minutes; experiment and iterate rapidly</li>
+        <li><strong>CapEx → OpEx</strong> — replace upfront hardware spend with predictable monthly billing</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: <strong>scalability</strong> = planned growth; <strong>elasticity</strong> = automatic scaling in response to real-time demand. The AZ-900 exam distinguishes these terms.</div>
+  <aside class="notes">The exam frequently presents scenarios that ask you to identify which benefit applies. Fault tolerance and high availability are often confused — HA means the system stays up; fault tolerance means it stays up even when components fail. Disaster recovery is a separate concept covering recovery from a regional outage, not just a failed component.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Fault Tolerance &amp; Distributed Infrastructure</h2>
+  <p style="font-size:0.62em;margin-bottom:0.7em">Azure distributes workloads across redundant physical infrastructure to eliminate single points of failure at every layer.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🏢</div>
+      <h4>Availability Zones</h4>
+      <p>Physically separate datacenters within one region — independent power, cooling, and networking</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌍</div>
+      <h4>Region Pairs</h4>
+      <p>Every Azure region is paired with another ≥300 miles away — updates are staggered, data stays in-country</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔁</div>
+      <h4>Replication</h4>
+      <p>Azure Storage replicates data 3× within a zone and optionally across zones or regions (LRS → ZRS → GRS)</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: deploying a VM across two Availability Zones raises its SLA from 99.9% (single VM with Premium SSD) to <strong>99.99%</strong> — a common exam scenario.</div>
+  <aside class="notes">Walk through the failure domain concept: a rack power failure inside one AZ does not affect the other AZs. Region pairs are key for compliance and disaster recovery — Azure promises to recover at least one region in each pair first during a regional outage. The replication acronyms (LRS, ZRS, GRS, RA-GRS) appear later in Module 2 but introduce them here so attendees have the mental model.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 01 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A retail company runs a shopping website that experiences a tenfold spike in traffic every November during a sale period. For the rest of the year, the site runs at 10% of that peak load. The company wants to minimise infrastructure costs while ensuring the site remains responsive during the spike. Which cloud characteristic most directly addresses this requirement?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> High availability — deploying the site across multiple Availability Zones</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Geo-distribution — hosting the site in multiple Azure regions worldwide</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Elasticity — automatically scaling resources out during the peak and back in afterwards</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Scalability — pre-provisioning a larger VM size to handle the November traffic</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Elasticity is the ability to automatically increase resources in response to real-time demand and release them when demand drops, which directly matches the spike-and-idle pattern and minimises cost.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — High availability improves uptime and fault tolerance but does not automatically adjust resource quantity to match demand or reduce cost during off-peak periods</li>
+        <li><strong>B</strong> — Geo-distribution reduces latency for global users; it does not address cost optimisation for a seasonal traffic pattern</li>
+        <li><strong>D</strong> — Scalability describes planned capacity growth (e.g. moving to a larger VM); it is a manual, pre-provisioned change and would over-spend during the 11 off-peak months</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30–45 seconds to choose before revealing the answer. The key teaching point is the elasticity-versus-scalability distinction — both involve handling more load, but elasticity is automatic and bidirectional while scalability is deliberate and typically one-directional. This distinction appears in multiple AZ-900 exam questions.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Lesson 02 · CapEx, OpEx &amp; the Consumption Model</h2>
+  <ul class="objectives">
+    <li>Contrast CapEx and OpEx financial models and when each applies</li>
+    <li>Explain the consumption-based pay-as-you-go pricing model</li>
+    <li>Calculate and compare TCO and ROI for cloud vs on-premises</li>
+    <li>Describe how cloud reduces capacity forecasting risk</li>
+  </ul>
+  <aside class="notes">This lesson is highly exam-relevant — CapEx vs OpEx appears in nearly every AZ-900 sitting. Ground it in real finance language so attendees can explain the difference to their CFO, not just pass a quiz. Estimated time: 12–15 minutes.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>CapEx vs OpEx</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em">CapEx — Capital Expenditure</h4>
+      <ul style="font-size:0.65em">
+        <li>Large upfront investment in physical hardware</li>
+        <li>Depreciated on the balance sheet over 3–5 years</li>
+        <li>Fixed capacity — you own what you bought</li>
+        <li>You are responsible for maintenance and refresh cycles</li>
+        <li>Requires capital budget approval in advance</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">OpEx — Operational Expenditure</h4>
+      <ul style="font-size:0.65em">
+        <li>Pay for services as you consume them — no upfront cost</li>
+        <li>Deducted as a business expense in the same fiscal year</li>
+        <li>Elastic capacity — scale up or down in minutes</li>
+        <li>Provider owns hardware; you pay for outcomes</li>
+        <li>Comes from operating budget — faster approval cycle</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Cloud computing shifts IT spend from <strong>CapEx</strong> (buy a server) to <strong>OpEx</strong> (pay per hour). Both models can co-exist in hybrid scenarios.</div>
+  <aside class="notes">Use a concrete analogy: buying a car (CapEx) vs. renting one hourly (OpEx). The depreciation point is often misunderstood — CapEx sits on the balance sheet and reduces profit over several years, whereas OpEx hits the P&L immediately. Finance teams often prefer OpEx because it's predictable on a rolling basis and avoids large approval gates.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>The Consumption-Based Model</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">Azure charges only for what you use — compute time, gigabytes stored, data transferred. If you stop a VM, billing stops. There is no charge for reserved but idle capacity.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🔢</div>
+      <h4>Metered usage</h4>
+      <p>Every resource emits usage metrics every second — cost accumulates like a utility meter, not a flat monthly fee</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📉</div>
+      <h4>No idle waste</h4>
+      <p>Deallocate a VM outside business hours and pay only for storage — Azure Example: D2s v5 VM ~$0.096/hr in East US</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔖</div>
+      <h4>Pricing tiers</h4>
+      <p>Pay-as-you-go, Reserved Instances (1- or 3-year), and Spot pricing offer 0%, up to 72%, and up to 90% savings respectively</p>
+    </div>
+  </div>
+  <aside class="notes">Highlight that "consumption-based" is what makes cloud OpEx in practice — the bill directly reflects usage. Mention that Azure Cost Management + Billing lets you set budgets and alerts so teams don't overspend. The pricing tier examples are real East US figures as of 2026 — they give attendees a concrete anchor.</aside>
+</section>
+
+<section>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Total Cost of Ownership (TCO) &amp; ROI</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">On-Premises TCO Includes</h4>
+      <ul style="font-size:0.62em">
+        <li>Hardware purchase and refresh (every 3–5 years)</li>
+        <li>Data centre space, power, and cooling (~40% of hardware cost)</li>
+        <li>Network switches, cabling, and load balancers</li>
+        <li>Staff time: OS patching, firmware, capacity planning</li>
+        <li>Software licences and support contracts</li>
+        <li>Disaster recovery site (often doubles costs)</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Cloud ROI Levers</h4>
+      <ul style="font-size:0.62em">
+        <li>Eliminate data centre capital refresh cycles</li>
+        <li>Reduce ops headcount — automation replaces manual tasks</li>
+        <li>Faster time to market → earlier revenue recognition</li>
+        <li>Right-size continuously — no stranded capacity</li>
+        <li>Azure Hybrid Benefit reuses existing Windows Server licences</li>
+        <li>Use the <strong>Azure TCO Calculator</strong> (free, at azure.microsoft.com/tco) for board-ready estimates</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: The <strong>Azure TCO Calculator</strong> compares on-premises costs with Azure costs. The <strong>Azure Pricing Calculator</strong> estimates Azure-only costs for a proposed architecture.</div>
+  <aside class="notes">Students with on-prem backgrounds are often surprised by the full TCO picture — power and cooling alone can equal 40% of the hardware cost per year. Walk through the TCO Calculator URL live if you have internet access. Stress the distinction between the TCO Calculator (on-prem vs cloud comparison) and the Pricing Calculator (Azure cost estimates) — the exam tests this specifically.</aside>
+</section>
+
+<section>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Capacity Forecasting &amp; Risk Reduction</h2>
+  <p style="font-size:0.64em;margin-bottom:0.7em">On-premises infrastructure forces a binary choice: under-provision (performance risk) or over-provision (wasted spend). Cloud eliminates this dilemma.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">📊</div>
+      <h4>Elastic scaling</h4>
+      <p>Azure Virtual Machine Scale Sets and App Service auto-scale add instances in response to CPU or queue depth — no manual pre-ordering</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>Global reach, on demand</h4>
+      <p>Spin up resources in a new Azure region in minutes for a product launch — no 12-week hardware lead time</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🛡️</div>
+      <h4>Reduced business risk</h4>
+      <p>Pay-as-you-go means a failed experiment costs hours of compute, not a sunk hardware investment of tens of thousands of dollars</p>
+    </div>
+  </div>
+  <aside class="notes">The forecasting story resonates strongly with project managers in the room — they've lived through months-long procurement cycles. Use the example of a retail company predicting Black Friday traffic: on-prem means buying for peak and wasting 11 months of capacity; Azure means scaling to peak and scaling back down within hours. This is one of the most compelling cloud value propositions beyond pure cost.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 02 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A retail company currently owns three on-premises servers that handle its e-commerce website. The servers are utilised at roughly 20% capacity most of the year but reach 95% capacity every November and December. The CFO wants to eliminate unpredictable capital expenditure and reduce idle infrastructure costs. Which cloud financial model and pricing approach best meets these requirements?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Migrate to Azure using 3-year Reserved Instances sized for peak load</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">B</span> Migrate to Azure using pay-as-you-go consumption pricing and auto-scale for seasonal peaks</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">C</span> Lease new on-premises servers under a hardware-as-a-service contract</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Move to Azure and purchase Reserved Instances sized for average (20%) utilisation</div>
+    <div class="quiz-explanation">
+      ✓ <strong>B is correct</strong> — Pay-as-you-go is a consumption-based OpEx model that eliminates upfront capital spend and charges only for resources used; combined with auto-scale, the company pays for peak capacity only during November–December and reduces costs during the remaining 10 months.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — 3-year Reserved Instances sized for peak commit the company to a fixed capacity year-round, preserving the same idle-cost problem as on-premises and introducing upfront financial commitment</li>
+        <li><strong>C</strong> — Hardware-as-a-service is still a fixed-capacity, CapEx-adjacent model; it does not provide elastic scaling or eliminate idle spend during low-demand periods</li>
+        <li><strong>D</strong> — Reservations sized at average utilisation would be insufficient during peak season, causing performance degradation; Reserved Instances also require a 1- or 3-year commitment, reintroducing financial lock-in</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to read the scenario and select an answer before revealing. The key teaching moment is that Reserved Instances are a cost-optimisation tool for predictable, steady-state workloads — not for highly seasonal ones. Emphasise that pay-as-you-go plus auto-scale is the textbook answer when demand is spiky and unpredictable. The CFO's goal of eliminating CapEx is the signal that points directly to the consumption-based OpEx model.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Lesson 03 · Cloud Service Models &amp; Shared Responsibility</h2>
+  <ul class="objectives">
+    <li>Distinguish between IaaS, PaaS, SaaS, and FaaS service models</li>
+    <li>Understand the shared responsibility model for each service type</li>
+    <li>Select the appropriate service model for a given workload</li>
+  </ul>
+  <aside class="notes">This lesson is one of the highest-yield topics on the AZ-900 exam. Nearly every question about which Azure service to pick connects back to understanding these service models and who owns what layer. Encourage attendees to think about their own workloads as you walk through each model.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>IaaS, PaaS, SaaS — The Three Core Models</h2>
+  <p>Cloud services are delivered at different levels of abstraction — the higher the model, the less infrastructure you manage.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🏗️</div>
+      <h4>IaaS</h4>
+      <p>Rent virtualised compute, storage, and networking. You manage the OS and above. <em>Example: Azure VMs</em></p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🧰</div>
+      <h4>PaaS</h4>
+      <p>Deploy apps on a managed platform — OS, runtime, and patching handled by Azure. <em>Example: Azure App Service</em></p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">☁️</div>
+      <h4>SaaS</h4>
+      <p>Use fully managed applications over the internet — no infrastructure or platform ownership. <em>Example: Microsoft 365</em></p>
+    </div>
+  </div>
+  <aside class="notes">The key mental model is a continuum of control vs. convenience. IaaS gives maximum control but maximum responsibility. SaaS gives maximum convenience but least control. PaaS sits in the middle and is the sweet spot for most modern application development. Stress that Azure VM is IaaS, App Service is PaaS, and Microsoft 365 is SaaS — these exact examples appear on the exam.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>FaaS &amp; Serverless — Beyond PaaS</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#0078D4;font-size:0.7em;margin-bottom:0.5em">Function as a Service (FaaS)</h4>
+      <ul style="font-size:0.65em">
+        <li>Run individual functions triggered by events</li>
+        <li>No server provisioning — ever</li>
+        <li>Billed per execution (millisecond granularity)</li>
+        <li>Scale to zero when idle — no idle cost</li>
+        <li>Azure example: <strong>Azure Functions</strong></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Serverless Characteristics</h4>
+      <ul style="font-size:0.65em">
+        <li>Abstraction over ALL infrastructure concerns</li>
+        <li>Event-driven execution model</li>
+        <li>Automatic, instantaneous scaling</li>
+        <li>Consumption-based pricing only</li>
+        <li>Also includes: Azure Logic Apps, Event Grid</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: "Serverless" does not mean no servers exist — it means <em>you</em> don't provision, manage, or pay for idle servers. Azure Functions is the canonical AZ-900 serverless example.</div>
+  <aside class="notes">FaaS is a subset of PaaS but with a fundamentally different billing and scaling model. The exam often presents serverless as a distractor — make sure attendees understand that serverless means event-driven and consumption-billed, not literally server-free. Azure Functions can run on a Consumption plan (true serverless) or a dedicated plan (then it behaves more like PaaS).</aside>
+</section>
+
+<section>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Shared Responsibility Model</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+graph TB
+    subgraph IaaS ["IaaS — e.g. Azure Virtual Machines"]
+        I1["Applications &amp; Data — You"]
+        I2["OS, Runtime &amp; Middleware — You"]
+        I3["Virtualisation, Hardware, Network — Microsoft"]
+    end
+    subgraph PaaS ["PaaS — e.g. Azure App Service"]
+        P1["Applications &amp; Data — You"]
+        P2["OS, Runtime, Middleware — Microsoft"]
+        P3["Virtualisation, Hardware, Network — Microsoft"]
+    end
+    subgraph SaaS ["SaaS — e.g. Microsoft 365"]
+        S1["Data &amp; Access Configuration — You"]
+        S2["Applications, Runtime, OS, Hardware — Microsoft"]
+    end
+    style I1 fill:#0078D4,color:#fff,stroke:none
+    style I2 fill:#0078D4,color:#fff,stroke:none
+    style I3 fill:#065F46,color:#6EE7B7,stroke:none
+    style P1 fill:#0078D4,color:#fff,stroke:none
+    style P2 fill:#065F46,color:#6EE7B7,stroke:none
+    style P3 fill:#065F46,color:#6EE7B7,stroke:none
+    style S1 fill:#0078D4,color:#fff,stroke:none
+    style S2 fill:#065F46,color:#6EE7B7,stroke:none
+    style IaaS fill:#0B1120,stroke:#0078D4,color:#E2E8F0
+    style PaaS fill:#0B1120,stroke:#10B981,color:#E2E8F0
+    style SaaS fill:#0B1120,stroke:#8B5CF6,color:#E2E8F0
+    </div>
+  </div>
+  <div class="callout fragment">🔵 Blue = <strong>Your responsibility</strong> &nbsp;|&nbsp; 🟢 Green = <strong>Microsoft's responsibility</strong></div>
+  <aside class="notes">Walk through each column left to right. The key insight is that as you move from IaaS to SaaS, responsibility shifts from you to Microsoft. In IaaS you own the OS patch cycle — a missed patch is your liability. In SaaS, even the application is Microsoft's problem. Emphasise that data classification and access management are ALWAYS the customer's responsibility regardless of service model — this is a common exam trap.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Choosing the Right Service Model</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#0078D4;font-size:0.7em;margin-bottom:0.5em">Pick IaaS when…</h4>
+      <ul style="font-size:0.62em">
+        <li>You need full OS-level control or custom kernel config</li>
+        <li>Migrating existing on-prem VMs (lift-and-shift)</li>
+        <li>Running software that requires a specific OS version</li>
+        <li>Third-party licensing tied to physical/virtual CPU count</li>
+      </ul>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em;margin-top:0.8em">Pick PaaS when…</h4>
+      <ul style="font-size:0.62em">
+        <li>Building or deploying a web app, API, or mobile backend</li>
+        <li>You want automatic OS patching and scaling</li>
+        <li>Development speed matters more than infrastructure control</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#8B5CF6;font-size:0.7em;margin-bottom:0.5em">Pick SaaS when…</h4>
+      <ul style="font-size:0.62em">
+        <li>You need productivity tools (email, docs, collaboration)</li>
+        <li>No custom development — consume as-is</li>
+        <li>Subscription pricing preferred over build cost</li>
+      </ul>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em;margin-top:0.8em">Pick FaaS/Serverless when…</h4>
+      <ul style="font-size:0.62em">
+        <li>Event-driven, short-lived tasks (seconds or less)</li>
+        <li>Highly variable or unpredictable traffic patterns</li>
+        <li>Pay-per-execution cost model fits the workload</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: "lift-and-shift with minimal changes" → <strong>IaaS</strong>. "deploy code without managing servers" → <strong>PaaS</strong>. "use email and Office apps" → <strong>SaaS</strong>.</div>
+  <aside class="notes">This decision framework is exactly what exam scenario questions test. Coach attendees to look for trigger words: "lift-and-shift" or "migrate existing VMs" signals IaaS; "deploy web application" or "no OS management" signals PaaS; "email, collaboration, productivity" signals SaaS; "event-driven" or "scale to zero" signals FaaS. These keywords appear almost verbatim in real exam questions.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 03 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A retail company has an existing order-processing application running on Windows Server 2019 on-premises. The application relies on a third-party COM component that requires direct OS access. Leadership wants to move it to Azure quickly with minimal code changes. Which service model should you recommend?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="true"><span class="option-key">A</span> IaaS — deploy the application on an Azure Virtual Machine running Windows Server 2019</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> PaaS — deploy the application to Azure App Service on a Windows plan</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">C</span> SaaS — migrate the order data to Microsoft Dynamics 365</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> FaaS — rewrite the order-processing logic as Azure Functions triggered by a queue</div>
+    <div class="quiz-explanation">
+      ✓ <strong>A is correct</strong> — IaaS (Azure VM) provides full OS-level control, supports the existing Windows Server 2019 environment, and enables lift-and-shift migration with minimal code changes. The third-party COM component requires direct OS access, which only IaaS provides.
+      <ul class="quiz-why-wrong">
+        <li><strong>B</strong> — App Service is PaaS and abstracts OS access; COM components requiring direct OS interaction are not supported in the sandboxed App Service environment</li>
+        <li><strong>C</strong> — Dynamics 365 is a SaaS CRM/ERP product; it cannot host or run a custom order-processing application</li>
+        <li><strong>D</strong> — Rewriting as Azure Functions requires significant code changes and architectural redesign, contradicting the "minimal changes" requirement</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30–45 seconds to read the scenario before revealing options. The two key triggers in this scenario are "third-party component requiring direct OS access" and "minimal code changes" — both point unambiguously to IaaS. Reinforce that whenever a question mentions OS-level dependencies or lift-and-shift, IaaS is almost always the answer. Option D is the most tempting distractor for developers — clarify that serverless requires re-architecture, not migration.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Lesson 04 · Cloud Deployment Models</h2>
+  <ul class="objectives">
+    <li>Describe public, private, hybrid, and multi-cloud deployment models</li>
+    <li>Compare trade-offs across cost, control, security, and scalability</li>
+    <li>Identify the right deployment model for organizational needs</li>
+    <li>Recognise how Azure Arc and Azure Stack extend Azure to any environment</li>
+  </ul>
+  <aside class="notes">This lesson maps directly to the AZ-900 exam objective on deployment models — expect 2-3 questions. The key insight is that "cloud" is not a single pattern: organisations choose based on compliance, cost, and existing infrastructure.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Public Cloud</h2>
+  <p>Infrastructure owned and operated by a third-party provider — shared across many customers, delivered over the internet.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">💰</div>
+      <h4>No CapEx</h4>
+      <p>Zero upfront hardware cost — pay only for resources consumed, billed by the second or minute</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📏</div>
+      <h4>Elastic Scale</h4>
+      <p>Spin up global capacity in minutes; release it just as fast — the provider absorbs demand spikes</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🛠️</div>
+      <h4>Managed by Provider</h4>
+      <p>Microsoft maintains physical hardware, networking, and hypervisor — you manage what you deploy</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Public cloud = <strong>no hardware ownership</strong> by the customer. Azure, AWS, and Google Cloud are all public cloud providers.</div>
+  <aside class="notes">Most AZ-900 candidates already interact with public cloud daily. Stress that "public" refers to the ownership model, not that data is publicly readable — access is controlled, but infrastructure is shared. Azure's 60+ regions are all public cloud.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Private &amp; Multi-Cloud</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em">Private Cloud</h4>
+      <ul style="font-size:0.65em">
+        <li>Infrastructure dedicated to <strong>one organisation</strong></li>
+        <li>Hosted on-premises or in a colocation facility</li>
+        <li>Full control over hardware, OS, and policies</li>
+        <li>Higher CapEx — organisation buys and maintains hardware</li>
+        <li>Required when data must never leave your facility</li>
+        <li><strong>Azure Stack HCI / Hub</strong> brings Azure services on-prem</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Multi-Cloud</h4>
+      <ul style="font-size:0.65em">
+        <li>Workloads distributed across <strong>two or more providers</strong></li>
+        <li>Avoids vendor lock-in; use best-of-breed services</li>
+        <li>Increases operational complexity and cost management challenges</li>
+        <li>Common: Azure + AWS or Azure + Google Cloud</li>
+        <li><strong>Azure Arc</strong> manages resources across clouds from one pane</li>
+        <li>Requires unified security and governance strategy</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Private cloud is popular in heavily regulated industries — defence, healthcare, banking. Azure Stack lets those customers run Azure APIs on their own hardware. Multi-cloud is increasingly common in enterprises that acquired companies using different providers.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Hybrid Cloud &amp; Azure Arc</h2>
+  <p>Hybrid cloud <strong>links</strong> on-premises infrastructure with public cloud — workloads can move between environments based on policy, cost, or compliance needs.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🔗</div>
+      <h4>Connected Environments</h4>
+      <p>On-premises datacentre connects to Azure via VPN or ExpressRoute — consistent identity, networking, and policy</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🗂️</div>
+      <h4>Data Sovereignty</h4>
+      <p>Keep sensitive data on-prem while bursting compute-intensive workloads to Azure when demand spikes</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>Azure Arc</h4>
+      <p>Extend Azure management, RBAC, and Policy to on-premises servers, Kubernetes clusters, and other clouds</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: <strong>Azure Arc</strong> = "project Azure management plane outward." It does NOT move workloads — it brings Azure governance to wherever the workload already lives.</div>
+  <aside class="notes">Hybrid is the most common real-world pattern for enterprises mid-migration. Emphasise that hybrid is not a permanent destination — many organisations use it as a stepping stone to full public cloud adoption over 3-5 years. Arc is a hot exam topic.</aside>
+</section>
+
+<section>
+  <h3>Module 01 · Cloud Concepts</h3>
+  <h2>Deployment Model Comparison</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+graph LR
+    subgraph Public ["☁️ Public Cloud"]
+        PubCost["💰 Lowest cost"]
+        PubScale["📏 Unlimited scale"]
+        PubCtrl["🔓 Provider controls hardware"]
+    end
+    subgraph Private ["🏢 Private Cloud"]
+        PriCost["💸 High CapEx"]
+        PriScale["📐 Fixed capacity"]
+        PriCtrl["🔐 Full control"]
+    end
+    subgraph Hybrid ["🔗 Hybrid Cloud"]
+        HybCost["⚖️ Mixed cost model"]
+        HybScale["📈 Burst to public"]
+        HybCtrl["🛡️ Policy-driven placement"]
+    end
+    Public -->|"adds control"| Hybrid
+    Private -->|"adds scale"| Hybrid
+    style Public fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style Private fill:#0F172A,stroke:#F59E0B,color:#E2E8F0
+    style Hybrid fill:#0F172A,stroke:#10B981,color:#E2E8F0
+    style PubCost fill:#0078D4,color:#fff,stroke:none
+    style PubScale fill:#0078D4,color:#fff,stroke:none
+    style PubCtrl fill:#1E293B,color:#94A3B8,stroke:#334155
+    style PriCost fill:#1E293B,color:#94A3B8,stroke:#334155
+    style PriScale fill:#1E293B,color:#94A3B8,stroke:#334155
+    style PriCtrl fill:#78350F,color:#FDE68A,stroke:none
+    style HybCost fill:#1E293B,color:#94A3B8,stroke:#334155
+    style HybScale fill:#065F46,color:#6EE7B7,stroke:none
+    style HybCtrl fill:#065F46,color:#6EE7B7,stroke:none
+    </div>
+  </div>
+  <aside class="notes">Walk through each subgraph column by column — cost, scale, control. The key insight: hybrid sits in the middle because it inherits characteristics from both. No single model wins on all three dimensions simultaneously; the right choice depends on the organisation's priorities.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 04 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A financial services company processes customer transactions on-premises to satisfy a regulatory requirement that all payment data must remain within its own datacentre. During quarter-end reporting, processing demand spikes sharply and the on-premises hardware cannot keep up. The company wants to offload the reporting workload to Azure while keeping transaction data on-premises. Which deployment model best meets these requirements?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Public cloud — migrate all workloads to Azure and enforce data controls using Azure Policy</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Private cloud — expand on-premises hardware capacity to handle peak demand</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Hybrid cloud — keep transaction data on-premises and burst reporting workloads to Azure</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Multi-cloud — split workloads between Azure and AWS to avoid any single provider dependency</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Hybrid cloud is purpose-built for this pattern: sensitive data stays on-premises to meet the regulatory requirement while elastic Azure capacity absorbs the quarter-end spike, avoiding costly on-premises over-provisioning.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — Moving all workloads to public cloud violates the regulatory requirement that payment data must remain in the company's own datacentre; Azure Policy enforces rules within Azure but cannot keep data physically on-premises</li>
+        <li><strong>B</strong> — Expanding on-premises hardware adds significant CapEx and leaves that capacity idle for most of the year; it does not leverage cloud elasticity at all</li>
+        <li><strong>D</strong> — Multi-cloud addresses vendor diversity, not the requirement to keep data on-premises; it also increases operational complexity without solving the core compliance constraint</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30-45 seconds before revealing the answer. Emphasise that the regulatory constraint is the deciding factor — it rules out A immediately. Then distinguish B (pure private, no cloud) from C (hybrid). D is a common distractor because it sounds like a balanced answer, but multi-cloud is about provider diversity, not on-premises data residency.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 01</div>
+  <h1>Create a Free Microsoft Azure Account</h1>
+  <ul class="objectives">
+    <li>🎯 Objective: Set up a free Microsoft Azure account and explore the Azure portal</li>
+    <li>⏱ Estimated time: ~15 minutes</li>
+  </ul>
+  <aside class="notes">Lab 01: Create a Free Microsoft Azure Account. Walk through this live if possible; pause for everyone to catch up before moving on.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 01 · Steps 1–5</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 0">
+    <li>Navigate to azure.microsoft.com/free</li>
+    <li>Sign up with a Microsoft account (or create one if needed)</li>
+    <li>Complete the identity verification process using a credit card</li>
+    <li>Review the free tier benefits: $200 credit for 30 days and 55+ always-free services</li>
+    <li>Explore the Azure portal: Home, All Services, Resource Groups, and Subscriptions sections</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 1 to 5. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 01 · Done</div>
+  <h2>What You Achieved</h2>
+  <ul class="objectives">
+    <li>Set up a free Microsoft Azure account and explore the Azure portal</li>
+  </ul>
+  <aside class="notes">Confirm everyone completed Lab 01 before continuing.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 02</div>
+  <h1>Switch to a Pay-As-You-Go Account</h1>
+  <ul class="objectives">
+    <li>🎯 Objective: Upgrade from the free trial to a Pay-As-You-Go subscription and understand billing</li>
+    <li>⏱ Estimated time: ~12 minutes</li>
+  </ul>
+  <aside class="notes">Lab 02: Switch to a Pay-As-You-Go Account. Walk through this live if possible; pause for everyone to catch up before moving on.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 02 · Steps 1–4</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 0">
+    <li>Navigate to portal.azure.com → Subscriptions → Upgrade</li>
+    <li>Understand the Pay-As-You-Go billing model with no upfront commitment</li>
+    <li>Review the Azure Pricing Calculator to estimate costs before deploying resources</li>
+    <li>Check your current spend and cost forecasts in the portal</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 1 to 4. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 02 · Done</div>
+  <h2>What You Achieved</h2>
+  <ul class="objectives">
+    <li>Upgrade from the free trial to a Pay-As-You-Go subscription and understand billing</li>
+  </ul>
+  <aside class="notes">Confirm everyone completed Lab 02 before continuing.</aside>
+</section>
+<section data-background-color="#080E1C">
+  <h3>Module 01 · Wrap-up</h3>
+  <h2>Key Takeaways</h2>
+  <ul class="objectives">
+    <li>Understand cloud computing fundamentals and key characteristics</li>
+    <li>Explain the business benefits of cloud adoption</li>
+    <li>Distinguish between cloud service models (IaaS, PaaS, SaaS, FaaS)</li>
+    <li>Compare cloud deployment models and the shared responsibility model</li>
+  </ul>
+  <aside class="notes">Recap Module 01. Pause for questions before moving on.</aside>
+</section>
+</section>
+
+<section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">Module 02</div>
+  <h1>Azure Architecture &amp; Services</h1>
+  <p>Describe the core architectural components of Azure and the main service categories.</p>
+  <ul class="objectives">
+    <li>Understand Azure's global infrastructure and regional architecture</li>
+    <li>Describe the Azure management hierarchy and resource organization</li>
+    <li>Compare compute, networking, and storage service options</li>
+    <li>Apply identity and access control principles in Azure</li>
+  </ul>
+  <aside class="notes">Introduce Module 02: Azure Architecture &amp; Services. Set expectations for the lessons ahead and why this domain matters for the exam.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 01</div>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Global Infrastructure</h2>
+  <ul class="objectives">
+    <li>Describe Azure's global infrastructure: geographies, regions, and Availability Zones</li>
+    <li>Explain region pairs and sovereign regions</li>
+    <li>Apply criteria for choosing the right region for a workload</li>
+  </ul>
+  <aside class="notes">This lesson establishes the physical and logical foundation of Azure. Understanding the infrastructure hierarchy is critical for exam questions about availability, compliance, and latency — and for real-world architectural decisions. Expect 3-5 AZ-900 questions that hinge on these concepts.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>The Infrastructure Hierarchy</h2>
+  <p>Azure's global footprint is organised into a four-level hierarchy — each layer adds a scope of isolation, redundancy, or compliance control.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🌍</div>
+      <h4>Geography</h4>
+      <p>A discrete market (e.g. United States, Europe) preserving data residency and compliance boundaries</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🗺️</div>
+      <h4>Region</h4>
+      <p>A set of datacenters deployed within a latency-defined perimeter; 60+ regions across 140+ countries</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🏢</div>
+      <h4>Availability Zone</h4>
+      <p>One or more physically separate datacenters within a region — independent power, cooling, and networking</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🖥️</div>
+      <h4>Datacenter</h4>
+      <p>The physical facility housing servers, storage, and networking hardware that backs every Azure service</p>
+    </div>
+  </div>
+  <aside class="notes">Walk through each tier top-down. Emphasise that a Geography is not a deployment target — it is a compliance boundary. Regions are what you select in the portal. AZs are the unit of fault isolation within a region, and not all regions have AZs yet.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Region Pairs &amp; High Availability</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">What is a Region Pair?</h4>
+      <ul style="font-size:0.65em">
+        <li>Every Azure region is paired with another region in the same Geography, ≥300 miles apart</li>
+        <li>Paired regions receive updates sequentially — never simultaneously</li>
+        <li>If a platform outage affects a region, failover prioritises its pair</li>
+        <li>Some services (e.g. Azure Storage GRS) replicate automatically to the paired region</li>
+        <li>Example pairs: <strong>East US ↔ West US</strong>, <strong>UK South ↔ UK West</strong></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Availability Zones — Key Facts</h4>
+      <ul style="font-size:0.65em">
+        <li>Minimum of 3 AZs per enabled region (e.g. East US, West Europe)</li>
+        <li>Each AZ is isolated — a failure in AZ 1 does not affect AZ 2 or AZ 3</li>
+        <li>Zonal services are pinned to a specific AZ (e.g. a VM in Zone 2)</li>
+        <li>Zone-redundant services spread automatically across all AZs (e.g. Zone-redundant Storage)</li>
+        <li>Inter-AZ latency is typically under 2 ms — transparent to applications</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: AZs protect against <strong>datacenter-level</strong> failures; region pairs protect against <strong>region-wide</strong> failures. These are complementary, not interchangeable.</div>
+  <aside class="notes">Students often confuse AZs with region pairs. Reinforce the distinction: AZs = same city, same day, millisecond latency; region pairs = hundreds of miles apart, disaster recovery. Both are needed for a comprehensive HA strategy. The exam tests which layer to apply for which failure scenario.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Sovereign &amp; Specialised Regions</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em">Sovereign Regions</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Azure Government</strong> — US federal, state, and local government; physically isolated; operated by screened US citizens only</li>
+        <li><strong>Azure China</strong> — operated by 21Vianet under Chinese law; separate Azure account required; some global services unavailable</li>
+        <li>Sovereign regions are <em>not</em> accessible via standard Azure subscriptions</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#A78BFA;font-size:0.7em;margin-bottom:0.5em">Choosing a Region — Key Criteria</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Compliance &amp; data residency:</strong> GDPR, NHS DSP Toolkit, FedRAMP — constrain to specific geographies</li>
+        <li><strong>Service availability:</strong> not every service is available in every region — check the Products by Region page</li>
+        <li><strong>Latency:</strong> deploy close to end users; use Azure Speed Test to measure</li>
+        <li><strong>Pricing:</strong> compute costs vary by region — East US is typically the cheapest; Brazil South is among the most expensive</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: If a question mentions government or regulatory isolation, the answer almost always involves a <strong>sovereign region</strong> — not just any region within the country.</div>
+  <aside class="notes">Sovereign regions come up regularly in scenario-based exam questions. The key distinguisher is physical and logical isolation from the commercial Azure cloud — not just data residency within a geography. Also flag that pricing and service availability are real architectural constraints, not just FYI — they drive many region-selection decisions in production.</aside>
+</section>
+
+<section>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Azure Global Infrastructure — Topology</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+graph TB
+    subgraph Geo ["🌍 Geography: United States"]
+        subgraph EastUS ["Region: East US (paired with West US)"]
+            AZ1["AZ 1\nDatacenter cluster A"] --- AZ2["AZ 2\nDatacenter cluster B"] --- AZ3["AZ 3\nDatacenter cluster C"]
+        end
+        subgraph WestUS ["Region: West US (pair)"]
+            AZ4["AZ 4"] --- AZ5["AZ 5"] --- AZ6["AZ 6"]
+        end
+        EastUS <-->|"Region pair\n≥300 miles apart"| WestUS
+    end
+    User["👤 End User"] -->|"Low latency"| EastUS
+    User -.->|"Failover"| WestUS
+    style Geo fill:#0B1120,stroke:#1E293B,color:#E2E8F0
+    style EastUS fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style WestUS fill:#0F172A,stroke:#334155,color:#94A3B8
+    style AZ1 fill:#0078D4,color:#fff,stroke:none
+    style AZ2 fill:#0078D4,color:#fff,stroke:none
+    style AZ3 fill:#0078D4,color:#fff,stroke:none
+    style AZ4 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style AZ5 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style AZ6 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style User fill:#065F46,color:#6EE7B7,stroke:none
+    </div>
+  </div>
+  <aside class="notes">Walk through the diagram level by level: Geography wraps the entire US market; East US contains three independent AZ clusters; West US is the paired region hundreds of miles away. The dashed arrow from User to West US represents the automatic failover path that region pairs enable. Point out that in a real deployment you would use Traffic Manager or Azure Front Door to route the failover — it is not magic.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 01 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A European e-commerce company stores customer personal data and must comply with GDPR. Their primary users are in Germany, but they also need a disaster-recovery site that automatically receives replicated storage data. The application must tolerate a single-datacenter failure without downtime. Which combination of Azure infrastructure features should you recommend?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Deploy to West Europe only and enable locally redundant storage (LRS)</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Deploy to Azure Government and use geo-redundant storage (GRS) paired with East US</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Deploy to Germany West Central using Availability Zones, with geo-redundant storage (GRS) replicating to the paired region Germany North</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Deploy to North Europe with zone-redundant storage (ZRS) and manually replicate to West Europe via Azure Data Factory</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Germany West Central is within the European Geography, satisfying GDPR data residency. Availability Zones provide datacenter-level fault tolerance. GRS automatically replicates storage to Germany North (its designated region pair) for DR without manual configuration.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — LRS keeps three copies within a single datacenter; it does not survive a datacenter failure and provides no DR replication to a paired region</li>
+        <li><strong>B</strong> — Azure Government is for US government entities only; it cannot be used by a European commercial company and pairing with East US would violate GDPR data residency requirements</li>
+        <li><strong>D</strong> — ZRS protects against datacenter failures within North Europe, but manual replication via Data Factory is not automatic and introduces operational complexity; the scenario calls for automatic DR replication, which GRS provides natively</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to read the scenario and choose. Unpack the answer by connecting each requirement to the infrastructure feature that satisfies it: GDPR → Germany geography; single-datacenter failure → AZs; automatic DR replication → GRS to paired region. Emphasise that option B is a common distractor — sovereign regions are for government clients, not general compliance requirements.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 02</div>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Azure Management Hierarchy &amp; Resource Manager</h2>
+  <ul class="objectives">
+    <li>Understand the Azure management hierarchy from root to individual resources</li>
+    <li>Explain how Azure Resource Manager (ARM) acts as the unified deployment and management layer</li>
+    <li>Use resource groups, tags, and management groups for organisation and governance at scale</li>
+  </ul>
+  <aside class="notes">This lesson maps directly to AZ-900's "describe Azure architecture components" objective. Emphasise that understanding scope and hierarchy is essential for both the exam and real-world governance work — many cost and policy mistakes come from misunderstanding which level a setting applies to.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>The Four-Level Hierarchy</h2>
+  <p>Every Azure resource lives inside a precise four-level container hierarchy — each level inherits policies and permissions from the level above.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🏢</div>
+      <h4>Management Groups</h4>
+      <p>Containers for multiple subscriptions — apply policies and RBAC across your entire organisation</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💳</div>
+      <h4>Subscriptions</h4>
+      <p>Billing boundary and trust boundary for Azure AD — every resource belongs to exactly one subscription</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📁</div>
+      <h4>Resource Groups</h4>
+      <p>Logical containers that hold related resources sharing the same lifecycle — delete the group to delete everything inside</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">⚙️</div>
+      <h4>Resources</h4>
+      <p>Individual Azure services — VMs, storage accounts, databases, and more; always belong to one resource group</p>
+    </div>
+  </div>
+  <aside class="notes">Walk through each level top-to-bottom. A key exam concept is inheritance: a policy applied at the management group level flows down to every subscription, resource group, and resource beneath it. This "assign once, enforce everywhere" pattern is how enterprises manage hundreds of subscriptions consistently.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Subscriptions &amp; Resource Groups in Depth</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Subscriptions</h4>
+      <ul style="font-size:0.65em">
+        <li>Unit of billing — usage rolled up per subscription</li>
+        <li>Separate subscriptions per environment (prod / dev) isolates costs and access</li>
+        <li>Soft limits apply per subscription (e.g. 980 resource groups max)</li>
+        <li>Trusts exactly one Azure AD / Entra ID tenant</li>
+        <li>Can be transferred between tenants or billing accounts</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">Resource Groups</h4>
+      <ul style="font-size:0.65em">
+        <li>Resources share a lifecycle — deploy, update, and delete together</li>
+        <li>Region is the metadata location, not the resource location</li>
+        <li>Resources in a group can span multiple regions</li>
+        <li>RBAC and policies can be scoped to a single resource group</li>
+        <li>A resource can only belong to one resource group at a time</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: a resource group's region stores the <em>metadata</em> about the group — resources inside can still be in any Azure region.</div>
+  <aside class="notes">Candidates often confuse the resource group region with the region of the resources it contains. Stress the lifecycle angle — grouping by lifecycle (not by resource type) is the recommended pattern. For example, put a web app and its database in the same group if they are always deployed and retired together.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Azure Resource Manager (ARM)</h2>
+  <p>ARM is the single control plane for all Azure operations — whether you use the portal, CLI, PowerShell, REST API, or an SDK, every request goes through ARM.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🔐</div>
+      <h4>Consistent Auth</h4>
+      <p>All requests authenticated via Entra ID before reaching any service — no per-service credentials</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📜</div>
+      <h4>Declarative Templates</h4>
+      <p>ARM templates (JSON) and Bicep define desired state — ARM handles ordering and retries automatically</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔁</div>
+      <h4>Idempotent Deployments</h4>
+      <p>Re-running the same template produces the same result — safe for automation and pipelines</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🏷️</div>
+      <h4>Tags &amp; Policies</h4>
+      <p>Apply tags for cost attribution and governance; Azure Policy enforces compliance rules at deployment time</p>
+    </div>
+  </div>
+  <aside class="notes">ARM is the glue that ties the whole hierarchy together. Emphasise the "single control plane" point — it means you get a consistent audit log (Activity Log) regardless of which tool made the change. Bicep is the modern preferred authoring language over raw ARM JSON, but both compile down to the same ARM template format.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Tags, Management Groups &amp; Governance at Scale</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#FBBF24;font-size:0.7em;margin-bottom:0.5em">Tags</h4>
+      <ul style="font-size:0.65em">
+        <li>Name/value pairs attached to any ARM resource or group</li>
+        <li>Up to 50 tags per resource; max 512 chars per name, 256 per value</li>
+        <li>Not inherited by default — Azure Policy can enforce inheritance</li>
+        <li>Used for cost centre reporting, environment labels, owner tracking</li>
+        <li>Example: <code>Environment: Prod</code> · <code>CostCentre: IT-0042</code></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#A78BFA;font-size:0.7em;margin-bottom:0.5em">Management Groups</h4>
+      <ul style="font-size:0.65em">
+        <li>Up to 6 levels of nesting below the root management group</li>
+        <li>Root management group is created automatically for every tenant</li>
+        <li>Policies and RBAC assigned here apply to all child subscriptions</li>
+        <li>Typical hierarchy: Root → Business Unit → Environment → Subscription</li>
+        <li>Supports up to 10,000 management groups per directory</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: tags are NOT inherited from resource groups to resources automatically — a child resource must be tagged separately, or use Azure Policy to propagate them.</div>
+  <aside class="notes">Tags are a high-frequency exam topic because they appear in both the Architecture and Governance domains. The inheritance gotcha — that tags do NOT flow down — surprises many candidates. Management groups are the recommended pattern for enterprise-scale Azure Landing Zones; even knowing this conceptually is sufficient for AZ-900.</aside>
+</section>
+
+<section>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Azure Management Hierarchy</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+graph TB
+    Root["🏛️ Root Management Group"]
+    Root --> MGBU1["Mgmt Group: Corp IT"]
+    Root --> MGBU2["Mgmt Group: Research"]
+    MGBU1 --> SubProd["Subscription: Prod"]
+    MGBU1 --> SubDev["Subscription: Dev"]
+    SubProd --> RG1["Resource Group: rg-web"]
+    SubProd --> RG2["Resource Group: rg-data"]
+    RG1 --> Res1["App Service"]
+    RG1 --> Res2["Application Gateway"]
+    RG2 --> Res3["Azure SQL Database"]
+    RG2 --> Res4["Storage Account"]
+    style Root fill:#0078D4,color:#fff,stroke:none
+    style MGBU1 fill:#0078D4,color:#fff,stroke:none
+    style MGBU2 fill:#0078D4,color:#fff,stroke:none
+    style SubProd fill:#065F46,color:#6EE7B7,stroke:none
+    style SubDev fill:#065F46,color:#6EE7B7,stroke:none
+    style RG1 fill:#78350F,color:#FDE68A,stroke:none
+    style RG2 fill:#78350F,color:#FDE68A,stroke:none
+    style Res1 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Res2 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Res3 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Res4 fill:#1E293B,color:#94A3B8,stroke:#334155
+    </div>
+  </div>
+  <aside class="notes">Walk the diagram top to bottom: the root management group spans the whole tenant, business-unit management groups group related subscriptions, subscriptions contain resource groups, and resource groups hold the actual resources. Policies assigned at any level flow downward — this is the inheritance model the exam tests on. Note the Dev subscription under Corp IT is a sibling to Prod, which is a common pattern for cost and access isolation.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 02 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A large enterprise runs 40 Azure subscriptions split across three business units. The security team needs to enforce a policy that prevents resources from being deployed outside of approved regions across <em>all</em> subscriptions simultaneously. Reconfiguring each subscription individually is not feasible. What is the most efficient approach?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Apply an Azure Policy definition directly to each of the 40 subscriptions one at a time</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Create a resource group in each subscription and assign the policy at resource group scope</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Assign an Azure Policy initiative to the root management group so it applies to all subscriptions automatically</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Add a tag named <code>AllowedRegion</code> to every resource group across all subscriptions</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — assigning a policy or initiative to the root management group cascades enforcement to every subscription, resource group, and resource beneath it, requiring only a single assignment.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — applying to each subscription individually achieves the result but requires 40 separate assignments and creates ongoing maintenance overhead as new subscriptions are added</li>
+        <li><strong>B</strong> — resource group scope only covers resources within that one group; it cannot span subscriptions, and does not address resources in other resource groups</li>
+        <li><strong>D</strong> — tags are metadata for organisation and cost attribution; they do not enforce allowed deployment regions or block non-compliant deployments</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30–40 seconds before revealing the answer. The key reasoning is scope inheritance — the management group is the correct level when enforcement must span multiple subscriptions. The distractor in option A is technically possible but violates the "at scale" requirement in the scenario. Emphasise that this hierarchy + policy inheritance pattern is a core AZ-900 exam topic that also appears in AZ-104 and AZ-305.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 03</div>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Compute Services</h2>
+  <p>Azure offers a spectrum of compute options — from full VM control to serverless functions — each optimised for different workload patterns.</p>
+  <ul class="objectives">
+    <li>Compare Azure compute options: VMs, App Service, Containers, and Functions</li>
+    <li>Understand when to use each service based on workload requirements</li>
+    <li>Evaluate workload characteristics to choose the right compute option</li>
+  </ul>
+  <aside class="notes">This lesson covers one of the most important decision-making areas in Azure and on the AZ-900 exam. Attendees should leave able to map any workload description to the right compute service. Emphasise that the exam loves scenario-based questions like "a team needs to deploy a web app without managing servers — which service?"</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Compute Services</h3>
+  <h2>Virtual Machines &amp; Scale Sets (IaaS)</h2>
+  <p>Azure Virtual Machines give you full control over the OS, runtime, and configuration — the closest cloud equivalent to an on-premises server.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🖥️</div>
+      <h4>Virtual Machines</h4>
+      <p>Choose any OS (Windows or Linux), install custom software, and configure networking. You manage OS patches and updates.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📐</div>
+      <h4>VM Scale Sets</h4>
+      <p>Automatically deploy and manage a fleet of identical VMs. Scales in/out based on demand rules or a schedule — no manual provisioning.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔒</div>
+      <h4>Best for</h4>
+      <p>Lift-and-shift migrations, custom OS requirements, legacy apps, and workloads that need full OS-level access.</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: VMs are IaaS — <em>you</em> are responsible for the OS, middleware, and runtime. Azure manages only the underlying hardware and virtualisation layer.</div>
+  <aside class="notes">Connect VMs to the shared-responsibility model from Lesson 1. With IaaS, the customer owns OS patching, security hardening, and runtime management. VM Scale Sets are the answer whenever the exam mentions "automatically scale identical VMs" or "high availability across multiple instances".</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Compute Services</h3>
+  <h2>App Service &amp; Containers (PaaS)</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Azure App Service</h4>
+      <ul style="font-size:0.65em">
+        <li>Fully managed platform for web apps, REST APIs, and mobile back-ends</li>
+        <li>Supports .NET, Node.js, Python, Java, PHP, Ruby</li>
+        <li>Built-in auto-scaling, load balancing, and CI/CD integration</li>
+        <li>No OS management — Microsoft patches the platform</li>
+        <li>Best for: web apps and APIs where you own the code, not the server</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#A78BFA;font-size:0.7em;margin-bottom:0.5em">Containers on Azure</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>ACI (Azure Container Instances)</strong> — run a single container on demand, pay per second, no cluster to manage</li>
+        <li><strong>AKS (Azure Kubernetes Service)</strong> — fully managed Kubernetes for orchestrating multi-container microservices at scale</li>
+        <li>ACI = simplest and fastest; AKS = complex, production-grade orchestration</li>
+        <li>Both use Docker-compatible images from Azure Container Registry</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: App Service = PaaS for web workloads. ACI = quick, isolated containers. AKS = Kubernetes orchestration at scale. All three remove OS responsibility from you.</div>
+  <aside class="notes">The key distinction between ACI and AKS trips up many candidates. ACI is designed for simple, short-lived, or burst workloads where you just need a container running without any cluster overhead. AKS is for microservices architectures that need service discovery, rolling deployments, and auto-healing across many containers.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Compute Services</h3>
+  <h2>Azure Functions (Serverless)</h2>
+  <p>Azure Functions is an event-driven, serverless compute service — you write code that responds to triggers, and Azure handles everything else.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">⚡</div>
+      <h4>Event-Driven</h4>
+      <p>Triggered by HTTP requests, timers, queue messages, blob uploads, database changes, and 20+ other event sources.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💸</div>
+      <h4>Consumption Billing</h4>
+      <p>Pay only for the time your code runs — billed per execution and per GB-second of memory. No idle cost on the Consumption plan.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔄</div>
+      <h4>Best for</h4>
+      <p>Short-lived tasks, data processing pipelines, scheduled jobs, API back-ends with variable traffic, and glue code between services.</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: "Serverless" means <em>you don't manage infrastructure</em> — not that there are no servers. Azure Functions scales to zero when idle; you pay nothing until an event fires.</div>
+  <aside class="notes">Functions is the highest abstraction level — you only write the function body and declare triggers. Contrast with VMs (manage everything) and App Service (manage app config). The exam often presents a scenario with irregular or spiky traffic and asks which service minimises cost — Azure Functions on the Consumption plan is almost always the answer.</aside>
+</section>
+
+<section>
+  <h3>Module 02 · Compute Services</h3>
+  <h2>Choosing the Right Compute Service</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+flowchart TB
+    Start(["🖥️ New Workload"]) --> Q1{"Need full OS\ncontrol or\ncustom software?"}
+    Q1 -->|Yes| Q2{"Auto-scale\nidentical VMs?"}
+    Q2 -->|Yes| VMSS["VM Scale Sets\n(IaaS · auto-scaling fleet)"]
+    Q2 -->|No| VM["Azure Virtual Machine\n(IaaS · full control)"]
+    Q1 -->|No| Q3{"Containerised\nworkload?"}
+    Q3 -->|Yes| Q4{"Need Kubernetes\norchestration?"}
+    Q4 -->|Yes| AKS["Azure Kubernetes Service\n(AKS · multi-container)"]
+    Q4 -->|No| ACI["Azure Container Instances\n(ACI · single container)"]
+    Q3 -->|No| Q5{"Event-driven or\nirregular traffic?"}
+    Q5 -->|Yes| FUNC["Azure Functions\n(Serverless · pay-per-exec)"]
+    Q5 -->|No| APP["Azure App Service\n(PaaS · web apps & APIs)"]
+    style Start fill:#0078D4,color:#fff,stroke:none
+    style VM fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style VMSS fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style APP fill:#065F46,color:#6EE7B7,stroke:none
+    style ACI fill:#065F46,color:#6EE7B7,stroke:none
+    style AKS fill:#065F46,color:#6EE7B7,stroke:none
+    style FUNC fill:#78350F,color:#FDE68A,stroke:none
+    style Q1 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Q2 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Q3 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Q4 fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Q5 fill:#1E293B,color:#94A3B8,stroke:#334155
+    </div>
+  </div>
+  <aside class="notes">Walk through this decision tree with a real scenario — e.g. "an e-commerce site needs to process order confirmations only when orders arrive." Start at the top: no custom OS → not a container → yes event-driven → Azure Functions. The exam encodes this exact logic in scenario questions, so practice applying the tree out loud.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 03 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A retail company processes customer order images uploaded to Azure Blob Storage. The processing job runs a Python script that resizes and watermarks each image. Traffic peaks unpredictably during flash sales and is near-zero overnight. The team wants to minimise infrastructure management and pay only for actual processing time. Which Azure compute service should they use?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Azure Virtual Machine with a cron job to poll Blob Storage</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Azure App Service running a background worker process</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Azure Functions with a Blob Storage trigger</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Azure Kubernetes Service with a single-container deployment</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Azure Functions with a Blob Storage trigger fires automatically on each upload, scales to zero when idle, and bills only per execution — exactly matching the unpredictable, pay-per-use requirement.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — a VM runs continuously and incurs cost 24/7 even when idle overnight; it also requires OS management, violating the minimal-management requirement</li>
+        <li><strong>B</strong> — App Service is designed for persistent web apps and APIs; a background worker on App Service keeps the plan running and charged even with zero workload</li>
+        <li><strong>D</strong> — AKS is built for complex multi-container microservices orchestration; it introduces significant cluster management overhead and is over-engineered for a single event-driven script</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30–45 seconds to choose before revealing the answer. Emphasise the two keywords that point to Functions: "unpredictably" (variable traffic → scale to zero) and "pay only for actual processing time" (Consumption plan billing). These exact phrases appear in AZ-900 exam distractors — train attendees to spot them.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 04</div>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Networking Services</h2>
+  <ul class="objectives">
+    <li>Describe Virtual Networks, subnets, and connectivity options</li>
+    <li>Explain hybrid connectivity solutions and their use cases</li>
+    <li>Identify the role of DNS, Load Balancer, and CDN in Azure networking</li>
+    <li>Distinguish between public and private endpoints</li>
+  </ul>
+  <aside class="notes">Networking is one of the densest topics on the AZ-900 exam. Learners with an on-premises background will recognise the concepts but need to map them to Azure equivalents. Spend extra time on the hybrid connectivity comparison — VPN Gateway vs ExpressRoute is a favourite exam scenario. Estimated lesson time: 20–25 minutes.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Networking Services</h3>
+  <h2>Virtual Networks &amp; Subnets</h2>
+  <p>An Azure Virtual Network (VNet) is an isolated, private network in Azure — the foundation for all Azure networking. Resources inside a VNet communicate securely by default.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>VNet</h4>
+      <p>Scoped to a single region; defined by an address space (e.g. <code>10.0.0.0/16</code>) using CIDR notation</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔲</div>
+      <h4>Subnet</h4>
+      <p>Subdivides the VNet address space (e.g. <code>10.0.1.0/24</code>); resources in different subnets can communicate within the same VNet</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔗</div>
+      <h4>VNet Peering</h4>
+      <p>Connects two VNets (same or different regions) with low-latency, private traffic — no gateway required</p>
+    </div>
+  </div>
+  <aside class="notes">A VNet is analogous to a VLAN in an on-premises data centre. Emphasise that VNets are free — you pay for the resources inside them, not the network itself. VNet Peering is the preferred way to connect VNets and it works globally across regions.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Networking Services</h3>
+  <h2>Hybrid Connectivity: VPN Gateway vs ExpressRoute</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em">VPN Gateway</h4>
+      <ul style="font-size:0.65em">
+        <li>Encrypted tunnel over the public internet</li>
+        <li>Site-to-site or point-to-site options</li>
+        <li>Up to ~10 Gbps (VpnGw5 SKU)</li>
+        <li>Lower cost; fast to provision (~45 min)</li>
+        <li>Best for: branch offices, remote workers, dev/test</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">ExpressRoute</h4>
+      <ul style="font-size:0.65em">
+        <li>Dedicated private connection — bypasses the internet</li>
+        <li>Up to 100 Gbps bandwidth</li>
+        <li>SLA-backed, consistent latency</li>
+        <li>Higher cost; weeks to provision</li>
+        <li>Best for: regulated industries, large data migrations</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: ExpressRoute does <strong>not</strong> traverse the public internet — it uses a connectivity provider's private circuit. VPN Gateway traffic is encrypted but <em>does</em> traverse the internet.</div>
+  <aside class="notes">This comparison is one of the most tested networking scenarios on AZ-900. The key decision drivers are: compliance (regulated data must stay off the internet → ExpressRoute), cost sensitivity (VPN is cheaper), and bandwidth needs. A company can use both together for ExpressRoute failover.</aside>
+</section>
+
+<section>
+  <h3>Module 02 · Networking Services</h3>
+  <h2>Azure DNS &amp; Load Balancer</h2>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🔍</div>
+      <h4>Azure DNS</h4>
+      <p>Hosts DNS zones using Azure's global anycast network. Supports public zones (internet-facing) and <strong>private DNS zones</strong> (name resolution inside a VNet only)</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">⚖️</div>
+      <h4>Azure Load Balancer</h4>
+      <p>Layer 4 (TCP/UDP) traffic distribution across backend VM instances. <strong>Public</strong> Load Balancer faces the internet; <strong>Internal</strong> Load Balancer stays within a VNet</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🚦</div>
+      <h4>Azure Application Gateway</h4>
+      <p>Layer 7 (HTTP/HTTPS) load balancer with URL-based routing, SSL termination, and a built-in Web Application Firewall (WAF)</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Load Balancer = Layer 4 (IP/port); Application Gateway = Layer 7 (URL path, hostname). The exam often uses this distinction to select the correct service.</div>
+  <aside class="notes">Azure DNS is purely authoritative — it does not resolve external DNS by itself, but it handles resolution for your own zones. Point out that Private DNS Zones are the modern replacement for custom DNS servers inside VNets. Reinforce the Layer 4 vs Layer 7 distinction — it comes up repeatedly across the exam domains.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Networking Services</h3>
+  <h2>CDN, Public vs Private Endpoints</h2>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🌍</div>
+      <h4>Azure CDN</h4>
+      <p>Caches static content at globally distributed Points of Presence (PoPs) — reduces latency and origin load for web apps, media, and software downloads</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>Public Endpoint</h4>
+      <p>A resource (e.g. Storage Account, SQL Database) is reachable via a public IP address over the internet — protected by firewall rules and service tags</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔒</div>
+      <h4>Private Endpoint</h4>
+      <p>Projects a PaaS service into your VNet with a private IP address — traffic never leaves the Microsoft backbone; disables the public endpoint optionally</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Private Endpoints are the recommended approach when PaaS services must not be reachable from the internet — common in regulated or zero-trust architectures.</div>
+  <aside class="notes">CDN is often tested alongside Traffic Manager (global DNS-based routing) — they serve different purposes. Private Endpoints are increasingly important for AZ-900 and will appear more in governance/security scenarios too. Emphasise that a Private Endpoint costs money (around $7/month per endpoint) — this matters for cost questions.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 04 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A financial services company is migrating a core banking application to Azure. Compliance requirements mandate that all traffic between their on-premises data centre and Azure must travel over a dedicated private connection and must never traverse the public internet. The connection must support up to 5 Gbps of sustained throughput. What should you recommend?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Configure a Site-to-Site VPN Gateway using the VpnGw3 SKU</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">B</span> Provision an Azure ExpressRoute circuit through a connectivity provider</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">C</span> Deploy VNet Peering between the on-premises network and the Azure VNet</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Use Azure Application Gateway with a private frontend IP configuration</div>
+    <div class="quiz-explanation">
+      ✓ <strong>B is correct</strong> — ExpressRoute provides a dedicated private connection through a connectivity provider that never traverses the public internet, meets strict compliance requirements, and supports up to 100 Gbps — well above the 5 Gbps requirement.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — A Site-to-Site VPN Gateway encrypts traffic but still routes it over the public internet, violating the compliance mandate</li>
+        <li><strong>C</strong> — VNet Peering connects two Azure VNets; it cannot bridge an on-premises data centre to Azure</li>
+        <li><strong>D</strong> — Application Gateway is a Layer 7 load balancer for HTTP/HTTPS traffic; it does not provide WAN connectivity from on-premises to Azure</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30–45 seconds to choose before revealing the answer. The distractor in option A is compelling because VPN Gateway is technically encrypted — reinforce that "encrypted" and "private" are not the same thing in Azure networking. Option C is designed to catch learners who confuse VNet Peering (cloud-to-cloud) with hybrid connectivity (on-premises-to-cloud).</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Lesson 05 · Storage Services</h2>
+  <ul class="objectives">
+    <li>Describe the five Azure storage account services and their primary use cases</li>
+    <li>Select the correct access tier (Hot, Cool, Cold, Archive) for a given data lifecycle need</li>
+    <li>Choose the right redundancy option (LRS, ZRS, GRS, GZRS) to meet durability and availability requirements</li>
+    <li>Match a real-world workload to the most appropriate Azure storage solution</li>
+  </ul>
+  <aside class="notes">This lesson covers one of the highest-frequency AZ-900 exam topic areas. Students with an on-premises background will relate to blob/file/disk analogues from their existing environments. Emphasise that all five services live under a single "storage account" resource — the account is the billing and security boundary, not the service itself.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Azure Storage Account Services</h2>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🗃️</div>
+      <h4>Blob Storage</h4>
+      <p>Unstructured object data — images, videos, backups, log files. Supports Hot, Cool, Cold, and Archive tiers.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📁</div>
+      <h4>Azure Files</h4>
+      <p>Fully managed SMB/NFS file shares mountable from Windows, Linux, or macOS — drop-in replacement for on-premises file servers.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📨</div>
+      <h4>Queue Storage</h4>
+      <p>Asynchronous message queuing — up to 64 KB per message, millions of messages per queue, decouples app components.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🗄️</div>
+      <h4>Table Storage</h4>
+      <p>NoSQL key-value store for semi-structured data. Fast lookups by partition and row key — ideal for telemetry and metadata.</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💾</div>
+      <h4>Disk Storage</h4>
+      <p>Managed block storage attached to Azure VMs. Options: Ultra, Premium SSD, Standard SSD, Standard HDD.</p>
+    </div>
+  </div>
+  <aside class="notes">Stress that all five services are provisioned within a single storage account resource. The account defines the access keys, networking rules, replication setting, and performance tier (Standard or Premium) that apply to all services inside it. Disk Storage is special — it is not accessed via the storage account API; it attaches directly to a VM as a block device.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Blob Access Tiers</h2>
+  <p style="font-size:0.65em;margin-bottom:0.6em">Blob Storage lets you assign a <strong>lifecycle tier</strong> per object — balancing storage cost against retrieval cost and latency.</p>
+  <div class="two-col">
+    <div>
+      <ul style="font-size:0.62em">
+        <li><strong style="color:#38BDF8">Hot</strong> — Frequently accessed data (daily reads). Highest storage cost, lowest access cost. Default for new accounts.</li>
+        <li><strong style="color:#34D399">Cool</strong> — Infrequently accessed; minimum 30-day retention. Lower storage cost, higher access cost than Hot.</li>
+        <li><strong style="color:#A78BFA">Cold</strong> — Rarely accessed; minimum 90-day retention. Lower cost than Cool; data available within milliseconds.</li>
+        <li><strong style="color:#F87171">Archive</strong> — Long-term retention; minimum 180 days. Lowest storage cost. Data is <em>offline</em> — must rehydrate (up to 15 hours) before reading.</li>
+      </ul>
+    </div>
+    <div>
+      <ul style="font-size:0.62em">
+        <li>Tiers can be set at the <strong>account level</strong> (Hot or Cool) or per-blob (Hot, Cool, Cold, Archive)</li>
+        <li>Archive-tier blobs cannot be read directly — rehydration copies data to Hot or Cool first</li>
+        <li>Lifecycle management policies automate tier transitions (e.g. move to Cool after 30 days, Archive after 90)</li>
+        <li>Early deletion fees apply if a blob is deleted or moved before its minimum retention period</li>
+      </ul>
+      <div class="callout fragment" style="margin-top:0.8em">🎯 Exam tip: Archive tier requires <em>rehydration</em> before data is accessible — it is not immediately readable like the other three tiers.</div>
+    </div>
+  </div>
+  <aside class="notes">The exam frequently tests whether candidates know that Archive-tier blobs must be rehydrated — they are offline and cannot be read in place. Also emphasise that lifecycle policies are the recommended way to automate tier transitions rather than manual per-blob changes. Cold tier was added after Cool and sits between Cool and Archive in cost/latency trade-offs.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Redundancy Options</h2>
+  <p style="font-size:0.63em;margin-bottom:0.6em">All storage accounts replicate data automatically. The option you choose determines <strong>where</strong> copies are stored and your durability SLA.</p>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.65em;margin-bottom:0.4em">Within one region</h4>
+      <ul style="font-size:0.62em">
+        <li><strong>LRS — Locally Redundant Storage</strong><br>3 copies within a single datacenter. Cheapest. No protection against datacenter failure. Durability: 11 nines.</li>
+        <li><strong>ZRS — Zone-Redundant Storage</strong><br>3 copies across 3 Availability Zones in one region. Survives a full zone outage. Durability: 12 nines.</li>
+      </ul>
+      <div class="callout fragment" style="margin-top:0.6em;font-size:0.6em">🎯 Exam tip: ZRS protects against a single AZ failure; LRS does not.</div>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.65em;margin-bottom:0.4em">Across two regions (geo-redundant)</h4>
+      <ul style="font-size:0.62em">
+        <li><strong>GRS — Geo-Redundant Storage</strong><br>LRS in primary region + asynchronous copy to secondary region. Secondary is read-only only after Microsoft initiates a failover. Durability: 16 nines.</li>
+        <li><strong>GZRS — Geo-Zone-Redundant Storage</strong><br>ZRS in primary region + asynchronous copy to secondary region. Maximum durability and availability. Durability: 16 nines.</li>
+      </ul>
+      <div class="callout fragment" style="margin-top:0.6em;font-size:0.6em">🎯 Exam tip: RA-GRS / RA-GZRS variants enable <em>read access</em> to the secondary region at all times — not just after failover.</div>
+    </div>
+  </div>
+  <aside class="notes">The key differentiators are zone vs. region scope and whether read access to the secondary is always available. GZRS is the highest-durability option but also the most expensive — it is appropriate for mission-critical data that must survive both zone and regional failures. Remind students that the secondary region is always paired by Azure — you do not choose it.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 05 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A media company uploads high-resolution video files immediately after production. Each video is accessed heavily for the first 30 days, rarely for the next 60 days, and then must be preserved for 7 years for regulatory compliance with minimal cost. Which combination of Blob Storage access tiers should the company use across this lifecycle?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Hot for 30 days → Cool for 60 days → Cool for 7 years</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">B</span> Hot for 30 days → Cool for 60 days → Archive for 7 years</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">C</span> Hot for 30 days → Archive for 60 days → Archive for 7 years</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Cool for 30 days → Cold for 60 days → GRS for 7 years</div>
+    <div class="quiz-explanation">
+      ✓ <strong>B is correct</strong> — Hot serves frequent early access at the lowest retrieval cost; Cool handles the infrequent mid-life access; Archive delivers the lowest storage cost for long-term regulatory retention where immediate readability is not required.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — Keeping data in Cool for 7 years is significantly more expensive than Archive; Cool is designed for data that is still occasionally accessed, not for rarely-touched compliance archives</li>
+        <li><strong>C</strong> — Moving to Archive after only 30 days means the 60-day period of rare-but-possible access would require a costly and slow rehydration (up to 15 hours) every time a video is retrieved</li>
+        <li><strong>D</strong> — GRS is a replication/redundancy option, not an access tier; it cannot be used to replace an access tier decision, and starting on Cool rather than Hot would increase retrieval costs during the high-demand first 30 days</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to read and choose before revealing. The key reasoning chain: match the access pattern to the tier's cost model, and remember that Archive is the only tier where data is offline. The exam often mixes redundancy and tier terminology as distractors — option D is a classic example of that pattern.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Lesson 06 · Identity, Access &amp; Security</h2>
+  <ul class="objectives">
+    <li>Understand Microsoft Entra ID and how Azure manages identities and tenants</li>
+    <li>Distinguish authentication from authorization and explain MFA and SSO</li>
+    <li>Apply Conditional Access policies and RBAC using the principle of least privilege</li>
+  </ul>
+  <aside class="notes">Identity is the new perimeter in cloud security — this lesson covers every identity and access topic measured on the AZ-900 exam. Expect at least two to three questions directly from this content. Emphasise that Entra ID is not the same as on-premises Active Directory Domain Services, even though the names sound similar.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Microsoft Entra ID — Identity Foundation</h2>
+  <p>Microsoft Entra ID (formerly Azure Active Directory) is Azure's cloud-based identity and access management service — the directory that authenticates every sign-in to Azure, Microsoft 365, and third-party apps.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🏢</div>
+      <h4>Tenant</h4>
+      <p>A dedicated, isolated instance of Entra ID representing one organisation — created automatically when you sign up for Azure</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">👤</div>
+      <h4>Identity</h4>
+      <p>Any object that can be authenticated: users, groups, service principals, and managed identities</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔗</div>
+      <h4>Hybrid Identity</h4>
+      <p>Sync on-premises Active Directory to Entra ID via <strong>Entra Connect</strong> — one identity for cloud and on-prem</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Entra ID is <em>not</em> Azure Active Directory Domain Services (AADDS) — Entra ID is cloud-native and protocol-based (OAuth 2.0, OIDC); AADDS provides legacy Kerberos/LDAP in a managed domain.</div>
+  <aside class="notes">Draw the analogy to on-prem AD but stress the differences: no Group Policy Objects, no domain-join in the traditional sense, and identity is managed via REST APIs. Every Azure subscription trusts exactly one Entra ID tenant. A single tenant can back multiple subscriptions.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Authentication vs Authorization</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Authentication (AuthN) — Who are you?</h4>
+      <ul style="font-size:0.65em">
+        <li>Proves the identity of a user or service</li>
+        <li>Entra ID issues a <strong>token</strong> on successful sign-in</li>
+        <li>Strengthened by <strong>MFA</strong> — requires ≥2 verification factors</li>
+        <li>MFA factors: something you know, have, or are</li>
+        <li><strong>SSO</strong> authenticates once to access many apps</li>
+        <li>Passwordless options: Windows Hello, FIDO2 keys, Authenticator app</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Authorization (AuthZ) — What can you do?</h4>
+      <ul style="font-size:0.65em">
+        <li>Determines what an authenticated identity is permitted to do</li>
+        <li>In Azure, authorization is enforced by <strong>RBAC</strong></li>
+        <li>Permissions granted via <em>role assignments</em>, not passwords</li>
+        <li>Always happens <em>after</em> authentication</li>
+        <li>Token claims carry scope and role information</li>
+        <li>Azure RBAC is separate from Entra ID directory roles</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Authentication answers "who are you?" — authorization answers "what are you allowed to do?" The exam tests whether you can tell them apart in scenario questions.</div>
+  <aside class="notes">Use a hotel analogy: showing your ID at check-in is authentication; your key card only opening your room is authorization. Stress that SSO reduces authentication fatigue and attack surface — fewer passwords means fewer credentials to steal.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Conditional Access &amp; Zero Trust</h2>
+  <p style="font-size:0.65em;margin-bottom:0.6em">Conditional Access policies evaluate signals at sign-in time and enforce access decisions — the engine that moves Azure toward a <strong>Zero Trust</strong> security model.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">📍</div>
+      <h4>Signals</h4>
+      <p>User identity, device compliance, location (IP/country), app being accessed, real-time risk score</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">⚙️</div>
+      <h4>Decisions</h4>
+      <p>Allow, block, or require additional verification — e.g. step-up MFA or compliant device</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🛡️</div>
+      <h4>Zero Trust Principles</h4>
+      <p>Verify explicitly · Use least-privilege access · Assume breach — never trust by network location alone</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Conditional Access is an <strong>Entra ID P1/P2</strong> feature — it is not available in the free tier. The AZ-900 exam expects you to recognise this as the tool for policy-driven access control.</div>
+  <aside class="notes">Give a concrete example: a policy that blocks sign-ins from outside the US except when MFA is satisfied. Contrast this with old perimeter-based security where VPN location was enough. Zero Trust assumes the attacker is already inside the network, so every request must be verified regardless of origin.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 02 · Azure Architecture &amp; Services</h3>
+  <h2>Role-Based Access Control (RBAC)</h2>
+  <p style="font-size:0.65em;margin-bottom:0.6em">Azure RBAC controls <em>what</em> authenticated identities can do with Azure resources. A <strong>role assignment</strong> combines a security principal, a role definition, and a scope.</p>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.68em;margin-bottom:0.4em">Built-in Roles (key four)</h4>
+      <ul style="font-size:0.62em">
+        <li><strong>Owner</strong> — full access + manage access</li>
+        <li><strong>Contributor</strong> — create &amp; manage resources, no access management</li>
+        <li><strong>Reader</strong> — view resources only, no changes</li>
+        <li><strong>User Access Administrator</strong> — manage user access only</li>
+      </ul>
+      <h4 style="color:#60A5FA;font-size:0.68em;margin-top:0.8em;margin-bottom:0.4em">Scope Hierarchy</h4>
+      <ul style="font-size:0.62em">
+        <li>Management Group → Subscription → Resource Group → Resource</li>
+        <li>Permissions <strong>inherit downward</strong> — assignment at subscription applies to all its resource groups</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.68em;margin-bottom:0.4em">Principle of Least Privilege</h4>
+      <ul style="font-size:0.62em">
+        <li>Grant only the permissions needed for the task — nothing more</li>
+        <li>Assign at the <strong>narrowest scope</strong> that satisfies the requirement</li>
+        <li>Prefer Reader over Contributor when writes are not needed</li>
+        <li>Use time-bound assignments via <strong>Privileged Identity Management (PIM)</strong> for admin roles</li>
+        <li>Regularly review and remove stale role assignments</li>
+      </ul>
+      <div class="callout fragment" style="margin-top:0.8em;font-size:0.6em">🎯 Exam tip: RBAC is additive — if a user has Reader at subscription scope and Contributor on one resource group, the more-permissive role applies to that resource group.</div>
+    </div>
+  </div>
+  <aside class="notes">Walk through a concrete assignment: assigning Reader to a contractor at resource group scope rather than subscription scope. This is the canonical least-privilege scenario the exam loves. Mention that deny assignments (via Azure Blueprints or Policy) override RBAC allow — a rare but exam-testable fact.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 06 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A development team has hired an external security auditor to review the configuration of resources inside a single Azure subscription. The auditor must be able to view all resources and their settings but must not be able to create, modify, or delete anything. Your organisation follows the principle of least privilege. What should you do?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Assign the Contributor role to the auditor at the subscription scope</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Assign the Owner role to the auditor at the resource group scope</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Assign the Reader role to the auditor at the subscription scope</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Assign the Reader role to the auditor at the management group scope</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Reader at subscription scope grants view-only access to every resource in the subscription with no ability to make changes, satisfying both the auditor's need for full visibility and the least-privilege requirement.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — Contributor allows the auditor to create and modify resources, which violates the read-only requirement</li>
+        <li><strong>B</strong> — Owner grants full control including access management, and is scoped only to one resource group — too permissive and too narrow at the same time</li>
+        <li><strong>D</strong> — Management group scope causes the Reader assignment to inherit down to every subscription under that group, granting broader access than the single subscription required — violating least privilege</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 30 seconds to choose before revealing the answer. Emphasise the two axes the exam always tests: the correct role (Reader vs Contributor vs Owner) and the correct scope (narrowest that satisfies the need). The distractor in option D is subtle — Reader is the right role but the scope is too broad, which is a common exam trap.</aside>
+</section>
+<section data-background-color="#080E1C">
+  <h3>Module 02 · Wrap-up</h3>
+  <h2>Key Takeaways</h2>
+  <ul class="objectives">
+    <li>Understand Azure's global infrastructure and regional architecture</li>
+    <li>Describe the Azure management hierarchy and resource organization</li>
+    <li>Compare compute, networking, and storage service options</li>
+    <li>Apply identity and access control principles in Azure</li>
+  </ul>
+  <aside class="notes">Recap Module 02. Pause for questions before moving on.</aside>
+</section>
+</section>
+
+<section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">Module 03</div>
+  <h1>Azure Management &amp; Governance</h1>
+  <p>Describe cost management, governance and compliance, and the tools for managing and monitoring Azure.</p>
+  <ul class="objectives">
+    <li>Identify factors affecting Azure costs and implement cost optimization strategies</li>
+    <li>Apply governance and compliance policies in Azure</li>
+    <li>Use Azure management and deployment tools effectively</li>
+    <li>Monitor Azure resources and respond to issues</li>
+  </ul>
+  <aside class="notes">Introduce Module 03: Azure Management &amp; Governance. Set expectations for the lessons ahead and why this domain matters for the exam.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 01</div>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Cost Management</h2>
+  <p>Understand what drives Azure costs and how to estimate, monitor, and optimize your cloud spend.</p>
+  <ul class="objectives">
+    <li>Identify the key factors that affect Azure costs</li>
+    <li>Use the Pricing Calculator and TCO Calculator to estimate and compare costs</li>
+    <li>Monitor spend and set budget alerts with Azure Cost Management + Billing</li>
+    <li>Apply cost optimization strategies: right-sizing, reservations, and Azure Hybrid Benefit</li>
+  </ul>
+  <aside class="notes">This lesson maps directly to the Cost Management section of the AZ-900 exam blueprint, which carries roughly 10–15% of exam weight. Encourage learners to think about cost as a first-class concern, not an afterthought. Real-world anecdote: many organizations discover their first Azure bill is higher than expected because they left dev VMs running overnight.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Cost Management</h3>
+  <h2>What Drives Azure Costs?</h2>
+  <p>Four primary factors determine how much you pay on Azure — every resource is affected by at least one.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🗂️</div>
+      <h4>Resource Type</h4>
+      <p>Every service has its own pricing meter — a VM charges per compute hour; Blob Storage charges per GB stored</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🌍</div>
+      <h4>Region</h4>
+      <p>The same VM SKU costs 10–30% more in premium regions (e.g. Brazil South vs East US) due to local infrastructure costs</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📤</div>
+      <h4>Bandwidth (Egress)</h4>
+      <p>Inbound data transfer is free; outbound data leaving Azure to the internet is charged per GB after the first 100 GB/month</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">⚙️</div>
+      <h4>Consumption Model</h4>
+      <p>Pay-as-you-go vs Reserved vs Spot pricing — the same resource can cost up to 90% less depending on your commitment</p>
+    </div>
+  </div>
+  <aside class="notes">Stress that egress costs catch many teams off guard — especially analytics workloads that move large datasets out of Azure. Mention that inter-region data transfer within Azure is also billed (though at lower rates than internet egress). The consumption model point leads naturally into the reservations topic later in this lesson.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Cost Management</h3>
+  <h2>Estimating Costs: The Two Calculators</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">💰 Pricing Calculator</h4>
+      <ul style="font-size:0.65em">
+        <li>Estimate cost of <em>new</em> Azure workloads before you deploy</li>
+        <li>Configure service SKUs, regions, and usage hours interactively</li>
+        <li>Export shareable cost estimates as Excel or JSON</li>
+        <li>URL: <code>azure.com/en-us/pricing/calculator</code></li>
+        <li>🎯 Exam tip: Pricing Calculator is for <strong>cloud-only</strong> estimates</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">🏢 TCO Calculator</h4>
+      <ul style="font-size:0.65em">
+        <li>Compare cost of <em>existing on-premises</em> workloads vs Azure equivalent</li>
+        <li>Inputs: servers, storage, networking, and labour costs</li>
+        <li>Produces a 3-year total cost of ownership report</li>
+        <li>URL: <code>azure.com/en-us/pricing/tco/calculator</code></li>
+        <li>🎯 Exam tip: TCO Calculator is for <strong>cloud migration</strong> business cases</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">Both calculators are free, require no Azure account, and are commonly used to build business cases for cloud adoption.</div>
+  <aside class="notes">The exam regularly asks which calculator to use for a given scenario. The key differentiator: Pricing Calculator = estimating new Azure spend; TCO Calculator = justifying a migration from on-premises. Draw the analogy: Pricing Calc is like configuring a new car; TCO Calc is like comparing the 3-year cost of a new car vs keeping your old one.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Cost Management</h3>
+  <h2>Azure Cost Management + Billing</h2>
+  <p>A built-in portal service for monitoring, allocating, and controlling Azure spend across subscriptions and resource groups.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">📊</div>
+      <h4>Cost Analysis</h4>
+      <p>Visualize spend by subscription, resource group, service, or tag — daily, monthly, or custom range</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔔</div>
+      <h4>Budgets &amp; Alerts</h4>
+      <p>Set a monthly spend threshold; trigger email or action-group alerts at 50%, 75%, and 100% of budget</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💡</div>
+      <h4>Advisor Recommendations</h4>
+      <p>Azure Advisor surfaces right-sizing suggestions for underutilized VMs and idle resources automatically</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🏷️</div>
+      <h4>Cost Allocation with Tags</h4>
+      <p>Tag resources with <code>CostCenter</code>, <code>Project</code>, or <code>Env</code> to slice costs by business unit or team</p>
+    </div>
+  </div>
+  <aside class="notes">Budgets do NOT stop spending when the limit is reached — they only alert. This is a classic exam gotcha. If you need to enforce a hard cap you must use Azure Policy or manual controls. Emphasize that Cost Management is available to all subscription types including free trial and pay-as-you-go.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Cost Management</h3>
+  <h2>Cost Optimization Strategies</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Commitment Discounts</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Reserved Instances (1 or 3 yr):</strong> up to 72% off VMs and SQL — best for steady, predictable workloads</li>
+        <li><strong>Savings Plans (1 or 3 yr):</strong> up to 65% off compute — flexible across VM families and regions</li>
+        <li><strong>Spot VMs:</strong> up to 90% off — use for interruptible batch jobs; Azure can evict with 30-second notice</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">Operational Practices</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Right-sizing:</strong> downscale over-provisioned VMs using Advisor CPU/memory utilization data</li>
+        <li><strong>Azure Hybrid Benefit:</strong> bring existing Windows Server or SQL Server licences to Azure — save up to 85% combined with Reserved Instances</li>
+        <li><strong>Auto-shutdown:</strong> schedule dev/test VMs to shut down outside business hours</li>
+        <li><strong>Lifecycle policies:</strong> automatically tier Blob Storage to Cool or Archive after N days</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Azure Hybrid Benefit applies to <strong>Windows Server</strong> and <strong>SQL Server</strong> licences covered by Software Assurance — not Linux or other Microsoft products.</div>
+  <aside class="notes">Walk through a concrete example: a D4s_v3 VM at ~$280/month pay-as-you-go becomes ~$78/month with a 3-year Reserved Instance + Azure Hybrid Benefit. That 72% saving is a powerful business case talking point. Spot VMs are ideal for rendering farms, Monte Carlo simulations, and large-scale data processing pipelines that can checkpoint and resume.</aside>
+</section>
+
+<section>
+  <h3>Module 03 · Cost Management</h3>
+  <h2>Cost Factors &amp; Optimization Flow</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+flowchart TB
+    Start(["New Azure Workload"]) --> F1
+
+    subgraph Factors ["Cost Factors"]
+        F1["Resource Type\n(SKU / service tier)"]
+        F2["Region\n(geography)"]
+        F3["Bandwidth\n(egress charges)"]
+        F4["Consumption Model\n(pay-as-you-go)"]
+    end
+
+    F1 & F2 & F3 & F4 --> Estimate
+
+    Estimate["Estimate with\nPricing Calculator"] --> Deploy["Deploy &amp; Monitor\nCost Management + Billing"]
+    Deploy --> Review{"Utilization\nReview"}
+
+    Review -->|"Overprovisioned"| RightSize["Right-size\nvia Advisor"]
+    Review -->|"Predictable load"| Reserve["Reserved Instance\nor Savings Plan"]
+    Review -->|"On-prem licence"| Hybrid["Azure Hybrid\nBenefit"]
+    Review -->|"Interruptible"| Spot["Spot VM"]
+
+    RightSize & Reserve & Hybrid & Spot --> Optimized(["Optimized Cost"])
+
+    style Start fill:#0078D4,color:#fff,stroke:none
+    style Optimized fill:#065F46,color:#6EE7B7,stroke:none
+    style Estimate fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style Deploy fill:#0F172A,stroke:#0078D4,color:#E2E8F0
+    style Review fill:#78350F,color:#FDE68A,stroke:none
+    style RightSize fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Reserve fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Hybrid fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Spot fill:#1E293B,color:#94A3B8,stroke:#334155
+    </div>
+  </div>
+  <aside class="notes">Walk through this flow left to right: every workload starts with four cost drivers, gets estimated before deployment, is monitored post-deployment, and then funneled into the right optimization path based on its characteristics. Emphasize that most production workloads benefit from a combination — e.g. right-sizing PLUS Reserved Instances PLUS Hybrid Benefit stacked together for maximum savings.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 01 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A company is migrating 50 Windows Server virtual machines to Azure. The workloads run 24/7 and have stable, predictable resource usage. The company already owns Windows Server licences with active Software Assurance. The operations team wants to minimize the monthly compute bill. Which combination of strategies provides the greatest cost reduction?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Use Spot VMs and enable Azure Hybrid Benefit</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Use pay-as-you-go pricing and right-size using Azure Advisor</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Purchase 3-year Reserved Instances and enable Azure Hybrid Benefit</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Purchase 1-year Reserved Instances and deploy in the cheapest Azure region</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — 3-year Reserved Instances provide up to 72% off pay-as-you-go compute pricing for stable 24/7 workloads, and Azure Hybrid Benefit eliminates the Windows Server licence cost on top of that, stacking both discounts for the maximum possible saving.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — Spot VMs can be evicted by Azure at any time with 30 seconds notice; they are not suitable for always-on production workloads regardless of Hybrid Benefit savings</li>
+        <li><strong>B</strong> — Pay-as-you-go with right-sizing reduces waste but forgoes the commitment discount; for 24/7 predictable loads this leaves 50–72% of potential savings on the table</li>
+        <li><strong>D</strong> — A 1-year reservation gives a smaller discount than a 3-year reservation, and moving workloads solely to the cheapest region may introduce latency, compliance, or data-residency issues without eliminating the Windows Server licence cost</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to select before revealing the answer. The key teaching point is that Azure Hybrid Benefit and Reserved Instances are additive — the exam often tests whether learners know they can be stacked. Also reinforce that Spot VMs are a distractor here because the scenario explicitly states 24/7 workloads, making eviction risk unacceptable.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Lesson 02 · Governance &amp; Compliance</h2>
+  <ul class="objectives">
+    <li>Apply Azure Policy to enforce organisational standards across subscriptions</li>
+    <li>Use resource locks and tags to control and organise resources</li>
+    <li>Understand the Microsoft Cloud Adoption Framework and compliance tooling</li>
+    <li>Navigate Microsoft Purview and the Service Trust Portal</li>
+  </ul>
+  <aside class="notes">This lesson covers the governance and compliance pillar of AZ-900 — a high-value exam area worth roughly 10-15% of questions. Emphasise that governance is about enforcing rules at scale, not managing individual resources manually. Set the scene: imagine a company with 50 teams all deploying to Azure — without policy and locks, sprawl happens fast.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Governance &amp; Compliance</h3>
+  <h2>Azure Policy</h2>
+  <p>Azure Policy evaluates resources against defined rules and enforces organisational standards automatically — at assignment time and on an ongoing basis.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">📋</div>
+      <h4>Policy Definition</h4>
+      <p>A rule written in JSON that describes a condition and an effect (e.g. <em>deny</em> VMs without tags)</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📦</div>
+      <h4>Initiative</h4>
+      <p>A named collection of policy definitions grouped to achieve a single compliance goal (e.g. "Enable Azure Monitor")</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🎯</div>
+      <h4>Assignment</h4>
+      <p>Applies a definition or initiative to a scope: management group, subscription, or resource group</p>
+    </div>
+  </div>
+  <aside class="notes">Walk through the lifecycle: you write (or pick a built-in) definition → bundle into an initiative → assign it to a scope. All resources within that scope are evaluated. Stress that policies can audit silently, deny non-compliant creates, or even auto-remediate existing resources. The exam loves distinguishing definition vs initiative vs assignment.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Governance &amp; Compliance</h3>
+  <h2>Policy Effects &amp; Built-in Definitions</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Policy Effects (in order of strictness)</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Audit</strong> — flags non-compliant resources; no blocking</li>
+        <li><strong>AuditIfNotExists</strong> — audits when a related resource is missing</li>
+        <li><strong>Deny</strong> — blocks the create/update if it violates the rule</li>
+        <li><strong>DeployIfNotExists</strong> — auto-deploys a missing companion resource</li>
+        <li><strong>Modify</strong> — adds, updates, or removes properties/tags on resources</li>
+        <li><strong>Disabled</strong> — definition exists but is not evaluated</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Common Built-in Policies</h4>
+      <ul style="font-size:0.65em">
+        <li>Allowed VM SKUs — restrict to approved sizes</li>
+        <li>Allowed locations — enforce data residency</li>
+        <li>Require a tag on resource groups</li>
+        <li>Enable Microsoft Defender for Servers</li>
+        <li>Audit VMs without managed disks</li>
+        <li>ISO 27001 initiative (105+ policies bundled)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: <strong>Deny</strong> stops non-compliant resources from being created. <strong>Audit</strong> only reports — it never blocks. You can also write <strong>custom</strong> policy definitions in JSON when no built-in fits.</div>
+  <aside class="notes">The distinction between Audit and Deny trips up many candidates. Audit is a great starting point — deploy it first to understand your compliance baseline before switching to Deny. Custom definitions follow the same JSON schema as built-ins; the exam will not ask you to write JSON but may ask when to use custom vs built-in.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Governance &amp; Compliance</h3>
+  <h2>Resource Locks &amp; Tags</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F87171;font-size:0.7em;margin-bottom:0.5em">Resource Locks</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>CanNotDelete</strong> — read and modify allowed; delete is blocked for all users</li>
+        <li><strong>ReadOnly</strong> — equivalent to Reader RBAC for everyone; no modifications or deletes</li>
+        <li>Applied at: management group, subscription, resource group, or individual resource</li>
+        <li>Child resources <strong>inherit</strong> a lock from their parent scope</li>
+        <li>Only the lock <em>owner</em> (or Owner/User Access Admin role) can remove a lock</li>
+        <li>Locks override RBAC — even an Owner cannot delete a CanNotDelete-locked resource without first removing the lock</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">Tags</h4>
+      <ul style="font-size:0.65em">
+        <li>Name/value metadata pairs attached to any Azure resource</li>
+        <li>Max <strong>50 tags</strong> per resource or resource group</li>
+        <li>Tags are <strong>not</strong> inherited by default — child resources don't get parent tags automatically</li>
+        <li>Use cases: cost attribution, environment labels, owner tracking, automation triggers</li>
+        <li>Azure Cost Management can group and filter billing by tag value</li>
+        <li>Apply consistently with Azure Policy <em>Modify</em> effect or <em>Require tag</em> definitions</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Locks and tags serve different purposes — locks are a safety net against accidental deletion or changes; tags are an organisational metadata system. A common exam gotcha: ReadOnly on a storage account prevents listing its keys (because that is treated as a write action). Also reinforce that tags do not flow down by default — you need policy to enforce consistent tagging.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Governance &amp; Compliance</h3>
+  <h2>Microsoft Purview, CAF &amp; Service Trust Portal</h2>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🔍</div>
+      <h4>Microsoft Purview</h4>
+      <p>Unified data governance and compliance management — data discovery, classification, sensitivity labels, and compliance manager across your estate</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🗺️</div>
+      <h4>Cloud Adoption Framework (CAF)</h4>
+      <p>Microsoft's prescriptive guidance for cloud adoption: Strategy → Plan → Ready → Adopt → Govern → Manage — not a product, a methodology</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🛡️</div>
+      <h4>Service Trust Portal</h4>
+      <p>Public portal at <code>servicetrust.microsoft.com</code> — audit reports, compliance guides, pen-test results, ISO/SOC certifications, and GDPR resources</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: <strong>Purview</strong> manages <em>your</em> data compliance posture. The <strong>Service Trust Portal</strong> shows Microsoft's own certifications and audit evidence — use it to satisfy <em>auditors</em> asking how Microsoft is compliant.</div>
+  <aside class="notes">These three often appear as a group on the exam in "which tool should you use" style questions. CAF is guidance/documentation — not a portal or service. Purview has both a free compliance manager (Compliance Score against regulations like GDPR, HIPAA) and paid data-governance features. The Service Trust Portal requires a Microsoft account login but its documents are publicly accessible.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 02 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A financial services company deploys all production infrastructure to a single resource group named <code>rg-prod-core</code>. A compliance audit requires that no one — including subscription Owners — can accidentally delete any resource in that group. The security team also wants any future resource created without a <strong>CostCenter</strong> tag to be automatically blocked. Which two actions should you take?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Assign the Reader RBAC role to all users at the resource group scope</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Apply a ReadOnly lock to <code>rg-prod-core</code> and create an Azure Policy with the Audit effect requiring the CostCenter tag</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Apply a CanNotDelete lock to <code>rg-prod-core</code> and create an Azure Policy with the Deny effect requiring the CostCenter tag</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Apply a CanNotDelete lock to <code>rg-prod-core</code> and use Azure Blueprints to tag existing resources</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — a CanNotDelete lock prevents deletions even by subscription Owners (they must first remove the lock), and a Deny policy blocks resource creation when the required CostCenter tag is absent.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — RBAC Reader restricts permissions but does not prevent Owners or other privileged roles from deleting resources; locks override RBAC, roles do not</li>
+        <li><strong>B</strong> — ReadOnly locks prevent all modifications including creates and updates, which would block legitimate deployments to the group; and Audit only reports missing tags — it does not block the resource from being created</li>
+        <li><strong>D</strong> — CanNotDelete is correct for deletion protection, but Azure Blueprints applies tags to resources at assignment time; it does not continuously block future untagged resources the way a Deny policy does</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to read the scenario before revealing options. The key teaching points: locks override RBAC, Deny blocks future resources while Audit only reports, and CanNotDelete is preferred over ReadOnly when you still need teams to deploy and modify but not delete. Blueprints is a plausible distractor — it can enforce tags at blueprint assignment but is not a continuous enforcement mechanism like policy.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Lesson 03 · Tools for Managing &amp; Deploying</h2>
+  <ul class="objectives">
+    <li>Navigate and use the Azure portal and management tools</li>
+    <li>Leverage Azure CLI and PowerShell for scripted management tasks</li>
+    <li>Understand Infrastructure as Code with ARM templates and Bicep</li>
+    <li>Choose the right management tool for the job</li>
+  </ul>
+  <aside class="notes">This lesson covers every interface Azure offers for managing resources — from the visual portal to CLI scripts to declarative IaC templates. Understanding when to reach for each tool is a common exam topic and a critical real-world skill.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Azure Management Interfaces</h2>
+  <p>Azure provides four primary ways to create and manage resources — each suited to different workflows and skill sets.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">🌐</div>
+      <h4>Azure Portal</h4>
+      <p>Web-based GUI at <code>portal.azure.com</code> — best for one-off tasks, exploration, and visual dashboards</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📱</div>
+      <h4>Azure Mobile App</h4>
+      <p>iOS and Android app — monitor health, run Cloud Shell commands, and respond to alerts on the go</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">💻</div>
+      <h4>Azure CLI</h4>
+      <p>Cross-platform <code>az</code> command set — ideal for Bash scripting, DevOps pipelines, and Linux/macOS workflows</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">⚙️</div>
+      <h4>Azure PowerShell</h4>
+      <p><code>Az</code> module for PowerShell — best for Windows admins and automation scripts already using PowerShell</p>
+    </div>
+  </div>
+  <aside class="notes">The AZ-900 exam tests conceptual knowledge of each tool, not deep command syntax. Emphasise the use-case fit: portal for humans, CLI/PowerShell for scripts, mobile for monitoring. All four tools ultimately call the same Azure Resource Manager REST API under the hood.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Azure Portal &amp; Cloud Shell</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Azure Portal</h4>
+      <ul style="font-size:0.65em">
+        <li>Visual, point-and-click resource management</li>
+        <li>Built-in dashboards and cost charts</li>
+        <li>Search bar finds any service in seconds</li>
+        <li>Wizard-driven resource creation reduces errors</li>
+        <li>No software install — runs in any browser</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">Azure Cloud Shell</h4>
+      <ul style="font-size:0.65em">
+        <li>Browser-based shell — no local install needed</li>
+        <li>Choose Bash (CLI) or PowerShell at launch</li>
+        <li>Authenticated automatically via your portal login</li>
+        <li>Persistent <code>$HOME</code> storage backed by Azure Files</li>
+        <li>Pre-installed: <code>az</code>, <code>kubectl</code>, <code>git</code>, Bicep, and more</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Cloud Shell requires an Azure file share to persist your home directory — a small storage account is created automatically on first use.</div>
+  <aside class="notes">Cloud Shell is the fastest way to run CLI or PowerShell commands without installing anything locally. Point out that the shell is already authenticated — no need to run `az login`. The persistent storage means scripts and files survive browser sessions.</aside>
+</section>
+
+<section>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Azure CLI vs Azure PowerShell</h2>
+  <pre><code class="language-bash"># Azure CLI — create a resource group and a storage account
+az group create --name rg-demo --location eastus
+az storage account create --name stdemoaccount --resource-group rg-demo \
+  --location eastus --sku Standard_LRS</code></pre>
+  <div class="expected-output fragment"><code>{ "provisioningState": "Succeeded", "name": "rg-demo" }</code></div>
+  <pre class="fragment"><code class="language-powershell"># Azure PowerShell — same task with Az module
+New-AzResourceGroup -Name rg-demo -Location eastus
+New-AzStorageAccount -Name stdemoaccount -ResourceGroupName rg-demo `
+  -Location eastus -SkuName Standard_LRS</code></pre>
+  <div class="callout fragment">🎯 Exam tip: CLI uses lowercase <code>az</code> noun-verb syntax; PowerShell uses <code>Verb-AzNoun</code> naming. Both call the same Azure Resource Manager API — the end result is identical.</div>
+  <aside class="notes">Walk through both blocks side-by-side to reinforce the syntax difference. Neither is "better" — the right choice depends on the team's existing skill set and OS environment. Both are available in Cloud Shell so no local setup is needed in the lab.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Infrastructure as Code (IaC)</h2>
+  <p>Declare your desired infrastructure state in a file — Azure provisions it consistently every time. No manual clicks, no configuration drift.</p>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#F59E0B;font-size:0.7em;margin-bottom:0.5em">ARM Templates</h4>
+      <ul style="font-size:0.65em">
+        <li>JSON-based declarative format</li>
+        <li>Native Azure format — full resource coverage</li>
+        <li>Verbose: a simple VM can require 200+ lines</li>
+        <li>Supports linked &amp; nested templates</li>
+        <li>Deployed via portal, CLI, PowerShell, or pipelines</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#10B981;font-size:0.7em;margin-bottom:0.5em">Bicep</h4>
+      <ul style="font-size:0.65em">
+        <li>Azure-native DSL — compiles to ARM JSON</li>
+        <li>Same VM in ~30 lines vs 200+ in JSON</li>
+        <li>Cleaner syntax: no quotation marks on properties</li>
+        <li>Modules, loops, and conditionals built in</li>
+        <li>First-class VS Code extension with intellisense</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Bicep is Microsoft's <strong>recommended</strong> approach for new IaC projects. Both Bicep and ARM templates are <strong>idempotent</strong> — re-deploying the same template produces the same result without duplicate resources.</div>
+  <aside class="notes">The key IaC concept to nail is idempotency — you describe what you want, not how to get there. Bicep is essentially a friendlier skin over ARM; there is no runtime difference. Terraform is another popular IaC tool but is third-party, not covered by AZ-900.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Bicep vs ARM — Side by Side</h2>
+  <pre><code class="language-bash"># Bicep — deploy a storage account (~8 lines)
+param location string = 'eastus'
+
+resource stg 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+  name: 'stdemoaccount'
+  location: location
+  sku: { name: 'Standard_LRS' }
+  kind: 'StorageV2'
+}</code></pre>
+  <div class="callout fragment" style="font-size:0.6em">The equivalent ARM JSON template would require ~60 lines of nested JSON with explicit <code>apiVersion</code>, <code>type</code>, <code>properties</code>, and <code>dependsOn</code> blocks — identical outcome, far more boilerplate.</div>
+  <div class="callout fragment">🎯 Exam tip: <code>az deployment group create --template-file main.bicep</code> deploys a Bicep file directly — the Azure CLI transpiles it to ARM JSON automatically before submission.</div>
+  <aside class="notes">Show the Bicep snippet and ask the group how many lines they'd expect for JSON. The contrast drives home why Bicep is preferred. Remind attendees that Bicep files end in `.bicep` and ARM templates end in `.json` — the exam may use file extensions as distractors.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 03 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A DevOps team needs to provision identical Azure environments — development, staging, and production — across three subscriptions. The team uses Linux build agents and wants to version-control the infrastructure alongside application code. They need the simplest possible syntax with full Azure resource coverage. What should they use to deploy the environments?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Use the Azure portal to manually create each environment and export the resource configuration as a CSV</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">B</span> Write Azure PowerShell scripts stored in a Git repository and run them on the Linux build agents</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">C</span> Author Bicep templates stored in Git and deploy via Azure CLI in the pipeline</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Use ARM JSON templates deployed through the Azure portal's "Deploy a custom template" blade</div>
+    <div class="quiz-explanation">
+      ✓ <strong>C is correct</strong> — Bicep provides simplified, version-controllable IaC with full Azure resource coverage; the Azure CLI runs natively on Linux and integrates cleanly into CI/CD pipelines. Idempotent deployments ensure each environment is identical.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — manual portal clicks are not repeatable or version-controllable, and CSV exports are not deployable templates</li>
+        <li><strong>B</strong> — PowerShell scripts are imperative, not declarative — they don't guarantee idempotency, and the <code>Az</code> module has limited support on Linux compared to the Azure CLI</li>
+        <li><strong>D</strong> — ARM JSON templates would work technically, but Bicep is Microsoft's recommended approach and requires far less boilerplate; deploying via the portal also removes pipeline automation</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give attendees 45 seconds to choose before revealing the answer. Stress the two key decision factors in the scenario: Linux agents (favours CLI over PowerShell) and "simplest syntax with full coverage" (favours Bicep over raw ARM JSON). The exam frequently combines multiple constraints in one stem — train attendees to find the option that satisfies all of them.</aside>
+</section>
+<section class="module-slide" data-background-color="#080E1C">
+  <div class="module-number">LESSON 04</div>
+  <h3>Module 03 · Azure Management &amp; Governance</h3>
+  <h2>Monitoring Tools</h2>
+  <ul class="objectives">
+    <li>Use Azure Monitor to collect metrics, logs, and configure alerts</li>
+    <li>Explain the role of Log Analytics and Application Insights</li>
+    <li>Leverage Azure Advisor for actionable recommendations</li>
+    <li>Monitor service health and plan for upcoming maintenance</li>
+  </ul>
+  <aside class="notes">This lesson ties together the full Azure observability story — from raw metrics to intelligent recommendations. Monitoring is consistently tested on AZ-900, so learners should understand what each tool does and when to use it. We cover five distinct services: Azure Monitor, Log Analytics, Application Insights, Azure Advisor, and Azure Service Health.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Monitoring Tools</h3>
+  <h2>Azure Monitor — The Central Hub</h2>
+  <p>Azure Monitor collects, analyses, and acts on telemetry from your Azure resources, on-premises infrastructure, and applications — all in one place.</p>
+  <div class="cards">
+    <div class="card fragment">
+      <div class="card-icon">📊</div>
+      <h4>Metrics</h4>
+      <p>Numerical time-series data (CPU %, memory, request count) sampled every 60 seconds — stored for 93 days by default</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">📋</div>
+      <h4>Logs</h4>
+      <p>Structured or unstructured event records sent to a Log Analytics workspace and queried with Kusto Query Language (KQL)</p>
+    </div>
+    <div class="card fragment">
+      <div class="card-icon">🔔</div>
+      <h4>Alerts</h4>
+      <p>Notification rules fire when a metric or log condition is met — trigger emails, SMS, webhooks, or auto-remediation runbooks</p>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Azure Monitor is the <strong>umbrella service</strong> — Log Analytics and Application Insights feed data <em>into</em> it; alerts and dashboards consume data <em>from</em> it.</div>
+  <aside class="notes">Stress that Azure Monitor is not a standalone portal tab but a platform that unifies data from every other service. The 93-day metric retention limit is a favourite exam distractor — logs in Log Analytics can be retained much longer (up to 2 years by default, configurable further). KQL syntax questions do not appear on AZ-900, but learners should know KQL is what you use.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Monitoring Tools</h3>
+  <h2>Log Analytics &amp; Application Insights</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Log Analytics Workspace</h4>
+      <ul style="font-size:0.65em">
+        <li>Central store for log data from VMs, containers, network, and security sources</li>
+        <li>Query logs with KQL — filter, aggregate, join across tables</li>
+        <li>Retention: 30 days free; up to 730 days configurable</li>
+        <li>Feeds Azure Sentinel (SIEM) and VM Insights</li>
+        <li>One workspace can serve multiple subscriptions</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#34D399;font-size:0.7em;margin-bottom:0.5em">Application Insights</h4>
+      <ul style="font-size:0.65em">
+        <li>Application Performance Monitoring (APM) for web apps and microservices</li>
+        <li>Tracks request rates, failure rates, dependency calls, and page load times</li>
+        <li>Automatic dependency mapping (Application Map)</li>
+        <li>Smart Detection — AI-powered anomaly alerts with zero configuration</li>
+        <li>Supports .NET, Java, Node.js, Python, and more via SDKs or auto-instrumentation</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Log Analytics = <strong>infrastructure and platform logs</strong>; Application Insights = <strong>application-level telemetry</strong>. Both are features within Azure Monitor.</div>
+  <aside class="notes">A common misconception is that Application Insights is a separate product. Since 2021 it is fully integrated into Azure Monitor as a "workspace-based" resource backed by Log Analytics. For the exam, distinguish the audience: ops teams use Log Analytics for VM and network logs; developers use Application Insights to debug slow transactions and trace exceptions end-to-end.</aside>
+</section>
+
+<section data-auto-animate>
+  <h3>Module 03 · Monitoring Tools</h3>
+  <h2>Azure Advisor &amp; Service Health</h2>
+  <div class="two-col">
+    <div>
+      <h4 style="color:#FBBF24;font-size:0.7em;margin-bottom:0.5em">Azure Advisor</h4>
+      <ul style="font-size:0.65em">
+        <li>Free, personalised cloud consultant — analyses your actual usage and config</li>
+        <li><strong>Cost:</strong> identify idle VMs, right-size over-provisioned resources, switch to reserved instances</li>
+        <li><strong>Security:</strong> surface gaps in Microsoft Defender coverage and RBAC posture</li>
+        <li><strong>Reliability:</strong> add redundancy, enable backups, fix single points of failure</li>
+        <li><strong>Performance:</strong> recommendations for SQL, CDN, and App Service throughput</li>
+        <li><strong>Operational Excellence:</strong> deployment health, monitoring coverage gaps</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#F87171;font-size:0.7em;margin-bottom:0.5em">Azure Service Health</h4>
+      <ul style="font-size:0.65em">
+        <li><strong>Azure Status:</strong> global status page — large-scale incidents affecting all customers</li>
+        <li><strong>Service Health:</strong> personalised view of outages impacting <em>your</em> subscriptions and regions</li>
+        <li><strong>Resource Health:</strong> per-resource availability history — was <em>this VM</em> affected?</li>
+        <li>Planned maintenance alerts and retirement notifications</li>
+        <li>Configure health alerts to notify your team via email or webhook</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout fragment">🎯 Exam tip: Advisor gives <strong>proactive recommendations</strong> on existing resources; Service Health gives <strong>reactive status</strong> during outages and advance notice of planned changes.</div>
+  <aside class="notes">Walk through the five Advisor pillars — the exam expects students to know all five categories and what each one covers. For Service Health, the three-level hierarchy (Azure Status → Service Health → Resource Health) is a common exam question. Emphasise that Service Health alerts require manual configuration — they are not on by default.</aside>
+</section>
+
+<section>
+  <h3>Module 03 · Monitoring Tools</h3>
+  <h2>Azure Monitoring Stack</h2>
+  <div class="diagram-container">
+    <div class="mermaid">
+graph TB
+    Sources["📡 Data Sources\nVMs · Apps · Network · Security"]
+
+    subgraph Monitor ["Azure Monitor"]
+        Metrics["📊 Metrics\n60-sec intervals\n93-day retention"]
+        Logs["📋 Logs\nKQL queryable\nup to 730 days"]
+        Alerts["🔔 Alerts &amp; Actions\nEmail · SMS · Webhook · Runbook"]
+    end
+
+    LA["Log Analytics\nWorkspace\nInfrastructure logs"]
+    AI["Application\nInsights\nAPM + tracing"]
+    Advisor["Azure Advisor\nCost · Security\nReliability · Perf"]
+    SvcHealth["Azure\nService Health\nOutages · Maintenance"]
+
+    Sources -->|"telemetry"| Metrics
+    Sources -->|"events"| Logs
+    Logs -->|"stored in"| LA
+    AI -->|"feeds"| Logs
+    Metrics --> Alerts
+    Logs --> Alerts
+    Monitor -.->|"recommendations"| Advisor
+    Monitor -.->|"status feed"| SvcHealth
+
+    style Sources fill:#1E293B,color:#94A3B8,stroke:#334155
+    style Monitor fill:#0B1120,stroke:#0078D4,color:#E2E8F0
+    style Metrics fill:#0078D4,color:#fff,stroke:none
+    style Logs fill:#0078D4,color:#fff,stroke:none
+    style Alerts fill:#0078D4,color:#fff,stroke:none
+    style LA fill:#065F46,color:#6EE7B7,stroke:none
+    style AI fill:#065F46,color:#6EE7B7,stroke:none
+    style Advisor fill:#78350F,color:#FDE68A,stroke:none
+    style SvcHealth fill:#1E293B,color:#94A3B8,stroke:#334155
+    </div>
+  </div>
+  <aside class="notes">Walk through the diagram left to right: data flows in from all sources into Azure Monitor's two stores — Metrics for numbers, Logs for events. Log Analytics and Application Insights are specialist consumers of the Logs store. Alerts can fire from either store. Advisor and Service Health sit alongside Monitor, complementing it with recommendations and platform status rather than raw telemetry. This overview is often the single most useful thing learners take away from the monitoring module.</aside>
+</section>
+
+<section>
+  <h3>Knowledge Check</h3>
+  <h2>Lesson 04 · Scenario</h2>
+  <p style="font-size:0.65em;margin-bottom:0.8em">A development team is running a multi-tier web application on Azure App Service and Azure SQL Database. The team wants to automatically detect unusual spikes in failed HTTP requests and receive email notifications without writing custom alert queries. Which Azure service should they enable?</p>
+  <div class="quiz-container">
+    <div class="quiz-option" data-correct="false"><span class="option-key">A</span> Azure Monitor Metrics alerts on App Service request count</div>
+    <div class="quiz-option" data-correct="true"><span class="option-key">B</span> Application Insights with Smart Detection enabled</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">C</span> A Log Analytics workspace with a custom KQL alert rule</div>
+    <div class="quiz-option" data-correct="false"><span class="option-key">D</span> Azure Advisor performance recommendations</div>
+    <div class="quiz-explanation">
+      ✓ <strong>B is correct</strong> — Application Insights Smart Detection uses machine learning to automatically identify anomalies (including abnormal failure-rate spikes) and sends email notifications with zero manual query configuration.
+      <ul class="quiz-why-wrong">
+        <li><strong>A</strong> — Metrics alerts can fire on request count but require a manually defined static or dynamic threshold; they do not automatically learn normal patterns or distinguish failures without custom logic</li>
+        <li><strong>C</strong> — A Log Analytics custom KQL rule can detect failure spikes, but it requires the team to write and maintain the query — the scenario explicitly asks for a no-query-writing solution</li>
+        <li><strong>D</strong> — Azure Advisor provides proactive recommendations on configuration and cost but does not monitor live request failure rates or send real-time anomaly alerts</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Give the group 30–40 seconds to decide before revealing the answer. The key discriminator is "without writing custom alert queries" — that phrase points directly to Smart Detection. Use this moment to reinforce why Application Insights exists as an APM tool on top of raw metrics: it understands application semantics and can establish baselines automatically. Highlight that A is tempting but lacks the "automatic anomaly" capability described.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 03</div>
+  <h1>Create a Budget &amp; Cost Alert in the Portal</h1>
+  <ul class="objectives">
+    <li>🎯 Objective: Set up an Azure budget and configure cost alerts to monitor spending</li>
+    <li>⏱ Estimated time: ~12 minutes</li>
+  </ul>
+  <aside class="notes">Lab 03: Create a Budget &amp; Cost Alert in the Portal. Walk through this live if possible; pause for everyone to catch up before moving on.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 03 · Steps 1–5</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 0">
+    <li>Navigate to portal.azure.com → Cost Management + Billing → Budgets</li>
+    <li>Create a new budget by specifying the amount, time period (monthly, quarterly, annual), and reset period</li>
+    <li>Configure alert conditions by setting percentage thresholds (e.g., 50%, 80%, 100% of budget)</li>
+    <li>Add alert recipients by entering email addresses for notifications</li>
+    <li>Review the budget settings and click Create to save the budget</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 1 to 5. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 03 · Steps 6–6</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 5">
+    <li>Verify that the alert appears in your Cost Management dashboard</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 6 to 6. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 03 · Done</div>
+  <h2>What You Achieved</h2>
+  <ul class="objectives">
+    <li>Set up an Azure budget and configure cost alerts to monitor spending</li>
+  </ul>
+  <aside class="notes">Confirm everyone completed Lab 03 before continuing.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 04</div>
+  <h1>Set Up Azure CLI &amp; Visual Studio Code</h1>
+  <ul class="objectives">
+    <li>🎯 Objective: Install and configure the Azure CLI and VS Code for Azure resource management</li>
+    <li>⏱ Estimated time: ~15 minutes</li>
+  </ul>
+  <aside class="notes">Lab 04: Set Up Azure CLI &amp; Visual Studio Code. Walk through this live if possible; pause for everyone to catch up before moving on.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 04 · Steps 1–5</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 0">
+    <li>Install Azure CLI: Windows MSI installer, macOS with 'brew install azure-cli', or Linux curl script</li>
+    <li>Verify installation by running 'az --version' and sign in with 'az login'</li>
+    <li>Run basic commands to explore your subscription: 'az account list' and 'az group list'</li>
+    <li>Install VS Code and search for the following extensions in the VS Code Marketplace: Azure Account, Azure Resources, Bicep, and Azure CLI Tools</li>
+    <li>Sign into your Azure subscription through VS Code's Azure Account extension</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 1 to 5. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206" data-auto-animate>
+  <div class="lab-number">LAB 04 · Steps 6–6</div>
+  <h2>Step-by-step</h2>
+  <ol class="steps" style="counter-reset: step 5">
+    <li>Browse your resources in VS Code's Azure Resources panel to verify connectivity</li>
+  </ol>
+  <aside class="notes">Demonstrate steps 6 to 6. 🔧 Lab tip: keep the Azure portal open alongside the slides.</aside>
+</section>
+<section class="lab-slide" data-background-color="#1A1206">
+  <div class="lab-number">LAB 04 · Done</div>
+  <h2>What You Achieved</h2>
+  <ul class="objectives">
+    <li>Install and configure the Azure CLI and VS Code for Azure resource management</li>
+  </ul>
+  <aside class="notes">Confirm everyone completed Lab 04 before continuing.</aside>
+</section>
+<section data-background-color="#080E1C">
+  <h3>Module 03 · Wrap-up</h3>
+  <h2>Key Takeaways</h2>
+  <ul class="objectives">
+    <li>Identify factors affecting Azure costs and implement cost optimization strategies</li>
+    <li>Apply governance and compliance policies in Azure</li>
+    <li>Use Azure management and deployment tools effectively</li>
+    <li>Monitor Azure resources and respond to issues</li>
+  </ul>
+  <aside class="notes">Recap Module 03. Pause for questions before moving on.</aside>
+</section>
+</section>
+
+  </div>
+</div>
+
+<!-- Back to hub -->
+<a href="../../index.html" style="position:fixed;bottom:16px;left:16px;z-index:999;font-family:Inter,sans-serif;font-size:11px;color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
+
+<!-- Reveal.js -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+
+<!-- Mermaid -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+<script>
+  // Init Mermaid before Reveal so diagrams render
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#080E1C',
+      primaryColor: '#0078D4',
+      primaryTextColor: '#E2E8F0',
+      primaryBorderColor: '#1E293B',
+      lineColor: '#475569',
+      secondaryColor: '#0F172A',
+      tertiaryColor: '#1E293B',
+      fontSize: '14px',
+    },
+    flowchart: { curve: 'basis', htmlLabels: true },
+    sequence: { mirrorActors: false },
+  });
+
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    controls: true,
+    controlsLayout: 'bottom-right',
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [ RevealNotes, RevealHighlight, RevealZoom ],
+    // PDF print layout
+    pdfMaxPagesPerSlide: 1,
+    pdfSeparateFragments: false,
+  });
+
+  // Render ALL Mermaid diagrams at once after Reveal is ready
+  Reveal.on('ready', renderAllMermaid);
+
+  function renderAllMermaid() {
+    document.querySelectorAll('.mermaid:not([data-rendered])').forEach(el => {
+      el.setAttribute('data-rendered', 'true');
+      const code = el.textContent.trim();
+      el.innerHTML = '';
+      mermaid.render('mermaid-' + Math.random().toString(36).slice(2), code)
+        .then(({ svg }) => {
+          el.innerHTML = svg;
+          const svgEl = el.querySelector('svg');
+          if (svgEl) {
+            svgEl.removeAttribute('style');
+            svgEl.setAttribute('width', '100%');
+            svgEl.removeAttribute('height');
+          }
+        })
+        .catch(err => {
+          el.textContent = '';
+          el.style.color = '#EF4444';
+          el.style.fontSize = '0.7em';
+          el.textContent = '⚠ Diagram error: ' + err.message;
+        });
+    });
+  }
+
+  // Quiz interaction
+  document.addEventListener('click', e => {
+    const option = e.target.closest('.quiz-option');
+    if (!option) return;
+    const container = option.closest('.quiz-container');
+    if (!container || container.dataset.answered) return;
+    container.dataset.answered = 'true';
+    const isCorrect = option.dataset.correct === 'true';
+    container.querySelectorAll('.quiz-option').forEach(o => {
+      o.classList.add(o.dataset.correct === 'true' ? 'correct' : 'incorrect');
+    });
+    const exp = container.querySelector('.quiz-explanation');
+    if (exp) exp.classList.add('show');
+  });
+
+  // Copy-to-clipboard buttons on every code block
+  Reveal.on('ready', () => {
+    document.querySelectorAll('.reveal pre').forEach(pre => {
+      const code = pre.querySelector('code');
+      if (!code || pre.querySelector('.code-copy-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'code-copy-btn';
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        const text = code.innerText;
+        const done = () => {
+          btn.textContent = 'Copied ✓';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          done();
+        }
+      });
+      pre.appendChild(btn);
+    });
+  });
+
+  // ── Module exam simulator (timed, scored) ─────────────────────────────────
+  // Markup contract (built by the generator):
+  //   .exam-intro    [data-exam-id]            with .exam-start [data-minutes]
+  //   .exam-question [data-exam-id][data-q]    with .exam-option [data-correct][data-rationale]
+  //   .exam-results  [data-exam-id][data-total][data-pass]  with .exam-score / .exam-review / .exam-retake
+  // All handlers are no-ops when a deck contains no exam markup.
+  const exams = {};
+
+  function examTimerBadge() {
+    let badge = document.querySelector('.exam-timer');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'exam-timer';
+      document.body.appendChild(badge);
+    }
+    return badge;
+  }
+
+  function startExam(examId, minutes) {
+    const exam = exams[examId] = {
+      answers: {},
+      deadline: Date.now() + minutes * 60000,
+      finished: false,
+      timerHandle: null,
+    };
+    const badge = examTimerBadge();
+    badge.style.display = 'block';
+    const tick = () => {
+      const left = exam.deadline - Date.now();
+      if (left <= 0) {
+        badge.textContent = '0:00';
+        jumpToResults(examId);
+        return;
+      }
+      const m = Math.floor(left / 60000);
+      const s = Math.floor((left % 60000) / 1000);
+      badge.textContent = m + ':' + String(s).padStart(2, '0');
+      badge.classList.toggle('warning', left < 60000);
+    };
+    tick();
+    exam.timerHandle = setInterval(tick, 1000);
+    Reveal.next();
+  }
+
+  function jumpToResults(examId) {
+    const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+    if (!results) return;
+    const idx = Reveal.getIndices(results);
+    Reveal.slide(idx.h, idx.v);
+    renderResults(examId);
+  }
+
+  function finishExam(examId) {
+    const exam = exams[examId];
+    if (!exam || exam.finished) return;
+    exam.finished = true;
+    if (exam.timerHandle) clearInterval(exam.timerHandle);
+    const badge = document.querySelector('.exam-timer');
+    if (badge) { badge.style.display = 'none'; badge.classList.remove('warning'); }
+  }
+
+  function renderResults(examId) {
+    const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+    const exam = exams[examId];
+    if (!results || !exam) return;
+    finishExam(examId);
+
+    const questions = Array.from(document.querySelectorAll('.exam-question[data-exam-id="' + examId + '"]'));
+    const total = questions.length || parseInt(results.dataset.total || '0', 10);
+    const pass = parseInt(results.dataset.pass || '70', 10);
+    let correct = 0;
+    const rows = [];
+    questions.forEach(q => {
+      const qNo = q.dataset.q;
+      const options = Array.from(q.querySelectorAll('.exam-option'));
+      const chosen = exam.answers[qNo];
+      const correctOpt = options.find(o => o.dataset.correct === 'true');
+      const chosenOpt = options[chosen];
+      const ok = chosenOpt && chosenOpt.dataset.correct === 'true';
+      if (ok) correct++;
+      const qTitle = (q.querySelector('.exam-stem') || q.querySelector('p') || {}).textContent || ('Question ' + (parseInt(qNo, 10) + 1));
+      rows.push(
+        '<div class="exam-review-row ' + (ok ? 'right' : 'wrong') + '">' +
+        '<span class="mark">' + (ok ? '✓' : '✗') + '</span>' +
+        '<div class="detail">' +
+        '<div class="q">' + 'Q' + (parseInt(qNo, 10) + 1) + ' · ' + qTitle.slice(0, 90) + (qTitle.length > 90 ? '…' : '') + '</div>' +
+        '<div class="a">Your answer: ' + (chosenOpt ? chosenOpt.textContent.trim().slice(0, 80) : '— skipped') +
+        (ok ? '' : ' · Correct: ' + (correctOpt ? correctOpt.textContent.trim().slice(0, 80) : '?')) + '</div>' +
+        (correctOpt && correctOpt.dataset.rationale ? '<div class="r">' + correctOpt.dataset.rationale + '</div>' : '') +
+        '</div></div>'
+      );
+    });
+    const pct = total ? Math.round((correct / total) * 100) : 0;
+    const passed = pct >= pass;
+    const scoreEl = results.querySelector('.exam-score');
+    if (scoreEl) {
+      scoreEl.innerHTML =
+        '<div class="pct ' + (passed ? 'pass' : 'fail') + '">' + pct + '%</div>' +
+        '<div class="verdict">' + correct + ' / ' + total + ' correct — ' +
+        (passed ? 'PASS 🎉' : 'Review needed (target ' + pass + '%)') + '</div>';
+    }
+    const reviewEl = results.querySelector('.exam-review');
+    if (reviewEl) reviewEl.innerHTML = rows.join('');
+    results.dataset.rendered = 'true';
+  }
+
+  document.addEventListener('click', e => {
+    const start = e.target.closest('.exam-start');
+    if (start) {
+      const examId = start.dataset.examId;
+      const minutes = parseFloat(start.dataset.minutes || '10');
+      startExam(examId, minutes);
+      return;
+    }
+    const retake = e.target.closest('.exam-retake');
+    if (retake) {
+      const examId = retake.dataset.examId;
+      delete exams[examId];
+      const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+      if (results) {
+        delete results.dataset.rendered;
+        const scoreEl = results.querySelector('.exam-score');
+        const reviewEl = results.querySelector('.exam-review');
+        if (scoreEl) scoreEl.innerHTML = '';
+        if (reviewEl) reviewEl.innerHTML = '';
+      }
+      document.querySelectorAll('.exam-question[data-exam-id="' + examId + '"] .exam-option.selected')
+        .forEach(o => o.classList.remove('selected'));
+      const intro = document.querySelector('.exam-intro[data-exam-id="' + examId + '"]');
+      if (intro) {
+        const idx = Reveal.getIndices(intro);
+        Reveal.slide(idx.h, idx.v);
+      }
+      return;
+    }
+    const option = e.target.closest('.exam-option');
+    if (option) {
+      const q = option.closest('.exam-question');
+      const exam = exams[q && q.dataset.examId];
+      if (!q || !exam || exam.finished) return;
+      q.querySelectorAll('.exam-option').forEach(o => o.classList.remove('selected'));
+      option.classList.add('selected');
+      exam.answers[q.dataset.q] = Array.from(q.querySelectorAll('.exam-option')).indexOf(option);
+    }
+  });
+
+  Reveal.on('slidechanged', e => {
+    const slide = e.currentSlide;
+    if (slide.classList && slide.classList.contains('exam-results') && !slide.dataset.rendered) {
+      const examId = slide.dataset.examId;
+      if (exams[examId]) renderResults(examId);
+    }
+    // Pause the timer display when navigating away from an unfinished exam? No —
+    // real exams keep counting; the badge stays visible until finished or expired.
+  });
+</script>
+
+</body>
+</html>

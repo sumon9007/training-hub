@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{COURSE_TITLE}} — Training Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+  <link rel="stylesheet" href="../../src/theme/training.css" />
+  <style>
+    /* Inline path override when served standalone */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    {{SLIDES_CONTENT}}
+
+  </div>
+</div>
+
+<!-- Back to hub + user chip -->
+<div style="position:fixed;bottom:16px;left:16px;z-index:999;display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:11px">
+  <a href="../../index.html" style="color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
+  <span id="pres-user" style="display:none;color:#64748b;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+  <a href="/login.html" id="pres-login" style="display:none;color:#60a5fa;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px">Sign in</a>
+</div>
+<script>
+  fetch('/.auth/me').then(r=>r.json()).then(d=>{
+    const p=d.clientPrincipal;
+    if(p){const el=document.getElementById('pres-user');el.textContent=p.userDetails;el.style.display='block';}
+    else{document.getElementById('pres-login').style.display='block';}
+  }).catch(()=>{});
+</script>
+
+<!-- Reveal.js -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+
+<!-- Mermaid -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+<script>
+  // Init Mermaid before Reveal so diagrams render
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#080E1C',
+      primaryColor: '#0078D4',
+      primaryTextColor: '#E2E8F0',
+      primaryBorderColor: '#1E293B',
+      lineColor: '#475569',
+      secondaryColor: '#0F172A',
+      tertiaryColor: '#1E293B',
+      fontSize: '14px',
+    },
+    flowchart: { curve: 'basis', htmlLabels: true },
+    sequence: { mirrorActors: false },
+  });
+
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    controls: true,
+    controlsLayout: 'bottom-right',
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [ RevealNotes, RevealHighlight, RevealZoom ],
+    // PDF print layout
+    pdfMaxPagesPerSlide: 1,
+    pdfSeparateFragments: false,
+  });
+
+  // Render ALL Mermaid diagrams at once after Reveal is ready
+  Reveal.on('ready', renderAllMermaid);
+
+  function renderAllMermaid() {
+    document.querySelectorAll('.mermaid:not([data-rendered])').forEach(el => {
+      el.setAttribute('data-rendered', 'true');
+      const code = el.textContent.trim();
+      el.innerHTML = '';
+      mermaid.render('mermaid-' + Math.random().toString(36).slice(2), code)
+        .then(({ svg }) => {
+          el.innerHTML = svg;
+          const svgEl = el.querySelector('svg');
+          if (svgEl) {
+            svgEl.removeAttribute('style');
+            svgEl.setAttribute('width', '100%');
+            svgEl.removeAttribute('height');
+          }
+        })
+        .catch(err => {
+          el.textContent = '';
+          el.style.color = '#EF4444';
+          el.style.fontSize = '0.7em';
+          el.textContent = '⚠ Diagram error: ' + err.message;
+        });
+    });
+  }
+
+  // Quiz interaction
+  document.addEventListener('click', e => {
+    const option = e.target.closest('.quiz-option');
+    if (!option) return;
+    const container = option.closest('.quiz-container');
+    if (!container || container.dataset.answered) return;
+    container.dataset.answered = 'true';
+    const isCorrect = option.dataset.correct === 'true';
+    container.querySelectorAll('.quiz-option').forEach(o => {
+      o.classList.add(o.dataset.correct === 'true' ? 'correct' : 'incorrect');
+    });
+    const exp = container.querySelector('.quiz-explanation');
+    if (exp) exp.classList.add('show');
+  });
+
+  // Copy-to-clipboard buttons on every code block
+  Reveal.on('ready', () => {
+    document.querySelectorAll('.reveal pre').forEach(pre => {
+      const code = pre.querySelector('code');
+      if (!code || pre.querySelector('.code-copy-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'code-copy-btn';
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        const text = code.innerText;
+        const done = () => {
+          btn.textContent = 'Copied ✓';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          done();
+        }
+      });
+      pre.appendChild(btn);
+    });
+  });
+
+  // ── Module exam simulator (timed, scored) ─────────────────────────────────
+  // Markup contract (built by the generator):
+  //   .exam-intro    [data-exam-id]            with .exam-start [data-minutes]
+  //   .exam-question [data-exam-id][data-q]    with .exam-option [data-correct][data-rationale]
+  //   .exam-results  [data-exam-id][data-total][data-pass]  with .exam-score / .exam-review / .exam-retake
+  // All handlers are no-ops when a deck contains no exam markup.
+  const exams = {};
+
+  function examTimerBadge() {
+    let badge = document.querySelector('.exam-timer');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'exam-timer';
+      document.body.appendChild(badge);
+    }
+    return badge;
+  }
+
+  function startExam(examId, minutes) {
+    const exam = exams[examId] = {
+      answers: {},
+      deadline: Date.now() + minutes * 60000,
+      finished: false,
+      timerHandle: null,
+    };
+    const badge = examTimerBadge();
+    badge.style.display = 'block';
+    const tick = () => {
+      const left = exam.deadline - Date.now();
+      if (left <= 0) {
+        badge.textContent = '0:00';
+        jumpToResults(examId);
+        return;
+      }
+      const m = Math.floor(left / 60000);
+      const s = Math.floor((left % 60000) / 1000);
+      badge.textContent = m + ':' + String(s).padStart(2, '0');
+      badge.classList.toggle('warning', left < 60000);
+    };
+    tick();
+    exam.timerHandle = setInterval(tick, 1000);
+    Reveal.next();
+  }
+
+  function jumpToResults(examId) {
+    const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+    if (!results) return;
+    const idx = Reveal.getIndices(results);
+    Reveal.slide(idx.h, idx.v);
+    renderResults(examId);
+  }
+
+  function finishExam(examId) {
+    const exam = exams[examId];
+    if (!exam || exam.finished) return;
+    exam.finished = true;
+    if (exam.timerHandle) clearInterval(exam.timerHandle);
+    const badge = document.querySelector('.exam-timer');
+    if (badge) { badge.style.display = 'none'; badge.classList.remove('warning'); }
+  }
+
+  function renderResults(examId) {
+    const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+    const exam = exams[examId];
+    if (!results || !exam) return;
+    finishExam(examId);
+
+    const questions = Array.from(document.querySelectorAll('.exam-question[data-exam-id="' + examId + '"]'));
+    const total = questions.length || parseInt(results.dataset.total || '0', 10);
+    const pass = parseInt(results.dataset.pass || '70', 10);
+    let correct = 0;
+    const rows = [];
+    questions.forEach(q => {
+      const qNo = q.dataset.q;
+      const options = Array.from(q.querySelectorAll('.exam-option'));
+      const chosen = exam.answers[qNo];
+      const correctOpt = options.find(o => o.dataset.correct === 'true');
+      const chosenOpt = options[chosen];
+      const ok = chosenOpt && chosenOpt.dataset.correct === 'true';
+      if (ok) correct++;
+      const qTitle = (q.querySelector('.exam-stem') || q.querySelector('p') || {}).textContent || ('Question ' + (parseInt(qNo, 10) + 1));
+      rows.push(
+        '<div class="exam-review-row ' + (ok ? 'right' : 'wrong') + '">' +
+        '<span class="mark">' + (ok ? '✓' : '✗') + '</span>' +
+        '<div class="detail">' +
+        '<div class="q">' + 'Q' + (parseInt(qNo, 10) + 1) + ' · ' + qTitle.slice(0, 90) + (qTitle.length > 90 ? '…' : '') + '</div>' +
+        '<div class="a">Your answer: ' + (chosenOpt ? chosenOpt.textContent.trim().slice(0, 80) : '— skipped') +
+        (ok ? '' : ' · Correct: ' + (correctOpt ? correctOpt.textContent.trim().slice(0, 80) : '?')) + '</div>' +
+        (correctOpt && correctOpt.dataset.rationale ? '<div class="r">' + correctOpt.dataset.rationale + '</div>' : '') +
+        '</div></div>'
+      );
+    });
+    const pct = total ? Math.round((correct / total) * 100) : 0;
+    const passed = pct >= pass;
+    const scoreEl = results.querySelector('.exam-score');
+    if (scoreEl) {
+      scoreEl.innerHTML =
+        '<div class="pct ' + (passed ? 'pass' : 'fail') + '">' + pct + '%</div>' +
+        '<div class="verdict">' + correct + ' / ' + total + ' correct — ' +
+        (passed ? 'PASS 🎉' : 'Review needed (target ' + pass + '%)') + '</div>';
+    }
+    const reviewEl = results.querySelector('.exam-review');
+    if (reviewEl) reviewEl.innerHTML = rows.join('');
+    results.dataset.rendered = 'true';
+  }
+
+  document.addEventListener('click', e => {
+    const start = e.target.closest('.exam-start');
+    if (start) {
+      const examId = start.dataset.examId;
+      const minutes = parseFloat(start.dataset.minutes || '10');
+      startExam(examId, minutes);
+      return;
+    }
+    const retake = e.target.closest('.exam-retake');
+    if (retake) {
+      const examId = retake.dataset.examId;
+      delete exams[examId];
+      const results = document.querySelector('.exam-results[data-exam-id="' + examId + '"]');
+      if (results) {
+        delete results.dataset.rendered;
+        const scoreEl = results.querySelector('.exam-score');
+        const reviewEl = results.querySelector('.exam-review');
+        if (scoreEl) scoreEl.innerHTML = '';
+        if (reviewEl) reviewEl.innerHTML = '';
+      }
+      document.querySelectorAll('.exam-question[data-exam-id="' + examId + '"] .exam-option.selected')
+        .forEach(o => o.classList.remove('selected'));
+      const intro = document.querySelector('.exam-intro[data-exam-id="' + examId + '"]');
+      if (intro) {
+        const idx = Reveal.getIndices(intro);
+        Reveal.slide(idx.h, idx.v);
+      }
+      return;
+    }
+    const option = e.target.closest('.exam-option');
+    if (option) {
+      const q = option.closest('.exam-question');
+      const exam = exams[q && q.dataset.examId];
+      if (!q || !exam || exam.finished) return;
+      q.querySelectorAll('.exam-option').forEach(o => o.classList.remove('selected'));
+      option.classList.add('selected');
+      exam.answers[q.dataset.q] = Array.from(q.querySelectorAll('.exam-option')).indexOf(option);
+    }
+  });
+
+  Reveal.on('slidechanged', e => {
+    const slide = e.currentSlide;
+    if (slide.classList && slide.classList.contains('exam-results') && !slide.dataset.rendered) {
+      const examId = slide.dataset.examId;
+      if (exams[examId]) renderResults(examId);
+    }
+    // Pause the timer display when navigating away from an unfinished exam? No —
+    // real exams keep counting; the badge stays visible until finished or expired.
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+{
+  "title": "Azure Management Hierarchy & Governance",
+  "direction": "TB",
+  "clusters": [
+    {
+      "label": "Management Level",
+      "nodes": [
+        {
+          "id": "mg",
+          "service": "management_group",
+          "label": "Management Group"
+        },
+        {
+          "id": "mgpol",
+          "service": "policy",
+          "label": "Policies"
+        },
+        {
+          "id": "mgrole",
+          "service": "entra_id",
+          "label": "RBAC Roles"
+        }
+      ]
+    },
+    {
+      "label": "Subscription Level",
+      "nodes": [
+        {
+          "id": "sub",
+          "service": "subscription",
+          "label": "Subscription"
+        },
+        {
+          "id": "subpol",
+          "service": "policy",
+          "label": "Inherited Policies"
+        },
+        {
+          "id": "subrole",
+          "service": "entra_id",
+          "label": "Inherited RBAC"
+        }
+      ]
+    },
+    {
+      "label": "Resource Group Level",
+      "nodes": [
+        {
+          "id": "rg",
+          "service": "resource_group",
+          "label": "Resource Group"
+        },
+        {
+          "id": "rgpol",
+          "service": "policy",
+          "label": "Inherited Policies"
+        },
+        {
+          "id": "rgrole",
+          "service": "entra_id",
+          "label": "Inherited RBAC"
+        }
+      ]
+    },
+    {
+      "label": "Resources",
+      "nodes": [
+        {
+          "id": "vm",
+          "service": "vm",
+          "label": "Virtual Machine"
+        },
+        {
+          "id": "sa",
+          "service": "storage_account",
+          "label": "Storage Account"
+        },
+        {
+          "id": "sql",
+          "service": "sql",
+          "label": "SQL Database"
+        }
+      ]
+    }
+  ],
+  "nodes": [],
+  "edges": [
+    {
+      "from": "mg",
+      "to": "sub",
+      "label": "contains"
+    },
+    {
+      "from": "mgpol",
+      "to": "subpol",
+      "label": "inherited"
+    },
+    {
+      "from": "mgrole",
+      "to": "subrole",
+      "label": "inherited"
+    },
+    {
+      "from": "sub",
+      "to": "rg",
+      "label": "contains"
+    },
+    {
+      "from": "subpol",
+      "to": "rgpol",
+      "label": "inherited"
+    },
+    {
+      "from": "subrole",
+      "to": "rgrole",
+      "label": "inherited"
+    },
+    {
+      "from": "rg",
+      "to": "vm",
+      "label": "contains"
+    },
+    {
+      "from": "rg",
+      "to": "sa",
+      "label": "contains"
+    },
+    {
+      "from": "rg",
+      "to": "sql",
+      "label": "contains"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "title": "Multi-Tier Load Balancing Architecture - Azure LB with Public & Internal Load Balancers",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "VNet",
+      "nodes": [
+        {
+          "id": "pub-lb",
+          "service": "load_balancer",
+          "label": "Public Load Balancer"
+        },
+        {
+          "id": "int-lb",
+          "service": "load_balancer",
+          "label": "Internal Load Balancer"
+        }
+      ]
+    },
+    {
+      "label": "Web Tier Subnet",
+      "nodes": [
+        {
+          "id": "web-nsg",
+          "service": "nsg",
+          "label": "Web NSG"
+        },
+        {
+          "id": "web-vm1",
+          "service": "vm",
+          "label": "Web VM 1"
+        },
+        {
+          "id": "web-vm2",
+          "service": "vm",
+          "label": "Web VM 2"
+        }
+      ]
+    },
+    {
+      "label": "App Tier Subnet",
+      "nodes": [
+        {
+          "id": "app-nsg",
+          "service": "nsg",
+          "label": "App NSG"
+        },
+        {
+          "id": "app-vm1",
+          "service": "vm",
+          "label": "App VM 1"
+        },
+        {
+          "id": "app-vm2",
+          "service": "vm",
+          "label": "App VM 2"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "internet",
+      "service": "internet",
+      "label": "Internet"
+    },
+    {
+      "id": "users",
+      "service": "users",
+      "label": "Users"
+    }
+  ],
+  "edges": [
+    {
+      "from": "internet",
+      "to": "pub-lb",
+      "label": "443/80"
+    },
+    {
+      "from": "users",
+      "to": "pub-lb",
+      "label": "HTTPS"
+    },
+    {
+      "from": "pub-lb",
+      "to": "web-nsg",
+      "label": "route"
+    },
+    {
+      "from": "web-nsg",
+      "to": "web-vm1",
+      "label": "allow"
+    },
+    {
+      "from": "web-nsg",
+      "to": "web-vm2",
+      "label": "allow"
+    },
+    {
+      "from": "pub-lb",
+      "to": "web-vm1",
+      "label": "health probe"
+    },
+    {
+      "from": "pub-lb",
+      "to": "web-vm2",
+      "label": "health probe"
+    },
+    {
+      "from": "web-vm1",
+      "to": "int-lb",
+      "label": "app request"
+    },
+    {
+      "from": "web-vm2",
+      "to": "int-lb",
+      "label": "app request"
+    },
+    {
+      "from": "int-lb",
+      "to": "app-nsg",
+      "label": "route"
+    },
+    {
+      "from": "app-nsg",
+      "to": "app-vm1",
+      "label": "allow"
+    },
+    {
+      "from": "app-nsg",
+      "to": "app-vm2",
+      "label": "allow"
+    },
+    {
+      "from": "int-lb",
+      "to": "app-vm1",
+      "label": "health probe"
+    },
+    {
+      "from": "int-lb",
+      "to": "app-vm2",
+      "label": "health probe"
+    }
+  ]
+}

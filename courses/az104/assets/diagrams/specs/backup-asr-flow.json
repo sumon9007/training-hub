@@ -1,0 +1,73 @@
+{
+  "title": "Azure Backup and ASR Flow through Recovery Services Vault",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Region A (Primary)",
+      "nodes": [
+        {
+          "id": "vmA",
+          "service": "vm",
+          "label": "Protected VM"
+        }
+      ]
+    },
+    {
+      "label": "Recovery Services Vault",
+      "nodes": [
+        {
+          "id": "vault",
+          "service": "recovery_vault",
+          "label": "Vault"
+        },
+        {
+          "id": "bkpol",
+          "service": "policy",
+          "label": "Backup Policy"
+        },
+        {
+          "id": "rest",
+          "service": "backup_vault",
+          "label": "Restore Points"
+        }
+      ]
+    },
+    {
+      "label": "Region B (Secondary)",
+      "nodes": [
+        {
+          "id": "vmB",
+          "service": "vm",
+          "label": "Failover VM"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "vmA",
+      "to": "bkpol",
+      "label": "backup policy"
+    },
+    {
+      "from": "bkpol",
+      "to": "rest",
+      "label": "schedule"
+    },
+    {
+      "from": "vmA",
+      "to": "rest",
+      "label": "snapshots"
+    },
+    {
+      "from": "vmA",
+      "to": "vault",
+      "label": "register"
+    },
+    {
+      "from": "vault",
+      "to": "vmB",
+      "label": "replicate"
+    }
+  ]
+}

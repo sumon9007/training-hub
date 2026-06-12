@@ -1,0 +1,140 @@
+{
+  "title": "AZ-104 Lab 01 — Manage Microsoft Entra ID Identities",
+  "subtitle": "Tenant | Member & Guest users | Assigned and Dynamic groups",
+  "layout": "LR",
+  "theme": "dark",
+  "graph_attr": {
+    "rankdir": "LR",
+    "splines": "ortho",
+    "nodesep": "0.4",
+    "ranksep": "1.2",
+    "pad": "0.5",
+    "bgcolor": "#1a1a2e",
+    "fontcolor": "#e0e0e0"
+  },
+  "clusters": [
+    {
+      "id": "tenant_zone",
+      "label": "Microsoft Entra ID Tenant",
+      "bgcolor": "#0a1628",
+      "pencolor": "#7c83fd",
+      "nodes": [
+        {
+          "id": "tenant",
+          "label": "Microsoft Entra ID",
+          "service": "AzureActiveDirectory",
+          "module": "diagrams.azure.identity"
+        }
+      ]
+    },
+    {
+      "id": "users_zone",
+      "label": "User Objects",
+      "bgcolor": "#0f3460",
+      "pencolor": "#4a9eff",
+      "rank": "same",
+      "nodes": [
+        {
+          "id": "u1",
+          "label": "User 1 (Member)",
+          "service": "Users",
+          "module": "diagrams.azure.identity"
+        },
+        {
+          "id": "u2",
+          "label": "User 2 (Member)",
+          "service": "Users",
+          "module": "diagrams.azure.identity"
+        },
+        {
+          "id": "guest",
+          "label": "Guest User (B2B Invite)",
+          "service": "Users",
+          "module": "diagrams.azure.identity"
+        }
+      ]
+    },
+    {
+      "id": "groups_zone",
+      "label": "Groups",
+      "bgcolor": "#0f3460",
+      "pencolor": "#4a9eff",
+      "rank": "same",
+      "nodes": [
+        {
+          "id": "sec_grp",
+          "label": "Security Group (Assigned)",
+          "service": "Groups",
+          "module": "diagrams.azure.identity"
+        },
+        {
+          "id": "dyn_grp",
+          "label": "Dynamic Group (Query-based)",
+          "service": "Groups",
+          "module": "diagrams.azure.identity"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "src": "tenant",
+      "dst": "u1",
+      "label": "manages",
+      "color": "#4caf50",
+      "style": "solid",
+      "meaning": "Entra ID manages member users"
+    },
+    {
+      "src": "tenant",
+      "dst": "u2",
+      "label": "",
+      "color": "#4caf50",
+      "style": "solid",
+      "meaning": "Entra ID manages member users"
+    },
+    {
+      "src": "tenant",
+      "dst": "guest",
+      "label": "B2B invite",
+      "color": "#4caf50",
+      "style": "solid",
+      "meaning": "External user invited via B2B collaboration"
+    },
+    {
+      "src": "u1",
+      "dst": "sec_grp",
+      "label": "member of",
+      "color": "#4a9eff",
+      "style": "solid",
+      "meaning": "User 1 explicitly assigned to security group"
+    },
+    {
+      "src": "u2",
+      "dst": "sec_grp",
+      "label": "",
+      "color": "#4a9eff",
+      "style": "solid",
+      "meaning": "User 2 explicitly assigned to security group"
+    },
+    {
+      "src": "tenant",
+      "dst": "dyn_grp",
+      "label": "dynamic rule",
+      "color": "#9e9e9e",
+      "style": "dashed",
+      "meaning": "Membership evaluated automatically by attribute-based query rule"
+    }
+  ],
+  "legend": {
+    "green_solid": "Direct management / explicit membership",
+    "blue_solid": "Assigned group membership",
+    "grey_dashed": "Dynamic / rule-based membership"
+  },
+  "output": {
+    "png": "courses/az104/assets/diagrams/labs/lab-01.png",
+    "script": "/tmp/diag_lab01_entra_identities.py",
+    "renderer": "diagrams Python library + Graphviz",
+    "venv": "/data/workbench/training-hub/.venv"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "title": "VM Availability Options: Set vs Zones vs VMSS",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Availability Set (FD/UD)",
+      "nodes": [
+        {
+          "id": "as",
+          "service": "availability_set",
+          "label": "Availability Set"
+        },
+        {
+          "id": "vm1",
+          "service": "vm",
+          "label": "VM (FD0)"
+        },
+        {
+          "id": "vm2",
+          "service": "vm",
+          "label": "VM (FD1)"
+        }
+      ]
+    },
+    {
+      "label": "Availability Zones",
+      "nodes": [
+        {
+          "id": "vmz1",
+          "service": "vm",
+          "label": "VM (Zone 1)"
+        },
+        {
+          "id": "vmz2",
+          "service": "vm",
+          "label": "VM (Zone 2)"
+        },
+        {
+          "id": "vmz3",
+          "service": "vm",
+          "label": "VM (Zone 3)"
+        }
+      ]
+    },
+    {
+      "label": "VMSS + Load Balancer",
+      "nodes": [
+        {
+          "id": "lb",
+          "service": "load_balancer",
+          "label": "Load Balancer"
+        },
+        {
+          "id": "vmss",
+          "service": "vmss",
+          "label": "Scale Set"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "clients",
+      "service": "users",
+      "label": "Clients"
+    }
+  ],
+  "edges": [
+    {
+      "from": "clients",
+      "to": "as"
+    },
+    {
+      "from": "clients",
+      "to": "vmz1"
+    },
+    {
+      "from": "clients",
+      "to": "vmz2"
+    },
+    {
+      "from": "clients",
+      "to": "vmz3"
+    },
+    {
+      "from": "clients",
+      "to": "lb"
+    },
+    {
+      "from": "as",
+      "to": "vm1"
+    },
+    {
+      "from": "as",
+      "to": "vm2"
+    },
+    {
+      "from": "lb",
+      "to": "vmss"
+    }
+  ]
+}

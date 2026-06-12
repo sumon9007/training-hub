@@ -1,0 +1,55 @@
+{
+  "title": "Azure Container Pipeline: ACR \u2192 ACI & Container Apps",
+  "direction": "LR",
+  "clusters": [
+    {
+      "label": "Build & Registry",
+      "nodes": [
+        {
+          "id": "acr",
+          "service": "acr",
+          "label": "Azure Container Registry\n(Build/Tasks)"
+        }
+      ]
+    },
+    {
+      "label": "Deployment Targets",
+      "nodes": [
+        {
+          "id": "aci",
+          "service": "aci",
+          "label": "Container Instances\n(Fixed)"
+        },
+        {
+          "id": "ca",
+          "service": "container_apps",
+          "label": "Container Apps\n(KEDA: 0..N)"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "dev",
+      "service": "users",
+      "label": "Developer"
+    }
+  ],
+  "edges": [
+    {
+      "from": "dev",
+      "to": "acr",
+      "label": "push image"
+    },
+    {
+      "from": "acr",
+      "to": "aci",
+      "label": "deploy"
+    },
+    {
+      "from": "acr",
+      "to": "ca",
+      "label": "deploy"
+    }
+  ]
+}

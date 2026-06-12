@@ -1,0 +1,26 @@
+        <mxfile host="arch-designer-agent">
+          <diagram name="AZ-104 Lab 04 — Implement Virtual Networking">
+            <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1"
+                          tooltips="1" connect="1" arrows="1" fold="1" page="1"
+                          pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+              <root>
+            <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="dns" value="private.contoso.com
+(Private DNS Zone)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="60" y="220" width="170" height="70" as="geometry"/></mxCell>
+    <mxCell id="vnet" value="az104-vnet1
+10.40.0.0/16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;shape=mxgraph.azure2.virtual_networks;sketch=0;aspect=fixed;" vertex="1" parent="1"><mxGeometry x="300" y="220" width="150" height="70" as="geometry"/></mxCell>
+    <mxCell id="sub0" value="subnet0 — Public
+10.40.0.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="530" y="100" width="160" height="70" as="geometry"/></mxCell>
+    <mxCell id="nsg" value="NSG
+AllowRDP / DenyAll" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="530" y="200" width="160" height="70" as="geometry"/></mxCell>
+    <mxCell id="sub1" value="subnet1 — Private
+10.40.1.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="530" y="320" width="160" height="70" as="geometry"/></mxCell>
+    <mxCell id="e0" value="linked to VNet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="dns" target="vnet" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e1" value="contains" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="vnet" target="sub0" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e2" value="contains" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="vnet" target="sub1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e3" value="associated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" edge="1" source="nsg" target="sub0" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+              </root>
+            </mxGraphModel>
+          </diagram>
+        </mxfile>
