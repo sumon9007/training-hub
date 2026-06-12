@@ -96,6 +96,7 @@
           <span id="user-name" class="text-sm text-slate-600 font-medium max-w-[160px] truncate"></span>
           <a href="/.auth/logout?post_logout_redirect_uri=/login.html" class="text-xs text-slate-400 hover:text-red-500 transition-colors">Sign out</a>
         </div>
+        <a href="/signup.html" id="signup-btn" class="hidden text-sm font-semibold text-slate-200 border border-slate-600 hover:border-slate-400 hover:text-white transition-colors px-4 py-2 rounded-lg">Sign up</a>
         <a href="/login.html" id="login-btn" class="hidden text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-2 rounded-lg shadow-sm">Sign in</a>
         <!-- Mobile hamburger -->
         <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden p-1.5 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors">
@@ -954,9 +955,10 @@
           nav.classList.remove('hidden');
           nav.classList.add('flex');
         } else {
-          const btn = document.getElementById('login-btn');
-          btn.classList.remove('hidden');
-          btn.classList.add('inline-flex');
+          document.getElementById('login-btn').classList.remove('hidden');
+          document.getElementById('login-btn').classList.add('inline-flex');
+          document.getElementById('signup-btn').classList.remove('hidden');
+          document.getElementById('signup-btn').classList.add('inline-flex');
         }
       })
       .catch(() => {});

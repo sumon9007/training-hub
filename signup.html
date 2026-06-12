@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Training Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+
+    .bg-scene { background: #060c18; position: fixed; inset: 0; overflow: hidden; z-index: 0; }
+    .dot-grid {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18; animation: drift 18s ease-in-out infinite; }
+    .blob-1 { width: 520px; height: 520px; background: #1d4ed8; top: -120px; left: -120px; animation-delay: 0s; }
+    .blob-2 { width: 380px; height: 380px; background: #6366f1; bottom: -80px; right: -80px; animation-delay: -9s; }
+    .blob-3 { width: 260px; height: 260px; background: #0ea5e9; top: 40%; left: 60%; animation-delay: -4s; }
+    @keyframes drift {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33%       { transform: translate(30px,-20px) scale(1.05); }
+      66%       { transform: translate(-20px,30px) scale(0.97); }
+    }
+
+    .glass-card {
+      background: rgba(13, 22, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .field-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #fff;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      box-sizing: border-box;
+    }
+    .field-input::placeholder { color: rgba(255,255,255,0.28); }
+    .field-input:focus { border-color: #3b82f6; background: rgba(59,130,246,0.08); }
+    .field-input.error { border-color: #f87171; }
+
+    .submit-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 2px 12px rgba(37,99,235,0.35);
+    }
+    .submit-btn:hover:not(:disabled) { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(37,99,235,0.45); }
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .feature-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.7rem; font-weight: 500;
+      padding: 5px 10px; border-radius: 9999px;
+    }
+    .feature-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative">
+
+  <!-- Background -->
+  <div class="bg-scene">
+    <div class="dot-grid"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Layout -->
+  <div class="relative z-10 w-full max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+
+    <!-- ── LEFT: Branding ── -->
+    <div class="flex-1 text-center md:text-left">
+      <a href="/" class="inline-flex items-center gap-3 mb-10">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-base shadow-lg shadow-blue-900/40">TH</div>
+        <span class="text-xl font-bold text-white tracking-tight">Training Hub</span>
+      </a>
+
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.1] mb-4">
+        Start your cloud<br/>
+        <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">journey today.</span>
+      </h1>
+      <p class="text-slate-400 text-base leading-relaxed mb-10 max-w-sm mx-auto md:mx-0">
+        Create your free account and get instant access to Azure certification courses, hands-on labs, and exam simulators.
+      </p>
+
+      <div class="flex flex-wrap justify-center md:justify-start gap-2">
+        <span class="feature-pill"><span class="dot bg-blue-400"></span>AZ-900 · AZ-104</span>
+        <span class="feature-pill"><span class="dot bg-emerald-400"></span>17 live labs</span>
+        <span class="feature-pill"><span class="dot bg-violet-400"></span>Exam simulators</span>
+        <span class="feature-pill"><span class="dot bg-cyan-400"></span>Azure diagrams</span>
+      </div>
+
+      <!-- Steps -->
+      <div class="mt-10 space-y-4 text-left max-w-xs mx-auto md:mx-0">
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 shrink-0 rounded-full bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xs font-bold">1</div>
+          <p class="text-slate-400 text-sm">Fill in your details below</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 shrink-0 rounded-full bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xs font-bold">2</div>
+          <p class="text-slate-400 text-sm">Receive credentials via email</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 shrink-0 rounded-full bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xs font-bold">3</div>
+          <p class="text-slate-400 text-sm">Sign in and start learning</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Sign-up form ── -->
+    <div class="w-full max-w-sm">
+      <div class="glass-card rounded-2xl p-8">
+
+        <!-- Form header -->
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-white mb-1.5">Create your account</h2>
+          <p class="text-slate-400 text-sm">We'll email your login credentials immediately.</p>
+        </div>
+
+        <!-- Success state (hidden by default) -->
+        <div id="success-state" class="hidden">
+          <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 mx-auto mb-5">
+            <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white text-center mb-2">Check your email!</h3>
+          <p id="success-msg" class="text-slate-400 text-sm text-center mb-6 leading-relaxed"></p>
+          <a href="/login.html"
+             class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm py-3 rounded-xl transition-colors">
+            Go to Sign In
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Form -->
+        <form id="signup-form" onsubmit="handleSignup(event)" novalidate>
+
+          <!-- Error banner -->
+          <div id="error-banner" class="hidden mb-4 bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-300 text-sm"></div>
+
+          <!-- Name row -->
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">First Name <span class="text-red-400">*</span></label>
+              <input id="firstName" type="text" placeholder="Jane" autocomplete="given-name"
+                     class="field-input" required />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Last Name <span class="text-red-400">*</span></label>
+              <input id="lastName" type="text" placeholder="Smith" autocomplete="family-name"
+                     class="field-input" required />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Email Address <span class="text-red-400">*</span></label>
+            <input id="email" type="email" placeholder="jane.smith@example.com" autocomplete="email"
+                   class="field-input" required />
+            <p class="text-xs text-slate-500 mt-1.5">Your login credentials will be sent here.</p>
+          </div>
+
+          <!-- Job title (optional) -->
+          <div class="mb-6">
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">
+              Job Title <span class="text-slate-600 normal-case font-normal">(optional)</span>
+            </label>
+            <input id="jobTitle" type="text" placeholder="Cloud Engineer"
+                   class="field-input" />
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <span id="btn-label">Create Account</span>
+            <div class="spinner" id="btn-spinner"></div>
+          </button>
+
+        </form>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-3 my-5">
+          <div class="flex-1 h-px bg-white/8"></div>
+          <span class="text-xs text-slate-600">or</span>
+          <div class="flex-1 h-px bg-white/8"></div>
+        </div>
+
+        <!-- Sign in link -->
+        <p class="text-center text-sm text-slate-500">
+          Already have an account?
+          <a href="/login.html" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors ml-1">Sign in</a>
+        </p>
+
+      </div>
+
+      <p class="text-center text-slate-600 text-xs mt-6 leading-relaxed px-2">
+        By creating an account you agree to use this platform for personal learning only.
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    async function handleSignup(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName  = document.getElementById('lastName').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const jobTitle  = document.getElementById('jobTitle').value.trim();
+
+      const errorBanner = document.getElementById('error-banner');
+      const submitBtn   = document.getElementById('submit-btn');
+      const btnLabel    = document.getElementById('btn-label');
+      const btnSpinner  = document.getElementById('btn-spinner');
+
+      // Client-side validation
+      errorBanner.classList.add('hidden');
+      errorBanner.textContent = '';
+      document.querySelectorAll('.field-input').forEach(i => i.classList.remove('error'));
+
+      let hasError = false;
+      if (!firstName) { document.getElementById('firstName').classList.add('error'); hasError = true; }
+      if (!lastName)  { document.getElementById('lastName').classList.add('error'); hasError = true; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email').classList.add('error'); hasError = true;
+      }
+      if (hasError) {
+        errorBanner.textContent = 'Please fill in all required fields.';
+        errorBanner.classList.remove('hidden');
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      btnLabel.textContent = 'Creating account…';
+      btnSpinner.style.display = 'block';
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName, lastName, email, jobTitle }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          // Show success
+          document.getElementById('signup-form').classList.add('hidden');
+          const successState = document.getElementById('success-state');
+          document.getElementById('success-msg').textContent = data.message;
+          successState.classList.remove('hidden');
+        } else {
+          errorBanner.textContent = data.error || 'Something went wrong. Please try again.';
+          errorBanner.classList.remove('hidden');
+          submitBtn.disabled = false;
+          btnLabel.textContent = 'Create Account';
+          btnSpinner.style.display = 'none';
+        }
+      } catch {
+        errorBanner.textContent = 'Network error. Please check your connection and try again.';
+        errorBanner.classList.remove('hidden');
+        submitBtn.disabled = false;
+        btnLabel.textContent = 'Create Account';
+        btnSpinner.style.display = 'none';
+      }
+    }
+
+    // Already authenticated? Send them to the hub.
+    fetch('/.auth/me')
+      .then(r => r.json())
+      .then(data => { if (data.clientPrincipal) window.location.href = '/'; })
+      .catch(() => {});
+  </script>
+
+</body>
+</html>

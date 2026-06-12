@@ -5,6 +5,22 @@
       "allowedRoles": ["anonymous", "authenticated"]
     },
     {
+      "route": "/signup.html",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/index.html",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/courses/*",
+      "allowedRoles": ["authenticated"]
+    },
+    {
       "route": "/*",
       "allowedRoles": ["authenticated"]
     }

@@ -1,0 +1,9 @@
+{
+  "name": "training-hub-api",
+  "version": "1.0.0",
+  "description": "Azure Functions API for Training Hub",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@azure/communication-email": "^1.0.0"
+  }
+}
