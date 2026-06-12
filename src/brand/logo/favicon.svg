@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Training Hub favicon">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#g)"/>
+  <!-- TH mark at 32px — simplified, bolder strokes -->
+  <rect x="4" y="6" width="24" height="5" rx="2.5" fill="white"/>
+  <rect x="13" y="6" width="5" height="20" rx="2.5" fill="white"/>
+  <rect x="23" y="6" width="5" height="20" rx="2.5" fill="white"/>
+  <rect x="13" y="15" width="15" height="4" fill="white"/>
+</svg>

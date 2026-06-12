@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Design System — Training Hub / BD Cloud Academy</title>
+  <link rel="icon" type="image/svg+xml" href="logo/favicon.svg"/>
+  <link rel="stylesheet" href="tokens.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: #f1f5f9;
+      color: var(--color-slate-900);
+      line-height: var(--leading-normal);
+    }
+
+    /* ── Page shell ───────────────────────────────────────────────────── */
+    .ds-header {
+      background: var(--gradient-brand);
+      padding: var(--space-16) var(--container-gutter);
+      text-align: center;
+      color: white;
+    }
+    .ds-header img { height: 48px; margin-bottom: var(--space-6); display: inline-block; }
+    .ds-header h1 { font-size: var(--text-4xl); font-weight: var(--font-weight-extrabold); letter-spacing: var(--tracking-tight); }
+    .ds-header p  { color: rgba(255,255,255,0.65); margin-top: var(--space-2); font-size: var(--text-lg); }
+
+    .ds-nav {
+      background: white;
+      border-bottom: 1px solid var(--color-slate-200);
+      padding: 0 var(--container-gutter);
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      display: flex;
+      gap: var(--space-6);
+      overflow-x: auto;
+    }
+    .ds-nav a {
+      display: inline-block;
+      padding: var(--space-4) 0;
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-slate-500);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color var(--duration-normal), border-color var(--duration-normal);
+    }
+    .ds-nav a:hover { color: var(--color-brand-600); border-color: var(--color-brand-600); }
+
+    .ds-main {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: var(--space-16) var(--container-gutter);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-20);
+    }
+
+    /* ── Section ──────────────────────────────────────────────────────── */
+    .ds-section { scroll-margin-top: 60px; }
+    .ds-section-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-extrabold);
+      color: var(--color-slate-900);
+      margin-bottom: var(--space-2);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--color-slate-200);
+    }
+    .ds-section-sub {
+      color: var(--color-slate-500);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-8);
+      margin-top: var(--space-2);
+    }
+
+    /* ── Color palettes ───────────────────────────────────────────────── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    .color-group { display: flex; flex-direction: column; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .color-swatch {
+      height: 64px;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-2) var(--space-3);
+    }
+    .color-swatch span {
+      font-size: var(--text-xs);
+      font-weight: var(--font-weight-semibold);
+      font-family: var(--font-mono);
+      background: rgba(0,0,0,0.3);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .color-info {
+      background: white;
+      padding: var(--space-3);
+    }
+    .color-name { font-size: var(--text-sm); font-weight: var(--font-weight-semibold); color: var(--color-slate-800); }
+    .color-var  { font-size: var(--text-xs); color: var(--color-slate-500); font-family: var(--font-mono); margin-top: 2px; }
+
+    .palette-row { display: flex; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--space-4); }
+    .palette-swatch {
+      flex: 1;
+      height: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: var(--space-2);
+      gap: 2px;
+    }
+    .palette-swatch .shade {
+      font-size: 10px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: rgba(0,0,0,0.5);
+    }
+    .palette-swatch.light .shade { color: rgba(0,0,0,0.35); }
+    .palette-swatch.dark  .shade { color: rgba(255,255,255,0.55); }
+
+    /* ── Typography ───────────────────────────────────────────────────── */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-6);
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--color-slate-100);
+    }
+    .type-label {
+      width: 80px;
+      flex-shrink: 0;
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      color: var(--color-slate-400);
+    }
+    .type-meta {
+      width: 130px;
+      flex-shrink: 0;
+      font-size: var(--text-xs);
+      color: var(--color-slate-400);
+      line-height: 1.4;
+    }
+
+    /* ── Spacing ──────────────────────────────────────────────────────── */
+    .space-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-slate-100);
+    }
+    .space-bar  { height: 20px; background: var(--color-brand-500); border-radius: 3px; flex-shrink: 0; }
+    .space-name { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-slate-500); width: 90px; flex-shrink: 0; }
+    .space-val  { font-size: var(--text-xs); color: var(--color-slate-400); }
+
+    /* ── Logo showcase ────────────────────────────────────────────────── */
+    .logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); }
+    .logo-card {
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .logo-card img { height: 60px; }
+    .logo-card span { font-size: var(--text-xs); font-weight: var(--font-weight-semibold); color: inherit; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.1em; }
+    .logo-on-light { background: var(--color-slate-50); border: 1px solid var(--color-slate-200); }
+    .logo-on-dark  { background: var(--color-dark-bg); }
+    .logo-on-brand { background: var(--gradient-brand); color: white; }
+    .logo-icon-row { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center; }
+    .logo-icon-card {
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .logo-icon-card img { height: 80px; width: 80px; }
+    .logo-icon-card span { font-size: var(--text-xs); color: var(--color-slate-500); }
+
+    /* ── Buttons ──────────────────────────────────────────────────────── */
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+      padding: var(--space-6);
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-slate-200);
+    }
+    .component-row.dark {
+      background: var(--color-dark-bg);
+      border-color: var(--color-dark-border);
+    }
+    .component-label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-slate-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-3);
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-lg);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--duration-normal) var(--ease-default);
+      white-space: nowrap;
+    }
+    .btn-sm   { font-size: var(--text-sm);  padding: 7px 14px; }
+    .btn-md   { font-size: var(--text-sm);  padding: 10px 20px; }
+    .btn-lg   { font-size: var(--text-base);padding: 13px 28px; }
+    .btn-xl   { font-size: var(--text-lg);  padding: 16px 36px; }
+
+    .btn-primary {
+      background: var(--color-brand-600);
+      color: white;
+      box-shadow: var(--shadow-brand-sm);
+    }
+    .btn-primary:hover { background: var(--color-brand-700); box-shadow: var(--shadow-brand-md); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: var(--color-slate-100);
+      color: var(--color-slate-800);
+    }
+    .btn-secondary:hover { background: var(--color-slate-200); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-brand-600);
+      border: 1.5px solid var(--color-brand-600);
+    }
+    .btn-outline:hover { background: var(--color-brand-50); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-slate-600);
+    }
+    .btn-ghost:hover { background: var(--color-slate-100); }
+
+    .btn-danger { background: var(--color-danger-600); color: white; }
+    .btn-danger:hover { background: #b91c1c; }
+
+    .btn-dark-ghost {
+      background: rgba(255,255,255,0.06);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .btn-dark-ghost:hover { background: rgba(255,255,255,0.10); }
+
+    .btn-dark-primary {
+      background: var(--color-brand-600);
+      color: white;
+      box-shadow: var(--shadow-brand-sm);
+    }
+    .btn-dark-primary:hover { background: var(--color-brand-500); transform: translateY(-1px); }
+
+    .btn-icon { width: 36px; height: 36px; padding: 0; border-radius: var(--radius-lg); }
+    .btn-icon.lg { width: 44px; height: 44px; border-radius: var(--radius-xl); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-xs);
+      font-weight: var(--font-weight-semibold);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+    }
+    .badge-blue    { background: var(--color-brand-100);   color: var(--color-brand-700); }
+    .badge-green   { background: var(--color-success-100); color: var(--color-success-600); }
+    .badge-amber   { background: var(--color-warning-100); color: var(--color-warning-600); }
+    .badge-red     { background: var(--color-danger-100);  color: var(--color-danger-600); }
+    .badge-slate   { background: var(--color-slate-100);   color: var(--color-slate-600); }
+    .badge-dark    { background: rgba(255,255,255,0.08);   color: rgba(255,255,255,0.7); }
+
+    /* ── Cards ────────────────────────────────────────────────────────── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-5); }
+
+    .card {
+      background: white;
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      transition: box-shadow var(--duration-normal), transform var(--duration-normal);
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .card-img {
+      width: 100%;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-4xl);
+    }
+    .card-body { padding: var(--space-5); }
+    .card-title { font-size: var(--text-lg); font-weight: var(--font-weight-bold); color: var(--color-slate-900); }
+    .card-desc  { font-size: var(--text-sm); color: var(--color-slate-500); margin-top: var(--space-1); line-height: var(--leading-relaxed); }
+    .card-footer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-slate-100); display: flex; align-items: center; justify-content: space-between; }
+
+    /* Dark card */
+    .card-dark {
+      background: var(--color-dark-surface);
+      border: 1px solid var(--color-dark-border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      transition: box-shadow var(--duration-normal), transform var(--duration-normal);
+    }
+    .card-dark:hover { box-shadow: var(--shadow-brand-sm); transform: translateY(-2px); }
+    .card-dark .card-body { padding: var(--space-5); }
+    .card-dark .card-title { color: white; font-size: var(--text-lg); font-weight: var(--font-weight-bold); }
+    .card-dark .card-desc  { color: var(--color-slate-400); font-size: var(--text-sm); margin-top: var(--space-1); line-height: var(--leading-relaxed); }
+    .card-dark .card-footer { border-top: 1px solid var(--color-dark-border); padding: var(--space-4) var(--space-5); display: flex; align-items: center; justify-content: space-between; }
+
+    /* ── Form controls ────────────────────────────────────────────────── */
+    .form-group { display: flex; flex-direction: column; gap: var(--space-2); }
+    .form-label { font-size: var(--text-sm); font-weight: var(--font-weight-semibold); color: var(--color-slate-700); }
+    .form-input {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      color: var(--color-slate-900);
+      background: white;
+      border: 1.5px solid var(--color-slate-300);
+      border-radius: var(--radius-lg);
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+    }
+    .form-input:focus {
+      border-color: var(--color-brand-500);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    .form-input.error { border-color: var(--color-danger-500); }
+    .form-input.error:focus { box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+    .form-hint { font-size: var(--text-xs); color: var(--color-slate-400); }
+    .form-error { font-size: var(--text-xs); color: var(--color-danger-500); }
+
+    .form-dark .form-label { color: rgba(255,255,255,0.7); }
+    .form-dark .form-input {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+      color: white;
+    }
+    .form-dark .form-input::placeholder { color: rgba(255,255,255,0.25); }
+    .form-dark .form-input:focus {
+      border-color: var(--color-brand-400);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.20);
+    }
+    .form-dark .form-hint { color: rgba(255,255,255,0.35); }
+
+    /* ── Alerts ───────────────────────────────────────────────────────── */
+    .alert {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      border-radius: var(--radius-xl);
+      font-size: var(--text-sm);
+    }
+    .alert-info    { background: var(--color-info-100);    color: var(--color-info-600);    border-left: 4px solid var(--color-info-500); }
+    .alert-success { background: var(--color-success-100); color: var(--color-success-600); border-left: 4px solid var(--color-success-500); }
+    .alert-warning { background: var(--color-warning-100); color: var(--color-warning-600); border-left: 4px solid var(--color-warning-500); }
+    .alert-danger  { background: var(--color-danger-100);  color: var(--color-danger-600);  border-left: 4px solid var(--color-danger-500); }
+    .alert-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+    .alert strong { display: block; font-weight: var(--font-weight-semibold); margin-bottom: 2px; }
+
+    /* ── Code ─────────────────────────────────────────────────────────── */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--color-slate-100);
+      color: var(--color-brand-700);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+    }
+    pre {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      background: var(--color-slate-900);
+      color: #e2e8f0;
+      padding: var(--space-5) var(--space-6);
+      border-radius: var(--radius-xl);
+      overflow-x: auto;
+      line-height: var(--leading-relaxed);
+    }
+    pre .kw  { color: #7dd3fc; }
+    pre .str { color: #86efac; }
+    pre .cm  { color: #64748b; }
+    pre .fn  { color: #c4b5fd; }
+
+    /* ── Motion preview ───────────────────────────────────────────────── */
+    .motion-row { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+    .motion-card {
+      flex: 1;
+      min-width: 180px;
+      background: white;
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .motion-box {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-brand);
+      border-radius: var(--radius-xl);
+      margin: 0 auto var(--space-3);
+      cursor: pointer;
+    }
+    .motion-card:hover .motion-box { transform: translateY(-4px); }
+    .motion-card:hover .motion-box.scale { transform: scale(1.1); }
+    .motion-card:hover .motion-box.rotate { transform: rotate(15deg); }
+    .motion-box { transition: all var(--duration-slow) var(--ease-spring); }
+    .motion-label { font-size: var(--text-xs); color: var(--color-slate-500); font-family: var(--font-mono); }
+
+    /* ── Divider ──────────────────────────────────────────────────────── */
+    .subsection-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-slate-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-4);
+    }
+    .ds-divider { border: none; border-top: 1px solid var(--color-slate-200); margin: var(--space-8) 0; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────────────── -->
+<header class="ds-header">
+  <img src="logo/logo-white.svg" alt="Training Hub"/>
+  <h1>Design System</h1>
+  <p>BD Cloud Academy · v1.0 · 2026</p>
+</header>
+
+<!-- ── Nav ────────────────────────────────────────────────────────────── -->
+<nav class="ds-nav">
+  <a href="#logo">Logo</a>
+  <a href="#colors">Colors</a>
+  <a href="#typography">Typography</a>
+  <a href="#spacing">Spacing</a>
+  <a href="#buttons">Buttons &amp; Badges</a>
+  <a href="#cards">Cards</a>
+  <a href="#forms">Form Controls</a>
+  <a href="#alerts">Alerts</a>
+  <a href="#motion">Motion</a>
+  <a href="#usage">Usage Guide</a>
+</nav>
+
+<!-- ── Main ───────────────────────────────────────────────────────────── -->
+<main class="ds-main">
+
+  <!-- ── LOGO ─────────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="logo">
+    <h2 class="ds-section-title">Logo &amp; Brand Mark</h2>
+    <p class="ds-section-sub">The Training Hub wordmark always pairs the icon mark with the name. Never stretch, recolor, or add effects to the logo.</p>
+
+    <div class="subsection-title">Wordmark — horizontal lockup</div>
+    <div class="logo-grid" style="margin-bottom: var(--space-8)">
+      <div class="logo-card logo-on-light">
+        <img src="logo/logo.svg" alt="logo on light"/>
+        <span>On light background</span>
+      </div>
+      <div class="logo-card logo-on-dark">
+        <img src="logo/logo-white.svg" alt="logo on dark"/>
+        <span style="color:rgba(255,255,255,0.4)">On dark background</span>
+      </div>
+      <div class="logo-card logo-on-brand">
+        <img src="logo/logo-white.svg" alt="logo on brand"/>
+        <span>On brand gradient</span>
+      </div>
+    </div>
+
+    <div class="subsection-title">Icon mark only</div>
+    <div class="logo-icon-row">
+      <div class="logo-icon-card" style="background:var(--color-slate-50);border:1px solid var(--color-slate-200)">
+        <img src="logo/logo-icon.svg" alt="icon on light"/>
+        <span>On light</span>
+      </div>
+      <div class="logo-icon-card" style="background:var(--color-dark-bg)">
+        <img src="logo/logo-icon.svg" alt="icon on dark"/>
+        <span style="color:rgba(255,255,255,0.4)">On dark</span>
+      </div>
+      <div class="logo-icon-card" style="display:flex;flex-direction:row;gap:12px;background:white;border:1px solid var(--color-slate-200);align-items:center;padding:var(--space-5)">
+        <img src="logo/logo-icon.svg" style="height:64px;width:64px" alt="64px"/>
+        <img src="logo/logo-icon.svg" style="height:48px;width:48px" alt="48px"/>
+        <img src="logo/logo-icon.svg" style="height:32px;width:32px" alt="32px"/>
+        <img src="logo/favicon.svg"   style="height:20px;width:20px" alt="favicon"/>
+      </div>
+    </div>
+
+    <hr class="ds-divider"/>
+    <div class="subsection-title">Logo files</div>
+    <pre><span class="cm">/* All in src/brand/logo/ */</span>
+logo-icon.svg     <span class="cm">— Icon mark only (200×200 viewBox, scalable)</span>
+logo.svg          <span class="cm">— Horizontal lockup: icon + wordmark (500×120)</span>
+logo-white.svg    <span class="cm">— All-white version for dark/brand backgrounds</span>
+favicon.svg       <span class="cm">— Simplified mark optimised for small sizes</span></pre>
+  </section>
+
+  <!-- ── COLORS ─────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="colors">
+    <h2 class="ds-section-title">Color System</h2>
+    <p class="ds-section-sub">All tokens defined in <code>tokens.css</code>. Never use raw hex values in components — always reference a token.</p>
+
+    <div class="subsection-title">Brand palette</div>
+    <div class="palette-row" style="margin-bottom:var(--space-6)">
+      <div class="palette-swatch dark" style="background:#dbeafe"><span class="shade" style="color:rgba(0,0,0,0.4)">100</span></div>
+      <div class="palette-swatch dark" style="background:#bfdbfe"><span class="shade" style="color:rgba(0,0,0,0.4)">200</span></div>
+      <div class="palette-swatch dark" style="background:#93c5fd"><span class="shade" style="color:rgba(0,0,0,0.4)">300</span></div>
+      <div class="palette-swatch dark" style="background:#60a5fa"><span class="shade" style="color:rgba(0,0,0,0.4)">400</span></div>
+      <div class="palette-swatch dark" style="background:#3b82f6"><span class="shade" style="color:white">500</span></div>
+      <div class="palette-swatch dark" style="background:#2563eb"><span class="shade" style="color:white">600 ★</span></div>
+      <div class="palette-swatch dark" style="background:#1d4ed8"><span class="shade" style="color:white">700</span></div>
+      <div class="palette-swatch dark" style="background:#1e40af"><span class="shade" style="color:white">800</span></div>
+      <div class="palette-swatch dark" style="background:#1e3a8a"><span class="shade" style="color:white">900</span></div>
+    </div>
+
+    <div class="subsection-title">Accent — cyan</div>
+    <div class="palette-row" style="margin-bottom:var(--space-6)">
+      <div class="palette-swatch" style="background:#cffafe"><span class="shade" style="color:rgba(0,0,0,0.35)">100</span></div>
+      <div class="palette-swatch" style="background:#a5f3fc"><span class="shade" style="color:rgba(0,0,0,0.35)">200</span></div>
+      <div class="palette-swatch" style="background:#67e8f9"><span class="shade" style="color:rgba(0,0,0,0.35)">300</span></div>
+      <div class="palette-swatch dark" style="background:#22d3ee"><span class="shade" style="color:rgba(0,0,0,0.4)">400 ★</span></div>
+      <div class="palette-swatch dark" style="background:#06b6d4"><span class="shade" style="color:white">500</span></div>
+      <div class="palette-swatch dark" style="background:#0891b2"><span class="shade" style="color:white">600</span></div>
+    </div>
+
+    <div class="subsection-title">Neutral — Slate</div>
+    <div class="palette-row" style="margin-bottom:var(--space-6)">
+      <div class="palette-swatch" style="background:#f8fafc"><span class="shade" style="color:rgba(0,0,0,0.35)">50</span></div>
+      <div class="palette-swatch" style="background:#f1f5f9"><span class="shade" style="color:rgba(0,0,0,0.35)">100</span></div>
+      <div class="palette-swatch" style="background:#e2e8f0"><span class="shade" style="color:rgba(0,0,0,0.35)">200</span></div>
+      <div class="palette-swatch dark" style="background:#94a3b8"><span class="shade" style="color:rgba(0,0,0,0.4)">400</span></div>
+      <div class="palette-swatch dark" style="background:#64748b"><span class="shade" style="color:white">500</span></div>
+      <div class="palette-swatch dark" style="background:#334155"><span class="shade" style="color:white">700</span></div>
+      <div class="palette-swatch dark" style="background:#1e293b"><span class="shade" style="color:white">800</span></div>
+      <div class="palette-swatch dark" style="background:#0f172a"><span class="shade" style="color:white">900</span></div>
+    </div>
+
+    <div class="subsection-title">Semantic colors</div>
+    <div class="color-grid">
+      <div class="color-group">
+        <div class="color-swatch" style="background:#059669"><span>#059669</span></div>
+        <div class="color-info"><div class="color-name">Success</div><div class="color-var">--color-success-600</div></div>
+      </div>
+      <div class="color-group">
+        <div class="color-swatch" style="background:#d97706"><span>#d97706</span></div>
+        <div class="color-info"><div class="color-name">Warning</div><div class="color-var">--color-warning-600</div></div>
+      </div>
+      <div class="color-group">
+        <div class="color-swatch" style="background:#dc2626"><span>#dc2626</span></div>
+        <div class="color-info"><div class="color-name">Danger</div><div class="color-var">--color-danger-600</div></div>
+      </div>
+      <div class="color-group">
+        <div class="color-swatch" style="background:#060c18"><span>#060c18</span></div>
+        <div class="color-info"><div class="color-name">Dark BG</div><div class="color-var">--color-dark-bg</div></div>
+      </div>
+      <div class="color-group">
+        <div class="color-swatch" style="background:linear-gradient(135deg,#3b82f6,#1e3a8a)"><span>gradient</span></div>
+        <div class="color-info"><div class="color-name">Brand gradient</div><div class="color-var">--gradient-brand</div></div>
+      </div>
+      <div class="color-group">
+        <div class="color-swatch" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)"><span>gradient</span></div>
+        <div class="color-info"><div class="color-name">Accent gradient</div><div class="color-var">--gradient-accent</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TYPOGRAPHY ─────────────────────────────────────────────────── -->
+  <section class="ds-section" id="typography">
+    <h2 class="ds-section-title">Typography</h2>
+    <p class="ds-section-sub">Primary: <strong>Inter</strong> (Google Fonts). Code: <strong>JetBrains Mono</strong>.</p>
+
+    <div class="type-row">
+      <span class="type-label">7xl</span>
+      <span style="font-size:var(--text-7xl);font-weight:800;letter-spacing:var(--tracking-tight);line-height:1">Aa</span>
+      <span class="type-meta">72px / 800 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">6xl</span>
+      <span style="font-size:var(--text-6xl);font-weight:800;letter-spacing:var(--tracking-tight);line-height:1">Aa</span>
+      <span class="type-meta">60px / 800 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">5xl</span>
+      <span style="font-size:var(--text-5xl);font-weight:800;letter-spacing:var(--tracking-tight);line-height:1">Aa</span>
+      <span class="type-meta">48px / hero headlines</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">4xl</span>
+      <span style="font-size:var(--text-4xl);font-weight:700;letter-spacing:var(--tracking-tight)">Section heading</span>
+      <span class="type-meta">36px / 700 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">3xl</span>
+      <span style="font-size:var(--text-3xl);font-weight:700">Card heading</span>
+      <span class="type-meta">30px / 700 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">2xl</span>
+      <span style="font-size:var(--text-2xl);font-weight:600">Modal title</span>
+      <span class="type-meta">24px / 600 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">xl</span>
+      <span style="font-size:var(--text-xl);font-weight:600">Card title</span>
+      <span class="type-meta">20px / 600 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">lg</span>
+      <span style="font-size:var(--text-lg)">Subheading or lead text</span>
+      <span class="type-meta">18px / 400–500 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">base</span>
+      <span style="font-size:var(--text-base)">Body text — courses, descriptions, instructions.</span>
+      <span class="type-meta">16px / 400 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">sm</span>
+      <span style="font-size:var(--text-sm);color:var(--color-slate-600)">Secondary text: labels, captions, hints.</span>
+      <span class="type-meta">14px / 400 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">xs</span>
+      <span style="font-size:var(--text-xs);color:var(--color-slate-500)">Microcopy: timestamps, badges, metadata.</span>
+      <span class="type-meta">12px / 400–600 weight</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">mono</span>
+      <span style="font-size:var(--text-sm);font-family:var(--font-mono)">az group member add --id &lt;userId&gt;</span>
+      <span class="type-meta">JetBrains Mono</span>
+    </div>
+
+    <hr class="ds-divider"/>
+    <div class="subsection-title">Gradient text</div>
+    <p style="font-size:var(--text-4xl);font-weight:800;background:var(--gradient-text-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+      Cloud career starts here.
+    </p>
+  </section>
+
+  <!-- ── SPACING ────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="spacing">
+    <h2 class="ds-section-title">Spacing Scale</h2>
+    <p class="ds-section-sub">4px base unit. Use tokens — never raw pixel values in component styles.</p>
+
+    <div class="space-row"><span class="space-name">--space-1</span><div class="space-bar" style="width:4px"></div><span class="space-val">4px</span></div>
+    <div class="space-row"><span class="space-name">--space-2</span><div class="space-bar" style="width:8px"></div><span class="space-val">8px</span></div>
+    <div class="space-row"><span class="space-name">--space-3</span><div class="space-bar" style="width:12px"></div><span class="space-val">12px</span></div>
+    <div class="space-row"><span class="space-name">--space-4</span><div class="space-bar" style="width:16px"></div><span class="space-val">16px</span></div>
+    <div class="space-row"><span class="space-name">--space-5</span><div class="space-bar" style="width:20px"></div><span class="space-val">20px</span></div>
+    <div class="space-row"><span class="space-name">--space-6</span><div class="space-bar" style="width:24px"></div><span class="space-val">24px</span></div>
+    <div class="space-row"><span class="space-name">--space-8</span><div class="space-bar" style="width:32px"></div><span class="space-val">32px</span></div>
+    <div class="space-row"><span class="space-name">--space-10</span><div class="space-bar" style="width:40px"></div><span class="space-val">40px</span></div>
+    <div class="space-row"><span class="space-name">--space-12</span><div class="space-bar" style="width:48px"></div><span class="space-val">48px</span></div>
+    <div class="space-row"><span class="space-name">--space-16</span><div class="space-bar" style="width:64px"></div><span class="space-val">64px</span></div>
+    <div class="space-row"><span class="space-name">--space-20</span><div class="space-bar" style="width:80px"></div><span class="space-val">80px</span></div>
+    <div class="space-row"><span class="space-name">--space-24</span><div class="space-bar" style="width:96px"></div><span class="space-val">96px</span></div>
+    <div class="space-row"><span class="space-name">--space-32</span><div class="space-bar" style="width:128px"></div><span class="space-val">128px</span></div>
+  </section>
+
+  <!-- ── BUTTONS & BADGES ──────────────────────────────────────────── -->
+  <section class="ds-section" id="buttons">
+    <h2 class="ds-section-title">Buttons &amp; Badges</h2>
+    <p class="ds-section-sub">Use <code>.btn</code> base class + one modifier. Sizes: <code>-sm</code> <code>-md</code> (default) <code>-lg</code> <code>-xl</code>.</p>
+
+    <div class="subsection-title">Light surface</div>
+    <div class="component-row" style="margin-bottom:var(--space-4)">
+      <button class="btn btn-primary btn-lg">Start Course</button>
+      <button class="btn btn-primary btn-md">Primary</button>
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-secondary btn-md">Secondary</button>
+      <button class="btn btn-outline btn-md">Outline</button>
+      <button class="btn btn-ghost btn-md">Ghost</button>
+      <button class="btn btn-danger btn-md">Danger</button>
+    </div>
+
+    <div class="subsection-title">Dark surface</div>
+    <div class="component-row dark" style="margin-bottom:var(--space-4)">
+      <button class="btn btn-dark-primary btn-lg">Start Course →</button>
+      <button class="btn btn-dark-primary btn-md">Primary</button>
+      <button class="btn btn-dark-ghost btn-md">Sign in</button>
+      <button class="btn btn-dark-ghost btn-md">
+        <svg width="16" height="16" viewBox="0 0 21 21" fill="none"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
+        Continue with Microsoft
+      </button>
+    </div>
+
+    <div class="subsection-title">Badges</div>
+    <div class="component-row">
+      <span class="badge badge-blue">AZ-104</span>
+      <span class="badge badge-green">✓ Live</span>
+      <span class="badge badge-amber">Most Popular</span>
+      <span class="badge badge-red">New</span>
+      <span class="badge badge-slate">Coming Soon</span>
+    </div>
+    <div class="component-row dark" style="margin-top:var(--space-4)">
+      <span class="badge badge-dark">AZ-900</span>
+      <span class="badge badge-dark">17 Labs</span>
+      <span class="badge badge-dark">AI Powered</span>
+    </div>
+  </section>
+
+  <!-- ── CARDS ──────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="cards">
+    <h2 class="ds-section-title">Cards</h2>
+    <p class="ds-section-sub">Two variants: light (hub page) and dark (course slides &amp; lab pages).</p>
+
+    <div class="subsection-title">Light cards</div>
+    <div class="card-grid" style="margin-bottom:var(--space-8)">
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#2563eb22,#1e3a8a22)">☁️</div>
+        <div class="card-body">
+          <div style="margin-bottom:var(--space-2)"><span class="badge badge-amber">Most Popular</span></div>
+          <div class="card-title">AZ-104: Azure Administrator</div>
+          <div class="card-desc">Master identity, networking, storage, and compute. 7 modules, 17 hands-on labs.</div>
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-green">✓ Live</span>
+          <a href="#" class="btn btn-primary btn-sm">Start course →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#06b6d422,#1e3a8a22)">🤖</div>
+        <div class="card-body">
+          <div class="card-title">AI-900: Azure AI Fundamentals</div>
+          <div class="card-desc">Workloads, principles of responsible AI, computer vision and NLP services.</div>
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-slate">Coming Soon</span>
+          <button class="btn btn-secondary btn-sm" disabled>Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-title">Dark cards</div>
+    <div class="card-grid" style="background:var(--color-dark-bg);padding:var(--space-8);border-radius:var(--radius-2xl)">
+      <div class="card-dark">
+        <div class="card-img" style="background:linear-gradient(135deg,#2563eb33,#1e3a8a33)">☁️</div>
+        <div class="card-body">
+          <div style="margin-bottom:var(--space-2)"><span class="badge badge-dark">Lab 04</span></div>
+          <div class="card-title">Configure VNet Peering</div>
+          <div class="card-desc">Connect two VNets in the same region and verify traffic flow with Effective Routes.</div>
+        </div>
+        <div class="card-footer">
+          <span style="font-size:var(--text-xs);color:var(--color-slate-500)">~45 min · Intermediate</span>
+          <a href="#" class="btn btn-dark-primary btn-sm">Open lab →</a>
+        </div>
+      </div>
+      <div class="card-dark">
+        <div class="card-img" style="background:linear-gradient(135deg,#06b6d433,#1e3a8a33)">🔐</div>
+        <div class="card-body">
+          <div class="card-title">Role-Based Access Control</div>
+          <div class="card-desc">Assign built-in and custom RBAC roles at management group, subscription, and resource scope.</div>
+        </div>
+        <div class="card-footer">
+          <span style="font-size:var(--text-xs);color:var(--color-slate-500)">~30 min · Beginner</span>
+          <a href="#" class="btn btn-dark-primary btn-sm">Open lab →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FORMS ──────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="forms">
+    <h2 class="ds-section-title">Form Controls</h2>
+    <p class="ds-section-sub">Used in signup, settings, and generator config. Two surfaces: light and dark (glass).</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);margin-bottom:var(--space-8)">
+      <div>
+        <div class="subsection-title">Light surface</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-5);background:white;padding:var(--space-8);border-radius:var(--radius-2xl);border:1px solid var(--color-slate-200)">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Sumon" value="Sumon"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="you@bdcloudacademy.com"/>
+            <span class="form-hint">Must be your BD Cloud Academy address.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Invalid field</label>
+            <input class="form-input error" type="text" value="bad input"/>
+            <span class="form-error">This field is required.</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-dark">
+        <div class="subsection-title">Dark surface (glass)</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-5);background:rgba(13,22,42,0.9);padding:var(--space-8);border-radius:var(--radius-2xl);border:1px solid rgba(255,255,255,0.07)">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Sumon" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.10);color:white"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="you@bdcloudacademy.com" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.10);color:white"/>
+            <span class="form-hint" style="color:rgba(255,255,255,0.3)">We'll send your login credentials here.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ALERTS ─────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="alerts">
+    <h2 class="ds-section-title">Alerts</h2>
+    <p class="ds-section-sub">Left-bordered alerts for inline status messaging.</p>
+
+    <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+      <div class="alert alert-info">
+        <span class="alert-icon">ℹ️</span>
+        <div><strong>Information</strong>Your credentials have been sent to your email address.</div>
+      </div>
+      <div class="alert alert-success">
+        <span class="alert-icon">✅</span>
+        <div><strong>Account created</strong>Welcome to BD Cloud Academy. Check your inbox for login details.</div>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <div><strong>Heads up</strong>Your temporary password expires in 7 days. Change it at first login.</div>
+      </div>
+      <div class="alert alert-danger">
+        <span class="alert-icon">🚫</span>
+        <div><strong>Registration failed</strong>An account with that email already exists. Try signing in instead.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MOTION ─────────────────────────────────────────────────────── -->
+  <section class="ds-section" id="motion">
+    <h2 class="ds-section-title">Motion</h2>
+    <p class="ds-section-sub">Hover the tiles to preview each easing curve.</p>
+
+    <div class="motion-row">
+      <div class="motion-card">
+        <div class="motion-box" style="transition:transform var(--duration-normal) var(--ease-default)"></div>
+        <div class="motion-label">ease-default 200ms</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-box" style="transition:transform var(--duration-slow) var(--ease-spring)"></div>
+        <div class="motion-label">ease-spring 350ms</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-box scale" style="transition:transform var(--duration-normal) var(--ease-out)"></div>
+        <div class="motion-label">ease-out scale 200ms</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-box rotate" style="transition:transform var(--duration-slow) var(--ease-in-out)"></div>
+        <div class="motion-label">ease-in-out rotate 350ms</div>
+      </div>
+    </div>
+
+    <hr class="ds-divider"/>
+    <div class="subsection-title">Token reference</div>
+    <pre><span class="cm">/* Duration */</span>
+<span class="kw">--duration-fast</span>:   <span class="str">100ms</span>;   <span class="cm">/* micro-interactions: active states, focus rings */</span>
+<span class="kw">--duration-normal</span>: <span class="str">200ms</span>;   <span class="cm">/* buttons, badges, card hovers */</span>
+<span class="kw">--duration-slow</span>:   <span class="str">350ms</span>;   <span class="cm">/* modals, drawers, hero entrance */</span>
+<span class="kw">--duration-slower</span>: <span class="str">500ms</span>;   <span class="cm">/* page transitions, large reveals */</span>
+
+<span class="cm">/* Easing */</span>
+<span class="kw">--ease-default</span>: <span class="fn">cubic-bezier</span>(<span class="str">0.4, 0, 0.2, 1</span>);    <span class="cm">/* general purpose */</span>
+<span class="kw">--ease-spring</span>:  <span class="fn">cubic-bezier</span>(<span class="str">0.34, 1.56, 0.64, 1</span>); <span class="cm">/* buttons, icon hovers */</span>
+<span class="kw">--ease-out</span>:     <span class="fn">cubic-bezier</span>(<span class="str">0, 0, 0.2, 1</span>);        <span class="cm">/* enter / appear */</span>
+<span class="kw">--ease-in</span>:      <span class="fn">cubic-bezier</span>(<span class="str">0.4, 0, 1, 1</span>);        <span class="cm">/* exit / disappear */</span></pre>
+  </section>
+
+  <!-- ── USAGE GUIDE ────────────────────────────────────────────────── -->
+  <section class="ds-section" id="usage">
+    <h2 class="ds-section-title">Usage Guide</h2>
+
+    <div class="subsection-title">Importing tokens</div>
+    <pre><span class="cm">/* In any HTML page — before component CSS */</span>
+&lt;<span class="kw">link</span> rel=<span class="str">"stylesheet"</span> href=<span class="str">"/src/brand/tokens.css"</span>&gt;
+
+<span class="cm">/* In a CSS file */</span>
+@<span class="kw">import</span> <span class="str">'/src/brand/tokens.css'</span>;
+
+<span class="cm">/* Using a token */</span>
+.<span class="fn">my-button</span> {
+  background: <span class="fn">var</span>(<span class="kw">--color-brand-600</span>);
+  border-radius: <span class="fn">var</span>(<span class="kw">--radius-lg</span>);
+  transition: background <span class="fn">var</span>(<span class="kw">--duration-normal</span>) <span class="fn">var</span>(<span class="kw">--ease-default</span>);
+}</pre>
+
+    <hr class="ds-divider"/>
+    <div class="subsection-title">Logo in HTML</div>
+    <pre><span class="cm">&lt;!-- Favicon --&gt;</span>
+&lt;<span class="kw">link</span> rel=<span class="str">"icon"</span> type=<span class="str">"image/svg+xml"</span> href=<span class="str">"/src/brand/logo/favicon.svg"</span>&gt;
+
+<span class="cm">&lt;!-- Full logo (header, light background) --&gt;</span>
+&lt;<span class="kw">img</span> src=<span class="str">"/src/brand/logo/logo.svg"</span> alt=<span class="str">"Training Hub"</span> height=<span class="str">"40"</span>&gt;
+
+<span class="cm">&lt;!-- White logo (dark headers / hero sections) --&gt;</span>
+&lt;<span class="kw">img</span> src=<span class="str">"/src/brand/logo/logo-white.svg"</span> alt=<span class="str">"Training Hub"</span> height=<span class="str">"40"</span>&gt;
+
+<span class="cm">&lt;!-- Icon only (mobile nav, favicon fallback) --&gt;</span>
+&lt;<span class="kw">img</span> src=<span class="str">"/src/brand/logo/logo-icon.svg"</span> alt=<span class="str">"Training Hub"</span> width=<span class="str">"36"</span> height=<span class="str">"36"</span>&gt;</pre>
+
+    <hr class="ds-divider"/>
+    <div class="subsection-title">What NOT to do</div>
+    <div class="alert alert-warning" style="margin-top:0">
+      <span class="alert-icon">⚠️</span>
+      <div>
+        <strong>Logo rules</strong>
+        Never stretch, rotate, recolor, or add drop-shadows to the logo. Never place the colored icon on a colored background with insufficient contrast. Minimum clear-space around the logo = half the icon height on all sides.
+      </div>
+    </div>
+    <div class="alert alert-danger" style="margin-top:var(--space-3)">
+      <span class="alert-icon">🚫</span>
+      <div>
+        <strong>Token rules</strong>
+        Never use raw hex values in component CSS. Always reference a token. Never create a one-off color that isn't in the palette — add it to <code>tokens.css</code> first.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="text-align:center;padding:var(--space-12);color:var(--color-slate-400);font-size:var(--text-sm);border-top:1px solid var(--color-slate-200);margin-top:var(--space-8)">
+  Training Hub Design System · BD Cloud Academy · 2026
+</footer>
+
+</body>
+</html>

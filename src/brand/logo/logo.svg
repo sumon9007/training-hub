@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" role="img" aria-label="Training Hub — BD Cloud Academy">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;800&amp;display=swap');
+      .wordmark { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Icon (120×120) -->
+  <rect x="0" y="0" width="120" height="120" rx="26" fill="url(#bg-grad)"/>
+  <rect x="0" y="0" width="120" height="120" rx="26" fill="url(#glow)"/>
+  <!-- TH mark scaled to 120px (factor 0.6) -->
+  <rect x="17" y="24" width="86" height="17" rx="8" fill="white"/>
+  <rect x="52" y="24" width="17" height="78" rx="8" fill="white"/>
+  <rect x="86" y="24" width="17" height="78" rx="8" fill="white"/>
+  <rect x="52" y="53" width="51" height="14" fill="white"/>
+
+  <!-- Wordmark -->
+  <text
+    x="140"
+    y="56"
+    class="wordmark"
+    font-size="38"
+    font-weight="800"
+    fill="#0f172a"
+    letter-spacing="-0.5">Training Hub</text>
+  <text
+    x="142"
+    y="81"
+    class="wordmark"
+    font-size="16"
+    font-weight="500"
+    fill="#64748b"
+    letter-spacing="1.5">BD CLOUD ACADEMY</text>
+</svg>
