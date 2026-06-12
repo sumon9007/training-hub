@@ -156,7 +156,7 @@ test.describe('Browser: lab pages load correctly', () => {
 
     test(`${lab.slug} — breadcrumb nav links back to hub`, async ({ page }) => {
       await page.goto(`${BASE_URL}/courses/az104/labs/${lab.slug}.html`, { waitUntil: 'domcontentloaded' });
-      const hubLink = page.locator('nav a:has-text("Training Hub")');
+      const hubLink = page.locator('nav a:has-text("BD Cloud Academy")');
       await expect(hubLink).toBeVisible();
     });
 

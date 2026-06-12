@@ -209,11 +209,11 @@ module.exports = async function (context, req) {
         to: [{ address: email.trim(), displayName: `${firstName.trim()} ${lastName.trim()}` }],
       },
       content: {
-        subject: 'Welcome to Training Hub — Your Login Credentials',
+        subject: 'Welcome to BD Cloud Academy — Your Login Credentials',
         plainText: [
           `Hi ${firstName.trim()},`,
           '',
-          'Your Training Hub account has been created.',
+          'Your BD Cloud Academy account has been created.',
           '',
           `Login URL : ${siteUrl}/login.html`,
           `Username  : ${upn}`,
@@ -221,7 +221,7 @@ module.exports = async function (context, req) {
           '',
           'You will be prompted to set a new password on first sign-in.',
           '',
-          '— Training Hub Team',
+          '— BD Cloud Academy Team',
         ].join('\n'),
         html: buildEmailHtml(firstName.trim(), upn, tempPassword, siteUrl, email.trim()),
       },
@@ -255,13 +255,13 @@ function buildEmailHtml(firstName, upn, password, siteUrl, recipientEmail) {
       <!-- Header -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px">
         <div style="width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;text-align:center;line-height:38px">TH</div>
-        <span style="font-size:18px;font-weight:700;color:#0f172a">Training Hub</span>
+        <span style="font-size:18px;font-weight:700;color:#0f172a">BD Cloud Academy</span>
       </div>
 
       <!-- Greeting -->
       <h1 style="font-size:22px;font-weight:700;color:#0f172a;margin:0 0 6px">Welcome, ${firstName}!</h1>
       <p style="font-size:15px;color:#64748b;margin:0 0 28px;line-height:1.6">
-        Your Training Hub account is ready. Use the credentials below to sign in and start learning.
+        Your BD Cloud Academy account is ready. Use the credentials below to sign in and start learning.
       </p>
 
       <!-- Credentials box -->
@@ -291,14 +291,14 @@ function buildEmailHtml(firstName, upn, password, siteUrl, recipientEmail) {
       <!-- CTA -->
       <a href="${siteUrl}/login.html"
          style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 32px;border-radius:10px;letter-spacing:0.01em">
-        Sign in to Training Hub →
+        Sign in to BD Cloud Academy →
       </a>
 
     </div>
 
     <!-- Footer -->
     <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:24px;line-height:1.6">
-      This email was sent to ${recipientEmail} because you created an account at Training Hub.<br>
+      This email was sent to ${recipientEmail} because you created an account at BD Cloud Academy.<br>
       Questions? Reply to this email.
     </p>
 
