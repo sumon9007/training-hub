@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Deploy to Azure Static Web Apps
         uses: azure/static-web-apps-deploy@v1
@@ -29,7 +31,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
           app_location: /
-          skip_api_build: true
+          output_location: ""
+          skip_app_build: true
 
       - name: Print live URL
         run: echo "Site live at ${{ vars.AZURE_SWA_URL }}"
