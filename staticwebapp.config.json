@@ -17,6 +17,10 @@
       "allowedRoles": ["anonymous", "authenticated"]
     },
     {
+      "route": "/src/brand/*",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
       "route": "/courses/*",
       "allowedRoles": ["authenticated"]
     },
