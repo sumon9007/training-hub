@@ -35,7 +35,7 @@
         <!-- User state: shown/hidden by auth JS below -->
         <div id="user-nav" class="hidden items-center gap-3 pl-4 border-l border-slate-200">
           <span id="user-name" class="text-sm text-slate-600 font-medium max-w-[160px] truncate"></span>
-          <a href="/.auth/logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors">Sign out</a>
+          <a href="/.auth/logout?post_logout_redirect_uri=/login.html" class="text-xs text-slate-400 hover:text-red-500 transition-colors">Sign out</a>
         </div>
         <a href="/login.html" id="login-btn" class="hidden text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-1.5 rounded-lg">Sign in</a>
       </div>

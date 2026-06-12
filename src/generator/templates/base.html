@@ -26,13 +26,16 @@
 <div style="position:fixed;bottom:16px;left:16px;z-index:999;display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:11px">
   <a href="../../index.html" style="color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
   <span id="pres-user" style="display:none;color:#64748b;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+  <a href="/.auth/logout?post_logout_redirect_uri=/login.html" id="pres-logout" style="display:none;color:#f87171;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px">Sign out</a>
   <a href="/login.html" id="pres-login" style="display:none;color:#60a5fa;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px">Sign in</a>
 </div>
 <script>
   fetch('/.auth/me').then(r=>r.json()).then(d=>{
     const p=d.clientPrincipal;
-    if(p){const el=document.getElementById('pres-user');el.textContent=p.userDetails;el.style.display='block';}
-    else{document.getElementById('pres-login').style.display='block';}
+    if(p){
+      const el=document.getElementById('pres-user');el.textContent=p.userDetails;el.style.display='block';
+      document.getElementById('pres-logout').style.display='block';
+    } else{document.getElementById('pres-login').style.display='block';}
   }).catch(()=>{});
 </script>
 
