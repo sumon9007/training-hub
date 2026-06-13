@@ -5,15 +5,18 @@ metadata:
   type: project
 ---
 
-# Training Hub — Project Facts
+# BD Cloud Academy — Project Facts
 
 **Bootstrapped:** 2026-06-05  
 **Location:** `/data/workbench/training-hub`  
-**Type:** Static web app — AI-powered training presentation platform  
+**Type:** Static web app — AI-powered cloud certification training platform  
 **Version:** 1.0.0 (package.json)  
-**Git:** Git repo, branch `main`, remote `origin` → `https://github.com/sumon9007/training-hub` (force-pushed clean initial commit 2026-06-12)  
-**Last context sync:** 2026-06-12 (session 5)
-**CLAUDE.md:** ✅ exists at project root (committed in initial commit)
+**Git:** Git repo, branch `main`, remote `origin` → `https://github.com/sumon9007/training-hub`
+**Last context sync:** 2026-06-13 (session 9)
+**CLAUDE.md:** ✅ exists at project root
+
+**Brand name:** BD Cloud Academy (renamed from "Training Hub" — all 32 user-facing files updated 2026-06-12)  
+**Public URL:** `https://learn.bdcloudacademy.com` (custom domain on SWA, Cloudflare DNS-only / grey cloud)
 
 ## Stack
 
@@ -71,9 +74,14 @@ Two resources deployed by `infra/main.bicep` in one `az deployment group create`
 - `AZURE_RESOURCE_GROUP`, `AZURE_SWA_NAME`, `AZURE_SWA_URL`, `AZURE_SWA_DEPLOYMENT_TOKEN`
 - `AZURE_MEDIA_STORAGE_ACCOUNT`, `AZURE_MEDIA_STORAGE_KEY`
 - `AAD_CLIENT_ID`, `AAD_CLIENT_SECRET`, `AAD_TENANT_ID` (reference only — runtime values live in SWA app settings)
+- `GRAPH_TENANT_ID`, `GRAPH_CLIENT_ID`, `GRAPH_CLIENT_SECRET` — app reg with Graph `User.ReadWrite.All` + `GroupMember.ReadWrite.All` (admin-consented) for self-service registration
+- `LEARNERS_GROUP_ID` — object ID of `sg-training-hub-learners` security group
+- `ACS_CONNECTION_STRING`, `ACS_SENDER_ADDRESS` — Azure Communication Services for welcome email
+- `SITE_URL` — public site URL embedded in credential emails (no trailing slash)
+- `TENANT_DOMAIN=bdcloudacademy.com` — UPN suffix for new member accounts
 
 **AAD App Registration** (created via `az ad app create`, one-time per tenant):
-- App name: `Training Hub` | Audience: `AzureADandPersonalMicrosoftAccount`
+- App name: `BD Cloud Academy` | Audience: `AzureADandPersonalMicrosoftAccount`
 - Redirect URI: `https://<swa-hostname>/.auth/login/aad/callback`
 - **Issuer:** `https://login.microsoftonline.com/<tenantId>/v2.0` (tenant-specific — `common/v2.0` causes JWT issuer mismatch in SWA validation)
 - **ID token issuance:** must be enabled (`az ad app update --enable-id-token-issuance true`) — SWA uses implicit ID token flow; it is OFF by default
@@ -128,9 +136,11 @@ Diagram assets: `courses/az104/assets/diagrams/labs/{slug}.png` (inline SVG-rend
 
 **`login.html`** — dark-themed Microsoft sign-in page at site root. "Sign in with Microsoft" button links to `/.auth/login/aad?post_login_redirect_uri=/`. Auto-redirects to `/` if already authenticated.
 
-**`staticwebapp.config.json`** — SWA route config:
-- `/*` — requires `authenticated` role (entire site gated, not just `/courses/*`)
-- `/login.html` — only page accessible to `anonymous`
+**`staticwebapp.config.json`** — SWA route config (three-tier):
+- `/`, `/index.html`, `/signup.html` — `anonymous` + `authenticated` (public landing + registration)
+- `/src/brand/*` — `anonymous` (brand assets + showcase images must load on public landing page before auth)
+- `/courses/*` — requires `authenticated` role
+- `/*` — requires `authenticated` role (catch-all)
 - `401` response → redirects to `/login.html`
 - AAD provider with tenant-specific issuer `https://login.microsoftonline.com/<tenantId>/v2.0`
 - `AAD_CLIENT_ID` / `AAD_CLIENT_SECRET` stored as SWA application settings (never in code)
@@ -141,9 +151,63 @@ Diagram assets: `courses/az104/assets/diagrams/labs/{slug}.png` (inline SVG-rend
 
 ## Testing
 
-- **Framework:** Playwright (`playwright.config.js` at project root)
-- **Test file:** `tests/lab-images.spec.js` — verifies all 17 lab pages load, architecture images are present, and navigation links work
-- **Run:** `npx playwright test tests/lab-images.spec.js --reporter=list` (requires `npm start` running on port 8080)
+- **Framework:** Playwright (`playwright.config.js` at project root) — Chromium only, `webServer` auto-starts `http-server` on port 8080
+- **Test files:**
+  - `tests/lab-images.spec.js` — verifies all 17 lab pages load, architecture images present, navigation works
+  - `tests/design-assessment.spec.js` — design quality suite (ADR-013): full-page screenshots (desktop/tablet/mobile), brand token presence, WCAG AA contrast checks, typography rules, layout overflow, logo/favicon, design-system page
+- **Run all:** `npx playwright test --reporter=list`
+- **Screenshots:** saved to `test-results/design-screenshots/` (gitignored)
+- **Known failing test:** `lab-03c — no step has CLI or PowerShell badge` — the "no CLI/PS badge" check at `tests/lab-images.spec.js:142` incorrectly runs on all 17 labs including the PowerShell-specific lab-03c. Fix: skip the check for labs whose titles contain "PowerShell" or "CLI".
+
+### Accessibility fixes applied (session 7 — 2026-06-12)
+
+| Element | Before | After | Reason |
+|---------|--------|-------|--------|
+| Desktop nav `<a>` | `text-slate-600` (2.77:1) | `text-slate-700` (10.35:1) | WCAG AA fail |
+| Lab card descriptions | `text-xs` (12px) | `text-sm` (14px) | Below minimum readable size |
+| `.ribbon` badge | `0.6rem` (9.6px) | `0.7rem` (11.2px) | Too small for decorative text |
+| `index.html` `<head>` | no `tokens.css` link | `<link href="/src/brand/tokens.css">` added | Design tokens unavailable on landing page |
+
+## Self-Service Registration (`signup.html` + `api/register/`)
+
+New in session 5 (2026-06-12). Allows visitors to create their own Entra ID member account.
+
+**Flow:** `signup.html` → POST `/api/register` → Graph API creates user → adds to `sg-training-hub-learners` → ACS sends branded welcome email with temp credentials.
+
+**Azure Function:** `api/register/index.js` (Node.js, HTTP trigger, `authLevel: anonymous`)
+- Gets Graph token via client credentials flow (`GRAPH_CLIENT_ID` / `GRAPH_CLIENT_SECRET`)
+- Creates member user with `forceChangePasswordNextSignIn: true`; UPN: `firstname.lastname@bdcloudacademy.com` (checks up to 5 variants for uniqueness)
+- Adds user to `sg-training-hub-learners` group
+- Sends HTML welcome email via `@azure/communication-email` SDK
+- Returns `{ success: true, message: "..." }` on success
+
+**Required SWA app settings** (beyond auth ones): `GRAPH_TENANT_ID`, `GRAPH_CLIENT_ID`, `GRAPH_CLIENT_SECRET`, `LEARNERS_GROUP_ID`, `ACS_CONNECTION_STRING`, `ACS_SENDER_ADDRESS`, `TENANT_DOMAIN`, `SITE_URL`
+
+## Design System (`src/brand/`)
+
+Added session 6 (2026-06-12). Single source of truth for visual language.
+
+| File | Purpose |
+|------|---------|
+| `src/brand/tokens.css` | CSS custom properties — colors, type scale, spacing, radius, shadows, gradients, z-index, motion |
+| `src/brand/logo/logo.svg` | Horizontal lockup: geometric mark + "BD Cloud Academy" wordmark (560×120) |
+| `src/brand/logo/logo-white.svg` | All-white variant for dark/hero backgrounds |
+| `src/brand/logo/logo-icon.svg` | Icon mark only — graduation cap over cloud mark on blue→navy gradient (200×200); redesigned 2026-06-13 |
+| `src/brand/logo/favicon.svg` | Simplified bold mark for browser tab (32×32) |
+| `src/brand/design-system.html` | Interactive visual reference — colors, typography, spacing, buttons, cards, forms, alerts, motion |
+| `src/brand/showcase/` | Public product visuals used by the landing page (e.g. `hub-spoke-topology.png`); served anonymously via SWA route rule so they load before login |
+
+All HTML pages reference `/src/brand/logo/favicon.svg` as the `<link rel="icon">`.
+
+## Hub Page — Landing Page Design
+
+Redesigned to a full-dark product-first theme (2026-06-13). Public-facing sections (no auth required):
+- **Hero** — full-dark gradient, outcome-first headline, dual CTAs (Sign Up indigo / Sign In violet), provider pill row
+- **Stats bar** — 4 metrics (certs, labs, modules, AI diagrams)
+- **"Why BD Cloud Academy" zigzag showcase** — three alternating feature rows, each backed by a real product visual: lab terminal with a validation step, exam-simulator question card with rationale, and an AI-generated hub-and-spoke architecture diagram. Images served from `src/brand/showcase/` (anonymous route). Followed by a comparison strip (typical video course vs BD Cloud Academy).
+- **Course cards** — gradient icon backgrounds, "Most Popular" ribbon on AZ-104, "Start course →" CTAs
+
+Header shows **Sign Up** (ghost) + **Sign In** (indigo/violet CTA) when unauthenticated; collapses to email + Sign out when authenticated. Footer copyright: BD Cloud Academy.
 
 ## Generate Commands
 

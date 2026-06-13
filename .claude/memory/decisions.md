@@ -148,3 +148,88 @@ Four fixes applied after the initial AAD wiring failed silently post-password-en
 ```bash
 az ad group member add --group sg-training-hub-learners --member-id <user-object-id>
 ```
+
+## ADR-009: Public landing page with three-tier route auth
+
+**Date:** 2026-06-12
+**Status:** Accepted
+
+### Decision
+`index.html` and `signup.html` are accessible without authentication (`anonymous` role). `/courses/*` and the `/*` catch-all require `authenticated`. The landing page, hero, benefits section, and course card grid are visible to unauthenticated visitors; clicking a course card triggers SWA's 401 → `/login.html` redirect.
+
+### Rationale
+- Marketing funnel: visitors must see what they're signing up for before creating an account.
+- SWA's route table makes this declarative — no server code, no JS guards.
+- The auth nav renders two buttons (Sign Up / Sign In) when unauthenticated and an email chip + Sign out when authenticated, driven by `/.auth/me`.
+
+## ADR-010: Self-service registration via Azure Function + Graph API + ACS
+
+**Date:** 2026-06-12
+**Status:** Accepted
+
+### Decision
+A co-located Azure Function (`api/register/index.js`, HTTP trigger) accepts a form POST from `signup.html`, creates an Entra ID member account via Microsoft Graph API (client credentials flow), adds the user to `sg-training-hub-learners`, and sends a branded HTML welcome email with temporary credentials via Azure Communication Services.
+
+### Rationale
+- Eliminates manual admin provisioning for every new learner.
+- Graph client credentials flow requires no user interaction — the Function runs headlessly with app-only permissions (`User.ReadWrite.All`, `GroupMember.ReadWrite.All`).
+- ACS transactional email is the recommended Azure-native path (no third-party SMTP dependency).
+- The Function is co-located with SWA in `api/` — zero additional hosting cost, deployed by the same GitHub Actions workflow.
+- No SDK for Graph — uses native Node.js `https` module to keep the function dependency surface minimal; only `@azure/communication-email` is an external dep.
+
+## ADR-011: Design system in `src/brand/`
+
+**Date:** 2026-06-12
+**Status:** Accepted
+
+### Decision
+All visual tokens (colors, typography, spacing, radius, shadows, gradients, motion) live in `src/brand/tokens.css` as CSS custom properties. Logo variants are SVG files in `src/brand/logo/`. A visual reference page (`src/brand/design-system.html`) documents all components inline — no external Storybook or design tool required.
+
+### Rationale
+- CSS custom properties are the lowest-friction token system compatible with the zero-build-step constraint.
+- SVG logos are infinitely scalable, editable in any text editor, and load without HTTP overhead on browsers that support `<link rel="icon" type="image/svg+xml">`.
+- The self-contained reference page (single HTML file) can be opened from `npm start` without deploying — no documentation hosting needed.
+
+## ADR-012: Site renamed from "Training Hub" to "BD Cloud Academy"
+
+**Date:** 2026-06-12
+**Status:** Accepted
+
+### Decision
+All user-facing references to "Training Hub" were replaced with "BD Cloud Academy" across 32 files (page titles, nav alt text, footer, email content, lab breadcrumbs, presentation template, logo wordmarks). The git repository slug (`training-hub`) and the Entra security group name (`sg-training-hub-learners`) are deliberately left unchanged to avoid breaking infrastructure references.
+
+### Rationale
+- The public brand is "BD Cloud Academy"; "Training Hub" was an internal project codename.
+- Keeping the repo slug and group name unchanged avoids needing to update GitHub Actions secrets, SWA resource names, and Bicep templates — purely cosmetic risk with no benefit.
+- Custom domain `learn.bdcloudacademy.com` reinforces the brand on the public URL.
+
+## ADR-014: Serve `/src/brand/*` anonymously for public landing page
+
+**Date:** 2026-06-13
+**Status:** Accepted
+
+### Decision
+Add a route rule in `staticwebapp.config.json` that grants `anonymous` access to `/src/brand/*`. All other unauthenticated paths use the existing catch-all `authenticated` requirement.
+
+### Rationale
+- The public landing page (`index.html`) embeds product visuals from `src/brand/showcase/` (e.g. `hub-spoke-topology.png`) in the "Why BD Cloud Academy" zigzag section.
+- Without an explicit anonymous rule, SWA's `/*` catch-all blocks image requests for unauthenticated visitors, breaking the marketing funnel before sign-in.
+- Scoping the exception to `/src/brand/*` keeps all course content, labs, and API routes fully protected — only CSS tokens, logos, and showcase PNGs are public.
+
+---
+
+## ADR-013: Playwright design assessment suite
+
+**Date:** 2026-06-12  
+**Status:** Accepted
+
+### Decision
+A dedicated Playwright test file (`tests/design-assessment.spec.js`) runs automated design quality checks on every local build: full-page screenshots at three viewports, brand token presence, WCAG AA contrast on flat-background elements, typography minimums, horizontal overflow, and logo/favicon loading.
+
+### Rationale
+- Screenshots at 1440/768/390px give a permanent visual record per commit — reviewers can diff PNGs without spinning up the site.
+- WCAG AA contrast checks caught a real failure: desktop nav links at 2.77:1 (slate-600 on white); fixed to 10.35:1 (slate-700).
+- Typography minimum (14px body copy) caught lab card descriptions at 12px; bumped to `text-sm`.
+- Contrast walker bails out on `background-image` (gradients) rather than producing false negatives — hero section is excluded by design, verified visually via screenshots.
+- Token check verifies `tokens.css` is linked and its CSS custom properties resolve on the landing page.
+- `webServer` in `playwright.config.js` auto-starts `http-server` — no manual `npm start` needed before running tests.
