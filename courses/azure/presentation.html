@@ -10,7 +10,7 @@
   <style>
     /* Inline path override when served standalone */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    :root { --course-color: #0078D4; --course-accent: #50E6FF; }
+    :root { --course-color: #10b981; --course-accent: #34d399; }
   </style>
 </head>
 <body>
@@ -19,22 +19,67 @@
   <div class="slides">
 
     
-    <section class="title-slide" data-background-gradient="radial-gradient(ellipse at top, #0F1E3A 0%, #0B1120 100%)">
-      <div style="margin-top: 12%">
-        <div class="course-badge">Microsoft Azure · Fundamentals</div>
-        <h1>Azure Fundamentals</h1>
-        <p class="subtitle">Learn cloud computing fundamentals and Azure services in preparation for the Microsoft Azure Fundamentals (AZ-900) certification. This course covers cloud concepts, Azure architecture and services, and Azure management and governance.</p>
-        <p class="subtitle" style="margin-top:0.3em;font-size:0.8em;color:#475569">
-          3 modules · ~4 hours · AZ-900
-        </p>
-        <div style="margin-top:2em;display:flex;gap:2em;font-size:0.45em;color:#475569">
-          <span>📋 Structured curriculum</span>
-          <span>📊 Interactive diagrams</span>
-          <span>✅ Knowledge checks</span>
-          <span>🗒️ Speaker notes</span>
+    <section class="title-slide" data-background-color="#060D1A">
+      <!-- Grid texture -->
+      <div class="ts-grid"></div>
+      <!-- Emerald glow behind badge -->
+      <div class="ts-glow" style="background:radial-gradient(circle,rgba(16,185,129,0.22) 0%,transparent 65%)"></div>
+      <div class="ts-wrap">
+        <!-- ── Left column ── -->
+        <div class="ts-left">
+          <div class="ts-eyebrow">
+            <svg class="ts-chevron" viewBox="0 0 7 9" fill="none"><path d="M1 1l5 3.5L1 8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span>Microsoft Azure</span>
+            <svg class="ts-chevron" viewBox="0 0 7 9" fill="none"><path d="M1 1l5 3.5L1 8" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="ts-eyebrow-hi" style="color:#34d399">Fundamentals</span>
+          </div>
+
+          <div class="ts-code-tag" style="color:#34d399;background:rgba(16,185,129,0.13);border:1px solid rgba(16,185,129,0.28)">AZ-900</div>
+
+          <h1 class="ts-h1">
+            <span class="ts-h1-grad" style="background:linear-gradient(90deg,#10b981 0%,#34d399 55%,#6ee7b7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Azure Fundamentals</span>
+          </h1>
+
+          <p class="ts-sub">Master cloud computing concepts, Azure architecture, core services, identity, security, pricing and governance — aligned to the AZ-900 exam.</p>
+
+          <div class="ts-meta">
+            <div class="ts-chip"><strong>3</strong><span>Modules</span></div>
+            <div class="ts-chip"><strong>~4h</strong><span>Duration</span></div>
+            <div class="ts-chip"><strong>40+</strong><span>Exam Qs</span></div>
+            <div class="ts-chip"><strong>Beginner</strong><span>Level</span></div>
+          </div>
+
+          <div class="ts-press">
+            <div class="ts-press-dot" style="background:#10b981;animation:ts-dot-pulse 2.2s ease-in-out infinite"></div>
+            Press <kbd class="ts-key">Space</kbd> to begin
+          </div>
+        </div>
+
+        <!-- ── Right column: cert badge + floating topic pills ── -->
+        <div class="ts-right">
+          <div class="ts-ring" style="background:conic-gradient(from 210deg,#10b981 0%,#34d399 35%,#059669 55%,#10b981 100%)">
+            <div class="ts-ring-face">
+              <!-- Azure logo mark -->
+              <svg class="ts-azure-icon" viewBox="0 0 96 96" fill="none">
+                <defs>
+                  <linearGradient id="azL9" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#10b981"/></linearGradient>
+                  <linearGradient id="azR9" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6ee7b7"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+                </defs>
+                <path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="url(#azL9)" opacity="0.95"/>
+              </svg>
+              <div class="ts-ring-code" style="color:#34d399">AZ-900</div>
+              <div class="ts-ring-label">AZURE<br>FUNDAMENTALS</div>
+            </div>
+          </div>
+          <!-- Floating topic pills -->
+          <div class="ts-pill ts-pill-a">☁️ Cloud Concepts</div>
+          <div class="ts-pill ts-pill-b">🏛️ Azure Architecture</div>
+          <div class="ts-pill ts-pill-c">🔐 Security &amp; Identity</div>
+          <div class="ts-pill ts-pill-d">💰 Pricing &amp; SLAs</div>
+          <div class="ts-pill ts-pill-e">⚙️ Core Services</div>
         </div>
       </div>
-      <aside class="notes">Welcome everyone. This presentation covers Azure Fundamentals. We have 3 modules to get through. Encourage questions throughout.</aside>
+      <aside class="notes">Welcome to Azure Fundamentals (AZ-900). We have 3 modules covering cloud concepts, Azure architecture and services, and management tools. This course prepares you for the AZ-900 certification exam.</aside>
     </section>
 
 <section>
@@ -124,7 +169,7 @@
   <h2>Business Benefits of Cloud Adoption</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.65em;margin-bottom:0.5em">Availability &amp; Reliability</h4>
+      <h4 style="color:#34d399;font-size:0.65em;margin-bottom:0.5em">Availability &amp; Reliability</h4>
       <ul style="font-size:0.62em">
         <li><strong>High availability</strong> — SLA-backed uptime (Azure VMs: up to 99.99% with Availability Zones)</li>
         <li><strong>Fault tolerance</strong> — redundant components absorb failures with no user impact</li>
@@ -261,7 +306,7 @@
   <h2>Total Cost of Ownership (TCO) &amp; ROI</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">On-Premises TCO Includes</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">On-Premises TCO Includes</h4>
       <ul style="font-size:0.62em">
         <li>Hardware purchase and refresh (every 3–5 years)</li>
         <li>Data centre space, power, and cooling (~40% of hardware cost)</li>
@@ -371,7 +416,7 @@
   <h2>FaaS &amp; Serverless — Beyond PaaS</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#0078D4;font-size:0.7em;margin-bottom:0.5em">Function as a Service (FaaS)</h4>
+      <h4 style="color:#10b981;font-size:0.7em;margin-bottom:0.5em">Function as a Service (FaaS)</h4>
       <ul style="font-size:0.65em">
         <li>Run individual functions triggered by events</li>
         <li>No server provisioning — ever</li>
@@ -437,7 +482,7 @@ graph TB
   <h2>Choosing the Right Service Model</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#0078D4;font-size:0.7em;margin-bottom:0.5em">Pick IaaS when…</h4>
+      <h4 style="color:#10b981;font-size:0.7em;margin-bottom:0.5em">Pick IaaS when…</h4>
       <ul style="font-size:0.62em">
         <li>You need full OS-level control or custom kernel config</li>
         <li>Migrating existing on-prem VMs (lift-and-shift)</li>
@@ -771,7 +816,7 @@ graph LR
   <h2>Region Pairs &amp; High Availability</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">What is a Region Pair?</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">What is a Region Pair?</h4>
       <ul style="font-size:0.65em">
         <li>Every Azure region is paired with another region in the same Geography, ≥300 miles apart</li>
         <li>Paired regions receive updates sequentially — never simultaneously</li>
@@ -919,7 +964,7 @@ graph TB
   <h2>Subscriptions &amp; Resource Groups in Depth</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Subscriptions</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Subscriptions</h4>
       <ul style="font-size:0.65em">
         <li>Unit of billing — usage rolled up per subscription</li>
         <li>Separate subscriptions per environment (prod / dev) isolates costs and access</li>
@@ -1097,7 +1142,7 @@ graph TB
   <h2>App Service &amp; Containers (PaaS)</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Azure App Service</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Azure App Service</h4>
       <ul style="font-size:0.65em">
         <li>Fully managed platform for web apps, REST APIs, and mobile back-ends</li>
         <li>Supports .NET, Node.js, Python, Java, PHP, Ruby</li>
@@ -1385,7 +1430,7 @@ flowchart TB
   <div class="two-col">
     <div>
       <ul style="font-size:0.62em">
-        <li><strong style="color:#38BDF8">Hot</strong> — Frequently accessed data (daily reads). Highest storage cost, lowest access cost. Default for new accounts.</li>
+        <li><strong style="color:#34d399">Hot</strong> — Frequently accessed data (daily reads). Highest storage cost, lowest access cost. Default for new accounts.</li>
         <li><strong style="color:#34D399">Cool</strong> — Infrequently accessed; minimum 30-day retention. Lower storage cost, higher access cost than Hot.</li>
         <li><strong style="color:#A78BFA">Cold</strong> — Rarely accessed; minimum 90-day retention. Lower cost than Cool; data available within milliseconds.</li>
         <li><strong style="color:#F87171">Archive</strong> — Long-term retention; minimum 180 days. Lowest storage cost. Data is <em>offline</em> — must rehydrate (up to 15 hours) before reading.</li>
@@ -1410,7 +1455,7 @@ flowchart TB
   <p style="font-size:0.63em;margin-bottom:0.6em">All storage accounts replicate data automatically. The option you choose determines <strong>where</strong> copies are stored and your durability SLA.</p>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.65em;margin-bottom:0.4em">Within one region</h4>
+      <h4 style="color:#34d399;font-size:0.65em;margin-bottom:0.4em">Within one region</h4>
       <ul style="font-size:0.62em">
         <li><strong>LRS — Locally Redundant Storage</strong><br>3 copies within a single datacenter. Cheapest. No protection against datacenter failure. Durability: 11 nines.</li>
         <li><strong>ZRS — Zone-Redundant Storage</strong><br>3 copies across 3 Availability Zones in one region. Survives a full zone outage. Durability: 12 nines.</li>
@@ -1490,7 +1535,7 @@ flowchart TB
   <h2>Authentication vs Authorization</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Authentication (AuthN) — Who are you?</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Authentication (AuthN) — Who are you?</h4>
       <ul style="font-size:0.65em">
         <li>Proves the identity of a user or service</li>
         <li>Entra ID issues a <strong>token</strong> on successful sign-in</li>
@@ -1547,14 +1592,14 @@ flowchart TB
   <p style="font-size:0.65em;margin-bottom:0.6em">Azure RBAC controls <em>what</em> authenticated identities can do with Azure resources. A <strong>role assignment</strong> combines a security principal, a role definition, and a scope.</p>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.68em;margin-bottom:0.4em">Built-in Roles (key four)</h4>
+      <h4 style="color:#34d399;font-size:0.68em;margin-bottom:0.4em">Built-in Roles (key four)</h4>
       <ul style="font-size:0.62em">
         <li><strong>Owner</strong> — full access + manage access</li>
         <li><strong>Contributor</strong> — create &amp; manage resources, no access management</li>
         <li><strong>Reader</strong> — view resources only, no changes</li>
         <li><strong>User Access Administrator</strong> — manage user access only</li>
       </ul>
-      <h4 style="color:#60A5FA;font-size:0.68em;margin-top:0.8em;margin-bottom:0.4em">Scope Hierarchy</h4>
+      <h4 style="color:#34d399;font-size:0.68em;margin-top:0.8em;margin-bottom:0.4em">Scope Hierarchy</h4>
       <ul style="font-size:0.62em">
         <li>Management Group → Subscription → Resource Group → Resource</li>
         <li>Permissions <strong>inherit downward</strong> — assignment at subscription applies to all its resource groups</li>
@@ -1669,7 +1714,7 @@ flowchart TB
   <h2>Estimating Costs: The Two Calculators</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">💰 Pricing Calculator</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">💰 Pricing Calculator</h4>
       <ul style="font-size:0.65em">
         <li>Estimate cost of <em>new</em> Azure workloads before you deploy</li>
         <li>Configure service SKUs, regions, and usage hours interactively</li>
@@ -1727,7 +1772,7 @@ flowchart TB
   <h2>Cost Optimization Strategies</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Commitment Discounts</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Commitment Discounts</h4>
       <ul style="font-size:0.65em">
         <li><strong>Reserved Instances (1 or 3 yr):</strong> up to 72% off VMs and SQL — best for steady, predictable workloads</li>
         <li><strong>Savings Plans (1 or 3 yr):</strong> up to 65% off compute — flexible across VM families and regions</li>
@@ -1850,7 +1895,7 @@ flowchart TB
   <h2>Policy Effects &amp; Built-in Definitions</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Policy Effects (in order of strictness)</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Policy Effects (in order of strictness)</h4>
       <ul style="font-size:0.65em">
         <li><strong>Audit</strong> — flags non-compliant resources; no blocking</li>
         <li><strong>AuditIfNotExists</strong> — audits when a related resource is missing</li>
@@ -1996,7 +2041,7 @@ flowchart TB
   <h2>Azure Portal &amp; Cloud Shell</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#38BDF8;font-size:0.7em;margin-bottom:0.5em">Azure Portal</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Azure Portal</h4>
       <ul style="font-size:0.65em">
         <li>Visual, point-and-click resource management</li>
         <li>Built-in dashboards and cost charts</li>
@@ -2146,7 +2191,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   <h2>Log Analytics &amp; Application Insights</h2>
   <div class="two-col">
     <div>
-      <h4 style="color:#60A5FA;font-size:0.7em;margin-bottom:0.5em">Log Analytics Workspace</h4>
+      <h4 style="color:#34d399;font-size:0.7em;margin-bottom:0.5em">Log Analytics Workspace</h4>
       <ul style="font-size:0.65em">
         <li>Central store for log data from VMs, containers, network, and security sources</li>
         <li>Query logs with KQL — filter, aggregate, join across tables</li>
@@ -2353,7 +2398,7 @@ graph TB
 </div>
 
 <!-- Back to hub -->
-<a href="../../index.html" style="position:fixed;bottom:16px;left:16px;z-index:999;font-family:Inter,sans-serif;font-size:11px;color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
+<a href="../../index.html" style="position:fixed;bottom:16px;left:16px;z-index:999;font-family:Inter,sans-serif;font-size:11px;color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #0d1f14;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
 
 <!-- Reveal.js -->
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
