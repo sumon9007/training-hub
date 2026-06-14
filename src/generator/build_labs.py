@@ -1131,15 +1131,15 @@ LABS = [
 # ── HTML Template ──────────────────────────────────────────────────────────────
 
 DIFF_STYLE = {
-    "Beginner":     ("bg-blue-100 text-blue-700",    "🔵"),
-    "Intermediate": ("bg-yellow-100 text-yellow-700", "🟡"),
-    "Advanced":     ("bg-red-100 text-red-700",      "🔴"),
+    "Beginner":     ("bg-blue-500/10 text-blue-300 border border-blue-500/25",    "🔵"),
+    "Intermediate": ("bg-amber-500/10 text-amber-300 border border-amber-500/25", "🟡"),
+    "Advanced":     ("bg-red-500/10 text-red-300 border border-red-500/25",       "🔴"),
 }
 
 STEP_TYPE_LABEL = {
-    "portal": ("Portal",     "bg-blue-100 text-blue-700 border border-blue-200"),
-    "cli":    ("CLI",        "bg-emerald-100 text-emerald-700 border border-emerald-200"),
-    "ps":     ("PowerShell", "bg-indigo-100 text-indigo-700 border border-indigo-200"),
+    "portal": ("Portal",     "bg-blue-500/10 text-blue-300 border border-blue-500/25"),
+    "cli":    ("CLI",        "bg-emerald-500/10 text-emerald-300 border border-emerald-500/25"),
+    "ps":     ("PowerShell", "bg-indigo-500/10 text-indigo-300 border border-indigo-500/25"),
 }
 
 
@@ -1153,22 +1153,22 @@ def build_step(i, step):
         code_block = f'''
         <div class="relative mt-3 group/code">
           <button onclick="copyCode(this)" title="Copy"
-            class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-white hover:bg-slate-100 rounded text-slate-500 border border-slate-300">
+            class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-[#16233a] hover:bg-[#1e2d45] rounded text-slate-400 border border-[#243654]">
             Copy
           </button>
           <pre class="code-block overflow-x-auto"><code>{lines}</code></pre>
         </div>'''
 
-    desc_html = f'<p class="text-sm text-slate-600 mt-1">{desc}</p>' if desc else ""
+    desc_html = f'<p class="text-sm text-slate-400 mt-1">{desc}</p>' if desc else ""
 
     return f'''
       <div class="step-card flex gap-4">
         <div class="shrink-0">
-          <div class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center text-xs font-bold text-indigo-600">{i}</div>
+          <div class="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-xs font-bold text-indigo-300">{i}</div>
         </div>
-        <div class="flex-1 min-w-0 pb-6 border-b border-slate-100 last:border-0">
+        <div class="flex-1 min-w-0 pb-6 border-b border-[#16233a] last:border-0">
           <div class="flex items-center gap-2 flex-wrap">
-            <h3 class="font-semibold text-sm text-slate-900">{title}</h3>
+            <h3 class="font-semibold text-sm text-slate-100">{title}</h3>
             <span class="text-xs px-2 py-0.5 rounded-full font-medium {badge_cls}">{label}</span>
           </div>
           {desc_html}{code_block}
@@ -1186,23 +1186,23 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     module = lab["module"]
 
     objectives_html = "".join(
-        f'<li class="flex items-start gap-2 text-sm text-slate-700"><span class="text-indigo-500 mt-0.5">✓</span>{o}</li>'
+        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-blue-400 mt-0.5">✓</span>{o}</li>'
         for o in lab["objectives"]
     )
     prereqs_html = "".join(
-        f'<li class="text-sm text-slate-600 flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span>{p}</li>'
+        f'<li class="text-sm text-slate-400 flex items-start gap-2"><span class="text-slate-500 mt-0.5">•</span>{p}</li>'
         for p in lab["prereqs"]
     )
     steps_html = "".join(build_step(i + 1, s) for i, s in enumerate(lab["steps"]))
     validation_html = "".join(
-        f'<li class="flex items-start gap-2 text-sm text-slate-700"><span class="text-green-600 mt-0.5">✓</span><span>{v}</span></li>'
+        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-green-400 mt-0.5">✓</span><span>{v}</span></li>'
         for v in lab["validation"]
     )
     cleanup_lines = "\n".join(lab["cleanup"])
     cleanup_html = f'''
           <div class="relative group/code">
             <button onclick="copyCode(this)" title="Copy"
-              class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-white hover:bg-slate-100 rounded text-slate-500 border border-slate-300">
+              class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-[#16233a] hover:bg-[#1e2d45] rounded text-slate-400 border border-[#243654]">
               Copy
             </button>
             <pre class="code-block overflow-x-auto"><code>{cleanup_lines}</code></pre>
@@ -1210,14 +1210,14 @@ def render_lab(lab, prev_lab, next_lab, img_path):
 
     prev_link = (
         f'<a href="{prev_lab["slug"]}.html" '
-        f'class="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 transition-colors">'
+        f'class="flex items-center gap-2 text-sm text-slate-400 hover:text-blue-400 transition-colors">'
         f'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>'
         f'Lab {prev_lab["id"]}: {prev_lab["title"]}</a>'
         if prev_lab else '<div></div>'
     )
     next_link = (
         f'<a href="{next_lab["slug"]}.html" '
-        f'class="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 transition-colors">'
+        f'class="flex items-center gap-2 text-sm text-slate-400 hover:text-blue-400 transition-colors">'
         f'Lab {next_lab["id"]}: {next_lab["title"]}'
         f'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
         f'</a>'
@@ -1229,46 +1229,46 @@ def render_lab(lab, prev_lab, next_lab, img_path):
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lab {lab_id} — {title} | AZ-104 Training Hub</title>
+  <title>Lab {lab_id} — {title} | BD Cloud Academy</title>
+  <link rel="icon" type="image/svg+xml" href="/src/brand/logo/favicon.svg"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     body {{ font-family: 'Inter', sans-serif; }}
     .code-block {{
-      background: #F1F5F9;
-      border: 1px solid #CBD5E1;
+      background: #0d1b2e;
+      border: 1px solid #16233a;
       border-radius: 8px;
       padding: 1rem 1.2rem;
       font-family: 'Cascadia Code','Fira Code','JetBrains Mono',monospace;
       font-size: 0.8rem;
       line-height: 1.6;
-      color: #1E293B;
+      color: #93c5fd;
       white-space: pre;
     }}
     .copy-btn {{ cursor: pointer; }}
-    .copy-btn.copied {{ color: #059669; }}
+    .copy-btn.copied {{ color: #34d399; }}
     .step-card + .step-card {{ margin-top: 1rem; }}
-    .sticky-sidebar {{ position: sticky; top: 5rem; }}
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-[#060c18] text-slate-200 min-h-screen">
 
   <!-- NAV -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+  <nav class="sticky top-0 z-50 bg-[#0a1322] border-b border-[#16233a] shadow-sm">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-3 text-sm">
-      <a href="../../../index.html#labs" class="flex items-center gap-1.5 text-slate-500 hover:text-blue-600 transition-colors font-medium">
+      <a href="../../../index.html#labs" class="flex items-center gap-1.5 text-slate-400 hover:text-blue-400 transition-colors font-medium">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-        Training Hub
+        BD Cloud Academy
       </a>
-      <span class="text-slate-300">/</span>
-      <a href="../../../index.html#labs" class="text-slate-500 hover:text-blue-600 transition-colors">AZ-104 Labs</a>
-      <span class="text-slate-300">/</span>
-      <span class="text-slate-900 font-semibold">Lab {lab_id}</span>
+      <span class="text-slate-600">/</span>
+      <a href="../../../index.html#labs" class="text-slate-400 hover:text-blue-400 transition-colors">AZ-104 Labs</a>
+      <span class="text-slate-600">/</span>
+      <span class="text-slate-100 font-semibold">Lab {lab_id}</span>
       <!-- User chip (right-aligned) -->
       <div class="ml-auto flex items-center gap-3">
-        <span id="lab-user" class="hidden text-slate-500 font-medium max-w-[180px] truncate"></span>
-        <a href="/.auth/logout?post_logout_redirect_uri=/login.html" id="lab-signout" class="hidden text-xs text-slate-400 hover:text-red-500 transition-colors">Sign out</a>
-        <a href="/login.html" id="lab-login" class="hidden text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors">Sign in</a>
+        <span id="lab-user" class="hidden text-slate-400 font-medium max-w-[180px] truncate"></span>
+        <a href="/.auth/logout?post_logout_redirect_uri=/login.html" id="lab-signout" class="hidden text-xs text-slate-500 hover:text-red-400 transition-colors">Sign out</a>
+        <a href="/login.html" id="lab-login" class="hidden text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors">Sign in</a>
       </div>
     </div>
   </nav>
@@ -1285,21 +1285,21 @@ def render_lab(lab, prev_lab, next_lab, img_path):
   </script>
 
   <!-- HEADER -->
-  <header class="border-b border-slate-200 bg-white">
+  <header class="border-b border-[#16233a] bg-[#0a1322]">
     <div class="max-w-6xl mx-auto px-6 py-8">
       <div class="flex items-start justify-between gap-6 flex-wrap">
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2.5 flex-wrap mb-3">
-            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">Lab {lab_id}</span>
+            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/25">Lab {lab_id}</span>
             <span class="text-xs font-semibold px-3 py-1 rounded-full {diff_cls}">{diff_emoji} {difficulty}</span>
-            <span class="text-xs text-slate-400 flex items-center gap-1">⏱ {duration}</span>
+            <span class="text-xs text-slate-500 flex items-center gap-1">⏱ {duration}</span>
           </div>
-          <h1 class="text-2xl font-bold text-slate-900 mb-1.5">{title}</h1>
-          <p class="text-slate-500 text-sm mb-3">{subtitle}</p>
-          <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">{module}</p>
+          <h1 class="text-2xl font-bold text-slate-100 mb-1.5">{title}</h1>
+          <p class="text-slate-400 text-sm mb-3">{subtitle}</p>
+          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">{module}</p>
         </div>
         <!-- Objectives summary -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 min-w-72 max-w-sm">
+        <div class="bg-[#0d1b2e] border border-[#16233a] rounded-xl p-4 min-w-72 max-w-sm">
           <h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Lab Objectives</h2>
           <ul class="space-y-1.5">{objectives_html}</ul>
         </div>
@@ -1312,7 +1312,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     <div class="space-y-10">
 
       <!-- Prerequisites -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="bg-[#0a1322] border border-[#16233a] rounded-xl p-5">
         <h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3 flex items-center gap-2">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Prerequisites
@@ -1323,18 +1323,18 @@ def render_lab(lab, prev_lab, next_lab, img_path):
       <!-- Steps + Diagram + Validation + Cleanup -->
       <div>
         <!-- Steps heading -->
-        <h2 class="text-base font-bold text-slate-900 mb-6 flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-500"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+        <h2 class="text-base font-bold text-slate-100 mb-6 flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
           Lab Steps
         </h2>
 
         <!-- Architecture Diagram — centred inline with steps -->
-        <div class="rounded-2xl border border-slate-200 overflow-hidden bg-white shadow-sm mb-8">
-          <div class="flex items-center gap-2 px-5 py-3 border-b border-slate-200 bg-slate-50">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-500"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <div class="rounded-2xl border border-[#16233a] overflow-hidden bg-[#0a1322] mb-8">
+          <div class="flex items-center gap-2 px-5 py-3 border-b border-[#16233a]">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Architecture Diagram</span>
           </div>
-          <div class="flex justify-center p-6 bg-slate-50">
+          <div class="flex justify-center p-6 bg-[#060c18]">
             <img src="../assets/diagrams/labs/{img_path}" alt="{title} Architecture Diagram"
                  class="rounded-xl object-contain"
                  style="max-height:520px; width:100%; max-width:860px;" loading="lazy"/>
@@ -1345,8 +1345,8 @@ def render_lab(lab, prev_lab, next_lab, img_path):
         <div class="space-y-0 mb-10">{steps_html}</div>
 
         <!-- Validation -->
-        <div class="bg-green-50 border border-green-200 rounded-xl p-5 mb-6">
-          <h2 class="text-sm font-bold text-green-700 mb-3 flex items-center gap-2">
+        <div class="bg-green-500/5 border border-green-500/20 rounded-xl p-5 mb-6">
+          <h2 class="text-sm font-bold text-green-400 mb-3 flex items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             Validation Checklist
           </h2>
@@ -1354,8 +1354,8 @@ def render_lab(lab, prev_lab, next_lab, img_path):
         </div>
 
         <!-- Cleanup -->
-        <div class="bg-red-50 border border-red-200 rounded-xl p-5">
-          <h2 class="text-sm font-bold text-red-700 mb-3 flex items-center gap-2">
+        <div class="bg-red-500/5 border border-red-500/20 rounded-xl p-5">
+          <h2 class="text-sm font-bold text-red-400 mb-3 flex items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
             Cleanup Resources
           </h2>
@@ -1367,7 +1367,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
       <!-- Back to lab list -->
       <div class="flex justify-center">
         <a href="../../../index.html#labs"
-          class="flex items-center gap-2 px-5 py-2.5 text-sm text-slate-500 hover:text-blue-600 border border-slate-200 hover:border-blue-300 rounded-xl transition-colors bg-white shadow-sm">
+          class="flex items-center gap-2 px-5 py-2.5 text-sm text-slate-400 hover:text-blue-400 border border-[#16233a] hover:border-blue-500/40 rounded-xl transition-colors bg-[#0a1322]">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           All AZ-104 Labs
         </a>
@@ -1377,10 +1377,10 @@ def render_lab(lab, prev_lab, next_lab, img_path):
   </main>
 
   <!-- FOOTER NAV -->
-  <footer class="border-t border-slate-200 mt-10 bg-white">
+  <footer class="border-t border-[#16233a] mt-10 bg-[#0a1322]">
     <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
       {prev_link}
-      <span class="text-xs text-slate-400">Lab {lab_id} of {len(LABS)}</span>
+      <span class="text-xs text-slate-500">Lab {lab_id} of {len(LABS)}</span>
       {next_link}
     </div>
   </footer>

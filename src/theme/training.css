@@ -1478,3 +1478,163 @@ a[href="../../index.html"]:hover {
   #bnav-up, #bnav-down { animation: none !important; }
   .bnav-varrow:active::after { animation: none !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   FIXES — keyboard overlay, content clipping, mobile, overview mode
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Fix A: Keyboard help overlay — dark theme compatibility ──
+   Reveal.js 5.x renders the help panel as .reveal .overlay (or .r-modal in
+   newer builds). Our dark .reveal-viewport background bleeds through because
+   the overlay relied on the default light theme backdrop. Override both. ── */
+.reveal .overlay,
+.reveal .r-modal {
+  background: rgba(0, 0, 0, 0.88) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.reveal .overlay .keyboard-shortcuts,
+.reveal .overlay .inner,
+.reveal .r-modal .r-modal-inner,
+.reveal .keyboard-shortcuts {
+  background: rgba(8, 14, 30, 0.98) !important;
+  border: 1px solid rgba(56, 189, 248, 0.2) !important;
+  border-radius: 14px !important;
+  padding: 28px 36px !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  color: #E2E8F0 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8) !important;
+}
+.reveal .overlay h3,
+.reveal .overlay h2,
+.reveal .r-modal h2 {
+  color: #60A5FA !important;
+  font-family: 'Inter', sans-serif !important;
+  margin-bottom: 0.75em !important;
+  padding-bottom: 0.5em !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  font-size: 1em !important;
+}
+.reveal .overlay table td,
+.reveal .overlay tr td,
+.reveal .overlay li,
+.reveal .overlay span,
+.reveal .overlay p,
+.reveal .r-modal li,
+.reveal .r-modal span,
+.reveal .r-modal p {
+  color: #CBD5E1 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+.reveal .overlay .close-overlay,
+.reveal .r-modal .r-modal-close {
+  color: #64748B !important;
+  background: rgba(255,255,255,0.07) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 6px !important;
+  padding: 4px 10px !important;
+  cursor: pointer !important;
+}
+.reveal .overlay .close-overlay:hover,
+.reveal .r-modal .r-modal-close:hover { color: #E2E8F0 !important; }
+/* Keyboard shortcut key chips */
+.reveal .overlay table td:first-child kbd,
+.reveal .overlay table td:first-child {
+  font-family: 'JetBrains Mono', monospace !important;
+  background: rgba(56,189,248,0.12) !important;
+  color: #7DD3FC !important;
+  border: 1px solid rgba(56,189,248,0.25) !important;
+  border-radius: 4px !important;
+  padding: 2px 7px !important;
+  white-space: nowrap !important;
+}
+
+/* ── Fix B: Heading overflow-wrap — prevents long titles clipping right ── */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  max-width: 100% !important;
+  hyphens: auto !important;
+}
+
+/* ── Fix C: Top padding for slide content — clear the fixed Hub button +
+   HUD elements that sit at top: 12px (height ~30px → end at ~44px).
+   Previous value was 36px which let content overlap the chrome layer. ── */
+.reveal .slides section,
+.reveal .slides section section {
+  padding-top: 62px !important;
+}
+
+/* ── Fix D: Mobile — readable presentation at small viewport widths ── */
+@media screen and (max-width: 768px) {
+  /* Title slide: collapse two-column to single column */
+  .ts-wrap {
+    grid-template-columns: 1fr !important;
+    padding: 24px 20px 16px !important;
+    gap: 12px !important;
+  }
+  .ts-right { display: none !important; }
+  .ts-h1 { font-size: 1.4em !important; }
+  .ts-sub { font-size: 0.48em !important; max-width: 100% !important; }
+  .ts-meta { gap: 5px !important; flex-wrap: wrap !important; }
+  .ts-chip { padding: 6px 10px !important; }
+  .ts-chip strong { font-size: 0.55em !important; }
+  .ts-chip span { font-size: 0.28em !important; }
+
+  /* Boost base font — Reveal.js scales the 1280px slide to ~0.3× at 390px;
+     a larger base means the scaled-down text is still readable (~14px out) */
+  .reveal { font-size: 34px !important; }
+
+  /* Tighter slide padding on small screens */
+  .reveal .slides section,
+  .reveal .slides section section {
+    padding: 60px 18px 14px !important;
+  }
+
+  /* Bottom nav: allow horizontal scroll when pills overflow */
+  .bnav-modules {
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    scrollbar-width: none !important;
+  }
+  .bnav-modules::-webkit-scrollbar { display: none !important; }
+  .bnav-module {
+    min-width: 28px !important;
+    max-width: 42px !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Bottom nav: make more compact */
+  #bottom-nav { height: 38px !important; padding: 0 8px !important; gap: 0 !important; }
+  .bnav-vstack { gap: 1px !important; margin: 0 2px !important; }
+  .bnav-varrow { width: 26px !important; height: 12px !important; font-size: 9px !important; }
+  .bnav-arrow { width: 28px !important; height: 24px !important; }
+
+  /* Hub button: smaller on mobile */
+  a[href="../../index.html"] {
+    font-size: 10px !important;
+    padding: 5px 10px !important;
+  }
+}
+
+/* ── Fix E: Overview mode — slide thumbnails visible on dark background ── */
+.reveal.overview .slides section {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 3px !important;
+  outline: none !important;
+}
+.reveal.overview .slides section:hover {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
+}
+.reveal.overview .slides section.present {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35) !important;
+}
+/* Ensure text inside overview thumbnails is always readable */
+.reveal.overview .slides section * { color: inherit !important; }
