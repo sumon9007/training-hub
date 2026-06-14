@@ -18,6 +18,28 @@
     /* Badges */
     .badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 9999px; }
 
+
+    /* ── Per-item accent colour system ── */
+    [data-accent]:hover { border-color: var(--ac-b) !important; box-shadow: 0 20px 40px -12px var(--ac-s) !important; }
+    [data-accent]:hover .accent-title { color: var(--ac-t) !important; }
+    [data-accent]:hover .accent-badge { background: var(--ac-bg) !important; }
+    [data-accent="sky"]     { --ac-t:#38BDF8; --ac-b:rgba(56,189,248,.52);  --ac-s:rgba(56,189,248,.18);  --ac-bg:rgba(56,189,248,.28); }
+    [data-accent="blue"]    { --ac-t:#60A5FA; --ac-b:rgba(96,165,250,.52);  --ac-s:rgba(96,165,250,.18);  --ac-bg:rgba(96,165,250,.28); }
+    [data-accent="indigo"]  { --ac-t:#818CF8; --ac-b:rgba(129,140,248,.52); --ac-s:rgba(129,140,248,.18); --ac-bg:rgba(129,140,248,.28); }
+    [data-accent="violet"]  { --ac-t:#A78BFA; --ac-b:rgba(167,139,250,.52); --ac-s:rgba(167,139,250,.18); --ac-bg:rgba(167,139,250,.28); }
+    [data-accent="purple"]  { --ac-t:#C084FC; --ac-b:rgba(192,132,252,.52); --ac-s:rgba(192,132,252,.18); --ac-bg:rgba(192,132,252,.28); }
+    [data-accent="fuchsia"] { --ac-t:#E879F9; --ac-b:rgba(232,121,249,.52); --ac-s:rgba(232,121,249,.18); --ac-bg:rgba(232,121,249,.28); }
+    [data-accent="pink"]    { --ac-t:#F472B6; --ac-b:rgba(244,114,182,.52); --ac-s:rgba(244,114,182,.18); --ac-bg:rgba(244,114,182,.28); }
+    [data-accent="rose"]    { --ac-t:#FB7185; --ac-b:rgba(251,113,133,.52); --ac-s:rgba(251,113,133,.18); --ac-bg:rgba(251,113,133,.28); }
+    [data-accent="red"]     { --ac-t:#F87171; --ac-b:rgba(248,113,113,.52); --ac-s:rgba(248,113,113,.18); --ac-bg:rgba(248,113,113,.28); }
+    [data-accent="orange"]  { --ac-t:#FB923C; --ac-b:rgba(251,146,60,.52);  --ac-s:rgba(251,146,60,.18);  --ac-bg:rgba(251,146,60,.28); }
+    [data-accent="amber"]   { --ac-t:#FCD34D; --ac-b:rgba(252,211,77,.52);  --ac-s:rgba(252,211,77,.18);  --ac-bg:rgba(252,211,77,.28); }
+    [data-accent="yellow"]  { --ac-t:#FACC15; --ac-b:rgba(250,204,21,.52);  --ac-s:rgba(250,204,21,.18);  --ac-bg:rgba(250,204,21,.28); }
+    [data-accent="lime"]    { --ac-t:#A3E635; --ac-b:rgba(163,230,53,.52);  --ac-s:rgba(163,230,53,.18);  --ac-bg:rgba(163,230,53,.28); }
+    [data-accent="green"]   { --ac-t:#4ADE80; --ac-b:rgba(74,222,128,.52);  --ac-s:rgba(74,222,128,.18);  --ac-bg:rgba(74,222,128,.28); }
+    [data-accent="emerald"] { --ac-t:#34D399; --ac-b:rgba(52,211,153,.52);  --ac-s:rgba(52,211,153,.18);  --ac-bg:rgba(52,211,153,.28); }
+    [data-accent="teal"]    { --ac-t:#2DD4BF; --ac-b:rgba(45,212,191,.52);  --ac-s:rgba(45,212,191,.18);  --ac-bg:rgba(45,212,191,.28); }
+    [data-accent="cyan"]    { --ac-t:#22D3EE; --ac-b:rgba(34,211,238,.52);  --ac-s:rgba(34,211,238,.18);  --ac-bg:rgba(34,211,238,.28); }
     /* Tab content fade-slide transition */
     #view-courses, #view-labs { will-change: opacity, transform; }
 
@@ -426,12 +448,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
 
           <!-- AZ-900 -->
-          <a href="courses/azure/presentation.html" class="card-hover group relative block glass rounded-2xl p-6 hover:border-blue-400/50 hover:shadow-xl hover:shadow-blue-500/10">
+          <a href="courses/azure/presentation.html" data-accent="sky" class="card-hover group relative block glass rounded-2xl p-6">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex items-center justify-center mb-5 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/45 group-hover:scale-105 transition-all">
               <svg width="36" height="36" viewBox="0 0 96 96" fill="none"><path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="white" opacity="0.95"/></svg>
             </div>
             <span class="badge bg-blue-500/10 text-blue-300 mb-3">Azure Fundamentals</span>
-            <h3 class="font-bold text-base mb-1.5 text-white group-hover:text-blue-400 transition-colors leading-snug">Azure Fundamentals</h3>
+            <h3 class="accent-title font-bold text-base mb-1.5 text-white transition-colors leading-snug">Azure Fundamentals</h3>
             <p class="text-sm text-slate-400 mb-4 line-clamp-2">Cloud concepts, core services, identity, governance, pricing, and support.</p>
             <div class="flex items-center gap-3 text-xs text-slate-400 border-t border-emerald-500/10 pt-3 mb-3">
               <span>8 modules</span><span>·</span><span>~4 hours</span><span>·</span><span class="font-semibold text-slate-400">AZ-900</span>
@@ -442,13 +464,13 @@
           </a>
 
           <!-- AZ-104 — Most Popular ribbon -->
-          <a href="courses/az104/presentation.html" class="card-hover group relative block glass rounded-2xl p-6 hover:border-indigo-400/50 hover:shadow-xl hover:shadow-indigo-500/15">
+          <a href="courses/az104/presentation.html" data-accent="indigo" class="card-hover group relative block glass rounded-2xl p-6">
             <div class="ribbon">Most Popular</div>
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 via-indigo-500 to-violet-700 flex items-center justify-center mb-5 shadow-lg shadow-indigo-500/30 group-hover:shadow-indigo-500/50 group-hover:scale-105 transition-all">
               <svg width="36" height="36" viewBox="0 0 96 96" fill="none"><path d="M33.1 6L12 60.8l17.6 31.2h35.2L96 60.8 74.9 6H33.1z" fill="white" opacity="0.95"/></svg>
             </div>
             <span class="badge bg-indigo-500/10 text-indigo-300 mb-3">Azure Administrator</span>
-            <h3 class="font-bold text-base mb-1.5 text-white group-hover:text-indigo-400 transition-colors leading-snug">Azure Administrator Associate</h3>
+            <h3 class="accent-title font-bold text-base mb-1.5 text-white transition-colors leading-snug">Azure Administrator Associate</h3>
             <p class="text-sm text-slate-400 mb-4 line-clamp-2">Official AZ-104T00 curriculum — knowledge checks, exam simulators, CLI labs, and architecture diagrams.</p>
             <div class="flex items-center gap-3 text-xs text-slate-400 border-t border-emerald-500/10 pt-3 mb-3">
               <span>7 modules · 17 labs</span><span>·</span><span>~18 hours</span><span>·</span><span class="font-semibold text-slate-400">AZ-104</span>
@@ -597,11 +619,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
 
-          <a href="courses/az104/labs/lab-01.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">01</div>
+          <a href="courses/az104/labs/lab-01.html" data-accent="sky" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">01</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Manage Azure AD Identities</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Manage Azure AD Identities</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create and manage users, groups, and bulk user operations.</p>
@@ -611,11 +633,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-02a.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02a</div>
+          <a href="courses/az104/labs/lab-02a.html" data-accent="emerald" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02a</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Subscriptions &amp; RBAC</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Subscriptions &amp; RBAC</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Manage subscriptions and implement role-based access control.</p>
@@ -625,11 +647,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-02b.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02b</div>
+          <a href="courses/az104/labs/lab-02b.html" data-accent="teal" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">02b</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Governance via Azure Policy</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Governance via Azure Policy</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create and assign policies, manage compliance, configure locks.</p>
@@ -639,11 +661,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-03a.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03a</div>
+          <a href="courses/az104/labs/lab-03a.html" data-accent="blue" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03a</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Resources via Azure Portal</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Resources via Azure Portal</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create resource groups and manage resources using the Azure Portal.</p>
@@ -653,11 +675,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-03b.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03b</div>
+          <a href="courses/az104/labs/lab-03b.html" data-accent="indigo" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03b</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Resources via ARM Templates</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Resources via ARM Templates</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Deploy and manage Azure resources using ARM JSON templates.</p>
@@ -667,11 +689,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-03c.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03c</div>
+          <a href="courses/az104/labs/lab-03c.html" data-accent="violet" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03c</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Resources via PowerShell</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Resources via PowerShell</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Manage Azure resources using Azure PowerShell and Cloud Shell.</p>
@@ -681,11 +703,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-03d.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03d</div>
+          <a href="courses/az104/labs/lab-03d.html" data-accent="purple" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">03d</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Resources via Azure CLI</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Resources via Azure CLI</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Use the Azure CLI in Cloud Shell to deploy and manage resources.</p>
@@ -695,11 +717,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-04.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">04</div>
+          <a href="courses/az104/labs/lab-04.html" data-accent="cyan" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">04</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Implement Virtual Networking</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Implement Virtual Networking</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create VNets, subnets, NSGs, and configure DNS settings.</p>
@@ -709,11 +731,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-05.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">05</div>
+          <a href="courses/az104/labs/lab-05.html" data-accent="amber" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">05</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Intersite Connectivity</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Intersite Connectivity</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Configure VNet peering and test connectivity between virtual networks.</p>
@@ -723,11 +745,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-06.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
+          <a href="courses/az104/labs/lab-06.html" data-accent="orange" class="card-hover group flex gap-4 glass rounded-xl p-4">
             <div class="w-10 h-10 shrink-0 rounded-lg bg-red-500 flex items-center justify-center text-xs font-bold text-white">06</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Traffic Management</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Traffic Management</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Deploy and configure Azure Load Balancer and Application Gateway.</p>
@@ -737,11 +759,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-07.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">07</div>
+          <a href="courses/az104/labs/lab-07.html" data-accent="yellow" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">07</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Manage Azure Storage</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Manage Azure Storage</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create storage accounts, configure access and replication, use AzCopy.</p>
@@ -751,11 +773,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-08.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">08</div>
+          <a href="courses/az104/labs/lab-08.html" data-accent="lime" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">08</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Manage Virtual Machines</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Manage Virtual Machines</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Deploy VMs, configure scale sets, and manage VM extensions.</p>
@@ -765,11 +787,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-09a.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09a</div>
+          <a href="courses/az104/labs/lab-09a.html" data-accent="rose" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09a</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Implement Web Apps</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Implement Web Apps</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create Azure App Service web apps, configure deployment slots.</p>
@@ -779,11 +801,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-09b.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09b</div>
+          <a href="courses/az104/labs/lab-09b.html" data-accent="fuchsia" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">09b</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Azure Container Instances</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Azure Container Instances</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Deploy containerized workloads using Azure Container Instances.</p>
@@ -793,11 +815,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-09c.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
+          <a href="courses/az104/labs/lab-09c.html" data-accent="pink" class="card-hover group flex gap-4 glass rounded-xl p-4">
             <div class="w-10 h-10 shrink-0 rounded-lg bg-red-500 flex items-center justify-center text-xs font-bold text-white">09c</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Azure Kubernetes Service</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Azure Kubernetes Service</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Create an AKS cluster, deploy applications, and scale workloads.</p>
@@ -807,11 +829,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-10.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">10</div>
+          <a href="courses/az104/labs/lab-10.html" data-accent="red" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">10</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Implement Data Protection</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Implement Data Protection</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Configure Azure Backup and Azure Site Recovery for VMs.</p>
@@ -821,11 +843,11 @@
             </div>
           </a>
 
-          <a href="courses/az104/labs/lab-11.html" class="card-hover group flex gap-4 glass rounded-xl p-4 hover:border-emerald-400/50">
-            <div class="w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">11</div>
+          <a href="courses/az104/labs/lab-11.html" data-accent="green" class="card-hover group flex gap-4 glass rounded-xl p-4">
+            <div class="accent-badge w-10 h-10 shrink-0 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">11</div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors truncate">Implement Monitoring</span>
+                <span class="accent-title font-semibold text-sm text-slate-100 transition-colors truncate">Implement Monitoring</span>
                 <span class="badge bg-emerald-500/10 text-emerald-300 shrink-0">Live</span>
               </div>
               <p class="text-sm text-slate-400 mb-2 line-clamp-1">Configure Azure Monitor, Log Analytics, and Application Insights.</p>
