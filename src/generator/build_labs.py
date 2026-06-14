@@ -1184,10 +1184,10 @@ def build_step(i, step):
 
     return f'''
       <div class="step-card flex gap-4">
-        <div class="shrink-0">
+        <div class="shrink-0 pt-0.5">
           <div class="w-8 h-8 rounded-full ac-step-num flex items-center justify-center text-xs font-bold">{i}</div>
         </div>
-        <div class="flex-1 min-w-0 pb-6 border-b border-white/5 last:border-0">
+        <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
             <h3 class="font-semibold text-sm text-slate-100">{title}</h3>
             <span class="text-xs px-2 py-0.5 rounded-full font-medium {badge_cls}">{label}</span>
@@ -1216,7 +1216,7 @@ def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_r
     )
     steps_html = "".join(build_step(i + 1, s) for i, s in enumerate(lab["steps"]))
     validation_html = "".join(
-        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-green-400 mt-0.5">✓</span><span>{v}</span></li>'
+        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="ac-text mt-0.5">✓</span><span>{v}</span></li>'
         for v in lab["validation"]
     )
     cleanup_lines = "\n".join(lab["cleanup"])
@@ -1256,20 +1256,37 @@ def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_r
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     :root {{ --ac: {accent_hex}; --ac-rgb: {accent_rgb}; }}
-    body {{ font-family: 'Inter', sans-serif; background: #040B18; }}
+    /* Dark glass canvas with per-lab accent glow */
+    body {{
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(ellipse at 75% 0%, rgba(var(--ac-rgb), 0.09) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 90%, rgba(var(--ac-rgb), 0.05) 0%, transparent 45%),
+        linear-gradient(160deg, #060D1E 0%, #030810 100%);
+      min-height: 100vh;
+    }}
     /* Glass surfaces */
     .glass-nav {{
-      background: linear-gradient(180deg, rgba(4,11,24,0.95) 0%, rgba(4,11,24,0.90) 100%);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      background: linear-gradient(180deg, rgba(3,8,16,0.94) 0%, rgba(3,8,16,0.88) 100%);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
     }}
     .glass-panel {{
-      background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.11);
-      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(0,0,0,0.24), 0 8px 24px rgba(0,0,0,0.36);
+      background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.28), 0 8px 32px rgba(0,0,0,0.42);
     }}
+    /* Step cards — individual glass cards */
+    .step-card {{
+      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(0,0,0,0.28);
+    }}
+    .step-card + .step-card {{ margin-top: 0.75rem; }}
     /* Accent helpers */
     .ac-text {{ color: var(--ac); }}
     .ac-badge {{
@@ -1285,9 +1302,16 @@ def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_r
     .ac-link {{ transition: color 0.2s; }}
     .ac-link:hover {{ color: var(--ac); }}
     .ac-border-hover:hover {{ border-color: rgba(var(--ac-rgb), 0.42); }}
+    .ac-validate {{
+      background: rgba(var(--ac-rgb), 0.05);
+      border: 1px solid rgba(var(--ac-rgb), 0.20);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }}
+    .ac-validate h2 {{ color: var(--ac); }}
     /* Code */
     .code-block {{
-      background: rgba(4,8,18,0.80);
+      background: rgba(2,5,12,0.85);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px;
       padding: 1rem 1.2rem;
@@ -1299,7 +1323,6 @@ def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_r
     }}
     .copy-btn {{ cursor: pointer; }}
     .copy-btn.copied {{ color: #34d399; }}
-    .step-card + .step-card {{ margin-top: 1rem; }}
   </style>
 </head>
 <body class="text-slate-200 min-h-screen">
@@ -1396,8 +1419,8 @@ def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_r
         <div class="space-y-0 mb-10">{steps_html}</div>
 
         <!-- Validation -->
-        <div class="bg-green-500/5 border border-green-500/20 rounded-xl p-5 mb-6">
-          <h2 class="text-sm font-bold text-green-400 mb-3 flex items-center gap-2">
+        <div class="ac-validate mb-6">
+          <h2 class="text-sm font-bold mb-3 flex items-center gap-2">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             Validation Checklist
           </h2>
