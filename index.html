@@ -20,26 +20,29 @@
 
 
     /* ── Per-item accent colour system ── */
-    [data-accent]:hover { border-color: var(--ac-b) !important; box-shadow: 0 20px 40px -12px var(--ac-s) !important; }
+    /* base: subtle tint in the glass */
+    [data-accent] { background: linear-gradient(135deg, var(--ac-tint, rgba(255,255,255,.04)) 0%, transparent 55%), linear-gradient(145deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.04) 100%) !important; }
+    [data-accent]:hover { border-color: var(--ac-b) !important; box-shadow: 0 20px 40px -12px var(--ac-s) !important;
+      background: linear-gradient(135deg, var(--ac-tint, rgba(255,255,255,.04)) 0%, transparent 55%), linear-gradient(145deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,.07) 100%) !important; }
     [data-accent]:hover .accent-title { color: var(--ac-t) !important; }
     [data-accent]:hover .accent-badge { background: var(--ac-bg) !important; }
-    [data-accent="sky"]     { --ac-t:#38BDF8; --ac-b:rgba(56,189,248,.52);  --ac-s:rgba(56,189,248,.18);  --ac-bg:rgba(56,189,248,.28); }
-    [data-accent="blue"]    { --ac-t:#60A5FA; --ac-b:rgba(96,165,250,.52);  --ac-s:rgba(96,165,250,.18);  --ac-bg:rgba(96,165,250,.28); }
-    [data-accent="indigo"]  { --ac-t:#818CF8; --ac-b:rgba(129,140,248,.52); --ac-s:rgba(129,140,248,.18); --ac-bg:rgba(129,140,248,.28); }
-    [data-accent="violet"]  { --ac-t:#A78BFA; --ac-b:rgba(167,139,250,.52); --ac-s:rgba(167,139,250,.18); --ac-bg:rgba(167,139,250,.28); }
-    [data-accent="purple"]  { --ac-t:#C084FC; --ac-b:rgba(192,132,252,.52); --ac-s:rgba(192,132,252,.18); --ac-bg:rgba(192,132,252,.28); }
-    [data-accent="fuchsia"] { --ac-t:#E879F9; --ac-b:rgba(232,121,249,.52); --ac-s:rgba(232,121,249,.18); --ac-bg:rgba(232,121,249,.28); }
-    [data-accent="pink"]    { --ac-t:#F472B6; --ac-b:rgba(244,114,182,.52); --ac-s:rgba(244,114,182,.18); --ac-bg:rgba(244,114,182,.28); }
-    [data-accent="rose"]    { --ac-t:#FB7185; --ac-b:rgba(251,113,133,.52); --ac-s:rgba(251,113,133,.18); --ac-bg:rgba(251,113,133,.28); }
-    [data-accent="red"]     { --ac-t:#F87171; --ac-b:rgba(248,113,113,.52); --ac-s:rgba(248,113,113,.18); --ac-bg:rgba(248,113,113,.28); }
-    [data-accent="orange"]  { --ac-t:#FB923C; --ac-b:rgba(251,146,60,.52);  --ac-s:rgba(251,146,60,.18);  --ac-bg:rgba(251,146,60,.28); }
-    [data-accent="amber"]   { --ac-t:#FCD34D; --ac-b:rgba(252,211,77,.52);  --ac-s:rgba(252,211,77,.18);  --ac-bg:rgba(252,211,77,.28); }
-    [data-accent="yellow"]  { --ac-t:#FACC15; --ac-b:rgba(250,204,21,.52);  --ac-s:rgba(250,204,21,.18);  --ac-bg:rgba(250,204,21,.28); }
-    [data-accent="lime"]    { --ac-t:#A3E635; --ac-b:rgba(163,230,53,.52);  --ac-s:rgba(163,230,53,.18);  --ac-bg:rgba(163,230,53,.28); }
-    [data-accent="green"]   { --ac-t:#4ADE80; --ac-b:rgba(74,222,128,.52);  --ac-s:rgba(74,222,128,.18);  --ac-bg:rgba(74,222,128,.28); }
-    [data-accent="emerald"] { --ac-t:#34D399; --ac-b:rgba(52,211,153,.52);  --ac-s:rgba(52,211,153,.18);  --ac-bg:rgba(52,211,153,.28); }
-    [data-accent="teal"]    { --ac-t:#2DD4BF; --ac-b:rgba(45,212,191,.52);  --ac-s:rgba(45,212,191,.18);  --ac-bg:rgba(45,212,191,.28); }
-    [data-accent="cyan"]    { --ac-t:#22D3EE; --ac-b:rgba(34,211,238,.52);  --ac-s:rgba(34,211,238,.18);  --ac-bg:rgba(34,211,238,.28); }
+    [data-accent="sky"]     { --ac-t:#38BDF8; --ac-b:rgba(56,189,248,.52);  --ac-s:rgba(56,189,248,.18);  --ac-bg:rgba(56,189,248,.28); --ac-tint:rgba(56,189,248,.08); }
+    [data-accent="blue"]    { --ac-t:#60A5FA; --ac-b:rgba(96,165,250,.52);  --ac-s:rgba(96,165,250,.18);  --ac-bg:rgba(96,165,250,.28); --ac-tint:rgba(96,165,250,.08); }
+    [data-accent="indigo"]  { --ac-t:#818CF8; --ac-b:rgba(129,140,248,.52); --ac-s:rgba(129,140,248,.18); --ac-bg:rgba(129,140,248,.28); --ac-tint:rgba(129,140,248,.08); }
+    [data-accent="violet"]  { --ac-t:#A78BFA; --ac-b:rgba(167,139,250,.52); --ac-s:rgba(167,139,250,.18); --ac-bg:rgba(167,139,250,.28); --ac-tint:rgba(167,139,250,.08); }
+    [data-accent="purple"]  { --ac-t:#C084FC; --ac-b:rgba(192,132,252,.52); --ac-s:rgba(192,132,252,.18); --ac-bg:rgba(192,132,252,.28); --ac-tint:rgba(192,132,252,.08); }
+    [data-accent="fuchsia"] { --ac-t:#E879F9; --ac-b:rgba(232,121,249,.52); --ac-s:rgba(232,121,249,.18); --ac-bg:rgba(232,121,249,.28); --ac-tint:rgba(232,121,249,.08); }
+    [data-accent="pink"]    { --ac-t:#F472B6; --ac-b:rgba(244,114,182,.52); --ac-s:rgba(244,114,182,.18); --ac-bg:rgba(244,114,182,.28); --ac-tint:rgba(244,114,182,.08); }
+    [data-accent="rose"]    { --ac-t:#FB7185; --ac-b:rgba(251,113,133,.52); --ac-s:rgba(251,113,133,.18); --ac-bg:rgba(251,113,133,.28); --ac-tint:rgba(251,113,133,.08); }
+    [data-accent="red"]     { --ac-t:#F87171; --ac-b:rgba(248,113,113,.52); --ac-s:rgba(248,113,113,.18); --ac-bg:rgba(248,113,113,.28); --ac-tint:rgba(248,113,113,.08); }
+    [data-accent="orange"]  { --ac-t:#FB923C; --ac-b:rgba(251,146,60,.52);  --ac-s:rgba(251,146,60,.18);  --ac-bg:rgba(251,146,60,.28); --ac-tint:rgba(251,146,60,.08); }
+    [data-accent="amber"]   { --ac-t:#FCD34D; --ac-b:rgba(252,211,77,.52);  --ac-s:rgba(252,211,77,.18);  --ac-bg:rgba(252,211,77,.28); --ac-tint:rgba(252,211,77,.08); }
+    [data-accent="yellow"]  { --ac-t:#FACC15; --ac-b:rgba(250,204,21,.52);  --ac-s:rgba(250,204,21,.18);  --ac-bg:rgba(250,204,21,.28); --ac-tint:rgba(250,204,21,.08); }
+    [data-accent="lime"]    { --ac-t:#A3E635; --ac-b:rgba(163,230,53,.52);  --ac-s:rgba(163,230,53,.18);  --ac-bg:rgba(163,230,53,.28); --ac-tint:rgba(163,230,53,.08); }
+    [data-accent="green"]   { --ac-t:#4ADE80; --ac-b:rgba(74,222,128,.52);  --ac-s:rgba(74,222,128,.18);  --ac-bg:rgba(74,222,128,.28); --ac-tint:rgba(74,222,128,.08); }
+    [data-accent="emerald"] { --ac-t:#34D399; --ac-b:rgba(52,211,153,.52);  --ac-s:rgba(52,211,153,.18);  --ac-bg:rgba(52,211,153,.28); --ac-tint:rgba(52,211,153,.08); }
+    [data-accent="teal"]    { --ac-t:#2DD4BF; --ac-b:rgba(45,212,191,.52);  --ac-s:rgba(45,212,191,.18);  --ac-bg:rgba(45,212,191,.28); --ac-tint:rgba(45,212,191,.08); }
+    [data-accent="cyan"]    { --ac-t:#22D3EE; --ac-b:rgba(34,211,238,.52);  --ac-s:rgba(34,211,238,.18);  --ac-bg:rgba(34,211,238,.28); --ac-tint:rgba(34,211,238,.08); }
     /* Tab content fade-slide transition */
     #view-courses, #view-labs { will-change: opacity, transform; }
 
