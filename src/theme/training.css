@@ -68,7 +68,7 @@
 
 /* ── Headings ── */
 .reveal h1 { font-size: 1.9em; line-height: 1.1; margin-bottom: 0.25em; }
-.reveal h2 { font-size: 1.35em; line-height: 1.2; margin-bottom: 0.35em; color: var(--azure); }
+.reveal h2 { font-size: 1.35em; line-height: 1.2; margin-bottom: 0.35em; color: #10B981; }
 .reveal h3 { font-size: 0.6em; font-weight: 600; color: #64748B; text-transform: uppercase !important; letter-spacing: 0.1em; margin-bottom: 0.4em; }
 
 /* ── Body text ── */
@@ -113,12 +113,12 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--azure) 0%, var(--azure-light) 100%);
+  background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
 }
 .reveal .module-slide .module-number {
   font-size: 0.5em;
   font-weight: 700;
-  color: var(--azure);
+  color: #10B981;
   text-transform: uppercase !important;
   letter-spacing: 0.12em;
   margin-bottom: 0.2em;
@@ -248,7 +248,7 @@
   gap: 0.7em;
   box-shadow: 0 1px 3px rgba(15,23,42,0.05);
 }
-.reveal .quiz-option:hover   { border-color: var(--azure); color: #0F172A; background: rgba(16,185,129,0.07); }
+.reveal .quiz-option:hover   { border-color: #10B981; color: #0F172A; background: rgba(16,185,129,0.07); }
 .reveal .quiz-option.correct { border-color: #059669; background: #ECFDF5; color: #065F46; }
 .reveal .quiz-option.incorrect { border-color: #DC2626; background: #FEF2F2; color: #991B1B; }
 .reveal .quiz-option .option-key {
@@ -288,17 +288,17 @@
   font-size: 0.72em;
 }
 .reveal .objectives li:last-child { border-bottom: none; }
-.reveal .objectives li::before { content: '✓'; color: var(--azure); font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+.reveal .objectives li::before { content: '✓'; color: #10B981; font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
 
 /* ── Callout boxes ── */
 .reveal .callout {
-  border-left: 3px solid var(--azure);
+  border-left: 3px solid #10B981;
   background: rgba(16,185,129,0.07);
   border-radius: 0 8px 8px 0;
   padding: 0.7em 1em;
   margin: 0.6em 0;
   font-size: 0.65em;
-  color: #1E40AF;
+  color: #064E3B;
   line-height: 1.5;
 }
 .reveal .callout.warning { border-color: #D97706; background: #FFFBEB; color: #92400E; }
@@ -306,8 +306,8 @@
 
 /* ── Progress bar & controls ── */
 .reveal .progress { height: 3px; background: rgba(0,0,0,0.06); }
-.reveal .progress span { background: linear-gradient(90deg, var(--azure) 0%, var(--azure-light) 100%); }
-.reveal .controls { color: var(--azure); }
+.reveal .progress span { background: linear-gradient(90deg, #10B981 0%, #34D399 100%); }
+.reveal .controls { color: #10B981; }
 .reveal .slide-number {
   font-family: var(--r-code-font);
   font-size: 11px;
