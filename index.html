@@ -18,6 +18,9 @@
     /* Badges */
     .badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 9999px; }
 
+    /* Tab content fade-slide transition */
+    #view-courses, #view-labs { will-change: opacity, transform; }
+
     /* Tab bar — iOS 26 glass pill segmented control */
     .tab-btn { transition: all 0.2s ease; border-radius: 0.75rem; }
     .tab-btn.active {
@@ -932,26 +935,48 @@
   ════════════════════════════════════════════ -->
   <script>
     /* Tab switching */
-    function switchTab(tab, pushState) {
+    function switchTab(tab, pushState, immediate) {
       const coursesView = document.getElementById('view-courses');
       const labsView    = document.getElementById('view-labs');
       const tabCourses  = document.getElementById('tab-courses');
       const tabLabs     = document.getElementById('tab-labs');
 
+      const incoming = tab === 'courses' ? coursesView : labsView;
+      const outgoing = tab === 'courses' ? labsView : coursesView;
+
+      // Update tab button states immediately
       if (tab === 'courses') {
-        coursesView.classList.remove('hidden');
-        labsView.classList.add('hidden');
-        tabCourses.classList.add('active');
-        tabLabs.classList.remove('active');
+        tabCourses.classList.add('active'); tabLabs.classList.remove('active');
       } else {
-        labsView.classList.remove('hidden');
-        coursesView.classList.add('hidden');
-        tabLabs.classList.add('active');
-        tabCourses.classList.remove('active');
+        tabLabs.classList.add('active'); tabCourses.classList.remove('active');
       }
+
       if (pushState !== false) {
         history.replaceState(null, '', tab === 'labs' ? '#labs' : '#courses');
       }
+
+      // Already on this tab or initial load — switch instantly
+      if (immediate || !incoming.classList.contains('hidden')) return;
+
+      // Phase 1: fade + slide outgoing down
+      outgoing.style.transition = 'opacity .2s ease, transform .2s ease';
+      outgoing.style.opacity = '0';
+      outgoing.style.transform = 'translateY(12px)';
+
+      setTimeout(() => {
+        outgoing.classList.add('hidden');
+        outgoing.style.cssText = '';
+
+        // Phase 2: fade + slide incoming up
+        incoming.style.opacity = '0';
+        incoming.style.transform = 'translateY(12px)';
+        incoming.classList.remove('hidden');
+        incoming.offsetHeight; // force reflow before transition
+        incoming.style.transition = 'opacity .24s ease, transform .24s ease';
+        incoming.style.opacity = '';
+        incoming.style.transform = '';
+        setTimeout(() => { incoming.style.cssText = ''; }, 260);
+      }, 215);
     }
 
     function switchTabAndScroll(tab) {
@@ -962,7 +987,7 @@
     /* Restore tab from URL hash on load and on browser back/forward */
     function restoreTab() {
       const hash = location.hash;
-      switchTab(hash === '#labs' ? 'labs' : 'courses', false);
+      switchTab(hash === '#labs' ? 'labs' : 'courses', false, true);
     }
     window.addEventListener('DOMContentLoaded', restoreTab);
     window.addEventListener('popstate', restoreTab);
