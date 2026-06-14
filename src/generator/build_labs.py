@@ -93,6 +93,27 @@ def diagram(nodes, edges, groups=None, w=520, h=300):
     return "".join(parts)
 
 
+# ── Per-lab accent colours (hex, r,g,b string) ────────────────────────────────
+ACCENT_MAP = {
+    "lab-01":  ("#38BDF8", "56,189,248"),    # sky
+    "lab-02a": ("#34D399", "52,211,153"),    # emerald
+    "lab-02b": ("#2DD4BF", "45,212,191"),    # teal
+    "lab-03a": ("#60A5FA", "96,165,250"),    # blue
+    "lab-03b": ("#818CF8", "129,140,248"),   # indigo
+    "lab-03c": ("#A78BFA", "167,139,250"),   # violet
+    "lab-03d": ("#C084FC", "192,132,252"),   # purple
+    "lab-04":  ("#22D3EE", "34,211,238"),    # cyan
+    "lab-05":  ("#FCD34D", "252,211,77"),    # amber
+    "lab-06":  ("#FB923C", "251,146,60"),    # orange
+    "lab-07":  ("#FACC15", "250,204,21"),    # yellow
+    "lab-08":  ("#A3E635", "163,230,53"),    # lime
+    "lab-09a": ("#FB7185", "251,113,133"),   # rose
+    "lab-09b": ("#E879F9", "232,121,249"),   # fuchsia
+    "lab-09c": ("#F472B6", "244,114,182"),   # pink
+    "lab-10":  ("#F87171", "248,113,113"),   # red
+    "lab-11":  ("#4ADE80", "74,222,128"),    # green
+}
+
 # ── Lab data ───────────────────────────────────────────────────────────────────
 # Each step: (title, type, description_html, [commands])
 # type: "portal" | "cli" | "ps"
@@ -1153,7 +1174,7 @@ def build_step(i, step):
         code_block = f'''
         <div class="relative mt-3 group/code">
           <button onclick="copyCode(this)" title="Copy"
-            class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-[#16233a] hover:bg-[#1e2d45] rounded text-slate-400 border border-[#243654]">
+            class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs rounded text-slate-400" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14)">
             Copy
           </button>
           <pre class="code-block overflow-x-auto"><code>{lines}</code></pre>
@@ -1164,9 +1185,9 @@ def build_step(i, step):
     return f'''
       <div class="step-card flex gap-4">
         <div class="shrink-0">
-          <div class="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-xs font-bold text-indigo-300">{i}</div>
+          <div class="w-8 h-8 rounded-full ac-step-num flex items-center justify-center text-xs font-bold">{i}</div>
         </div>
-        <div class="flex-1 min-w-0 pb-6 border-b border-[#16233a] last:border-0">
+        <div class="flex-1 min-w-0 pb-6 border-b border-white/5 last:border-0">
           <div class="flex items-center gap-2 flex-wrap">
             <h3 class="font-semibold text-sm text-slate-100">{title}</h3>
             <span class="text-xs px-2 py-0.5 rounded-full font-medium {badge_cls}">{label}</span>
@@ -1176,7 +1197,7 @@ def build_step(i, step):
       </div>'''
 
 
-def render_lab(lab, prev_lab, next_lab, img_path):
+def render_lab(lab, prev_lab, next_lab, img_path, accent_hex="#818CF8", accent_rgb="129,140,248"):
     lab_id = lab["id"]
     title = lab["title"]
     subtitle = lab["subtitle"]
@@ -1186,7 +1207,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     module = lab["module"]
 
     objectives_html = "".join(
-        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-blue-400 mt-0.5">✓</span>{o}</li>'
+        f'<li class="flex items-start gap-2 text-sm text-slate-300"><span class="ac-text mt-0.5">✓</span>{o}</li>'
         for o in lab["objectives"]
     )
     prereqs_html = "".join(
@@ -1202,7 +1223,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     cleanup_html = f'''
           <div class="relative group/code">
             <button onclick="copyCode(this)" title="Copy"
-              class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs bg-[#16233a] hover:bg-[#1e2d45] rounded text-slate-400 border border-[#243654]">
+              class="copy-btn absolute top-2 right-2 opacity-0 group-hover/code:opacity-100 transition-opacity px-2 py-1 text-xs rounded text-slate-400" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14)">
               Copy
             </button>
             <pre class="code-block overflow-x-auto"><code>{cleanup_lines}</code></pre>
@@ -1210,14 +1231,14 @@ def render_lab(lab, prev_lab, next_lab, img_path):
 
     prev_link = (
         f'<a href="{prev_lab["slug"]}.html" '
-        f'class="flex items-center gap-2 text-sm text-slate-400 hover:text-blue-400 transition-colors">'
+        f'class="flex items-center gap-2 text-sm text-slate-400 ac-link">'
         f'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>'
         f'Lab {prev_lab["id"]}: {prev_lab["title"]}</a>'
         if prev_lab else '<div></div>'
     )
     next_link = (
         f'<a href="{next_lab["slug"]}.html" '
-        f'class="flex items-center gap-2 text-sm text-slate-400 hover:text-blue-400 transition-colors">'
+        f'class="flex items-center gap-2 text-sm text-slate-400 ac-link">'
         f'Lab {next_lab["id"]}: {next_lab["title"]}'
         f'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
         f'</a>'
@@ -1234,10 +1255,40 @@ def render_lab(lab, prev_lab, next_lab, img_path):
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body {{ font-family: 'Inter', sans-serif; }}
+    :root {{ --ac: {accent_hex}; --ac-rgb: {accent_rgb}; }}
+    body {{ font-family: 'Inter', sans-serif; background: #040B18; }}
+    /* Glass surfaces */
+    .glass-nav {{
+      background: linear-gradient(180deg, rgba(4,11,24,0.95) 0%, rgba(4,11,24,0.90) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+    }}
+    .glass-panel {{
+      background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.11);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(0,0,0,0.24), 0 8px 24px rgba(0,0,0,0.36);
+    }}
+    /* Accent helpers */
+    .ac-text {{ color: var(--ac); }}
+    .ac-badge {{
+      background: rgba(var(--ac-rgb), 0.12);
+      border: 1px solid rgba(var(--ac-rgb), 0.28);
+      color: var(--ac);
+    }}
+    .ac-step-num {{
+      background: rgba(var(--ac-rgb), 0.10);
+      border: 1px solid rgba(var(--ac-rgb), 0.28);
+      color: var(--ac);
+    }}
+    .ac-link {{ transition: color 0.2s; }}
+    .ac-link:hover {{ color: var(--ac); }}
+    .ac-border-hover:hover {{ border-color: rgba(var(--ac-rgb), 0.42); }}
+    /* Code */
     .code-block {{
-      background: #0d1b2e;
-      border: 1px solid #16233a;
+      background: rgba(4,8,18,0.80);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px;
       padding: 1rem 1.2rem;
       font-family: 'Cascadia Code','Fira Code','JetBrains Mono',monospace;
@@ -1251,17 +1302,17 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     .step-card + .step-card {{ margin-top: 1rem; }}
   </style>
 </head>
-<body class="bg-[#060c18] text-slate-200 min-h-screen">
+<body class="text-slate-200 min-h-screen">
 
   <!-- NAV -->
-  <nav class="sticky top-0 z-50 bg-[#0a1322] border-b border-[#16233a] shadow-sm">
+  <nav class="sticky top-0 z-50 glass-nav border-b border-white/8">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-3 text-sm">
-      <a href="../../../index.html#labs" class="flex items-center gap-1.5 text-slate-400 hover:text-blue-400 transition-colors font-medium">
+      <a href="../../../index.html#labs" class="flex items-center gap-1.5 text-slate-400 ac-link font-medium">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
         BD Cloud Academy
       </a>
       <span class="text-slate-600">/</span>
-      <a href="../../../index.html#labs" class="text-slate-400 hover:text-blue-400 transition-colors">AZ-104 Labs</a>
+      <a href="../../../index.html#labs" class="text-slate-400 ac-link">AZ-104 Labs</a>
       <span class="text-slate-600">/</span>
       <span class="text-slate-100 font-semibold">Lab {lab_id}</span>
       <!-- User chip (right-aligned) -->
@@ -1285,12 +1336,12 @@ def render_lab(lab, prev_lab, next_lab, img_path):
   </script>
 
   <!-- HEADER -->
-  <header class="border-b border-[#16233a] bg-[#0a1322]">
+  <header class="glass-nav border-b border-white/8">
     <div class="max-w-6xl mx-auto px-6 py-8">
       <div class="flex items-start justify-between gap-6 flex-wrap">
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2.5 flex-wrap mb-3">
-            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/25">Lab {lab_id}</span>
+            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ac-badge">Lab {lab_id}</span>
             <span class="text-xs font-semibold px-3 py-1 rounded-full {diff_cls}">{diff_emoji} {difficulty}</span>
             <span class="text-xs text-slate-500 flex items-center gap-1">⏱ {duration}</span>
           </div>
@@ -1299,7 +1350,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
           <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">{module}</p>
         </div>
         <!-- Objectives summary -->
-        <div class="bg-[#0d1b2e] border border-[#16233a] rounded-xl p-4 min-w-72 max-w-sm">
+        <div class="glass-panel rounded-xl p-4 min-w-72 max-w-sm">
           <h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Lab Objectives</h2>
           <ul class="space-y-1.5">{objectives_html}</ul>
         </div>
@@ -1312,7 +1363,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
     <div class="space-y-10">
 
       <!-- Prerequisites -->
-      <div class="bg-[#0a1322] border border-[#16233a] rounded-xl p-5">
+      <div class="glass-panel rounded-xl p-5">
         <h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3 flex items-center gap-2">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Prerequisites
@@ -1324,17 +1375,17 @@ def render_lab(lab, prev_lab, next_lab, img_path):
       <div>
         <!-- Steps heading -->
         <h2 class="text-base font-bold text-slate-100 mb-6 flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ac-text"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
           Lab Steps
         </h2>
 
         <!-- Architecture Diagram — centred inline with steps -->
-        <div class="rounded-2xl border border-[#16233a] overflow-hidden bg-[#0a1322] mb-8">
-          <div class="flex items-center gap-2 px-5 py-3 border-b border-[#16233a]">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-400"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <div class="glass-panel rounded-2xl overflow-hidden mb-8">
+          <div class="flex items-center gap-2 px-5 py-3 border-b border-white/8">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ac-text"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Architecture Diagram</span>
           </div>
-          <div class="flex justify-center p-6 bg-[#060c18]">
+          <div class="flex justify-center p-6 bg-[#030810]">
             <img src="../assets/diagrams/labs/{img_path}" alt="{title} Architecture Diagram"
                  class="rounded-xl object-contain"
                  style="max-height:520px; width:100%; max-width:860px;" loading="lazy"/>
@@ -1367,7 +1418,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
       <!-- Back to lab list -->
       <div class="flex justify-center">
         <a href="../../../index.html#labs"
-          class="flex items-center gap-2 px-5 py-2.5 text-sm text-slate-400 hover:text-blue-400 border border-[#16233a] hover:border-blue-500/40 rounded-xl transition-colors bg-[#0a1322]">
+          class="flex items-center gap-2 px-5 py-2.5 text-sm text-slate-400 ac-link ac-border-hover glass-panel rounded-xl transition-colors">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           All AZ-104 Labs
         </a>
@@ -1377,7 +1428,7 @@ def render_lab(lab, prev_lab, next_lab, img_path):
   </main>
 
   <!-- FOOTER NAV -->
-  <footer class="border-t border-[#16233a] mt-10 bg-[#0a1322]">
+  <footer class="glass-nav border-t border-white/8 mt-10">
     <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
       {prev_link}
       <span class="text-xs text-slate-500">Lab {lab_id} of {len(LABS)}</span>
@@ -1404,9 +1455,10 @@ def main():
     for i, lab in enumerate(LABS):
         prev_lab = LABS[i - 1] if i > 0 else None
         next_lab = LABS[i + 1] if i < len(LABS) - 1 else None
+        accent_hex, accent_rgb = ACCENT_MAP.get(lab["slug"], ("#818CF8", "129,140,248"))
 
         img_filename = f'{lab["slug"]}.png'
-        html = render_lab(lab, prev_lab, next_lab, img_filename)
+        html = render_lab(lab, prev_lab, next_lab, img_filename, accent_hex, accent_rgb)
 
         out_path = OUT / f'{lab["slug"]}.html'
         out_path.write_text(html, encoding="utf-8")
