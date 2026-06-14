@@ -989,7 +989,7 @@
 .reveal, .reveal p, .reveal li, .reveal blockquote { color: #C7D2E0; }
 .reveal h1, .reveal h4, .reveal h5, .reveal h6 { color: #F0F6FF; }
 .reveal h2 { color: #34D399; }
-.reveal h3 { color: #7C8AA5; }
+.reveal h3 { color: #7A9488; }
 .reveal strong { color: #FFFFFF; }
 .reveal a, .reveal .controls { color: #34D399; }
 
@@ -1213,7 +1213,7 @@
 
 /* ── [R3] Module headers → gradient headline + accent underline ── */
 .reveal .module-slide h1 {
-  background: linear-gradient(92deg, #F0F6FF 0%, #BAE0FF 55%, #34D399 100%);
+  background: linear-gradient(92deg, #F0F6FF 0%, #A7F3D0 55%, #34D399 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   display: inline-block;
 }
