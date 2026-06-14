@@ -632,20 +632,34 @@
 }
 .bnav-module:hover::after { opacity: 1; }
 
-/* ── [R1-Nav] Hub back button (left end of bottom nav bar) ── */
+/* ── [R1-Nav] Hub back button — pill, distinct from square nav arrows ── */
 .bnav-hub {
-  font-size: 11px; font-weight: 500;
-  color: #64748B;
-  text-decoration: none;
-  padding: 0 12px 0 2px;
-  margin-right: 6px;
-  border-right: 1px solid #E2E8F0;
-  height: 28px;
-  display: flex; align-items: center;
-  white-space: nowrap; flex-shrink: 0;
-  transition: color 0.15s;
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 13px;
+  margin-right: 10px; flex-shrink: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(16,185,129,0.38);
+  background: linear-gradient(135deg, rgba(16,185,129,0.14) 0%, rgba(5,150,105,0.07) 100%);
+  color: #10B981;
+  font-size: 11px; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none; white-space: nowrap;
+  transition: transform .18s ease, background .18s, border-color .18s, box-shadow .18s, color .18s;
+  animation: hub-idle-glow 3.5s ease-in-out infinite;
 }
-.bnav-hub:hover { color: #10B981; }
+.bnav-hub:hover {
+  background: linear-gradient(135deg, rgba(16,185,129,0.30) 0%, rgba(5,150,105,0.20) 100%);
+  border-color: #34D399;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px -3px rgba(52,211,153,0.60);
+  animation: none;
+}
+.bnav-hub:active { transform: translateY(0); }
+@keyframes hub-idle-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0);    border-color: rgba(16,185,129,0.38); }
+  50%       { box-shadow: 0 0 10px -2px rgba(52,211,153,0.42); border-color: rgba(16,185,129,0.68); }
+}
 
 /* ── [R1-Nav] Global progress chip (top-right) ── */
 #global-progress {
@@ -789,8 +803,7 @@
   color: #34D399 !important;
   border-color: rgba(0, 120, 212, 0.5) !important;
 }
-.bnav-hub { color: rgba(255,255,255,0.35) !important; border-right-color: rgba(255,255,255,0.1) !important; }
-.bnav-hub:hover { color: #10B981 !important; }
+/* .bnav-hub pill uses rgba emerald values that already read on dark — no override needed */
 .bnav-module {
   background: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
