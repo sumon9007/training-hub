@@ -12,7 +12,7 @@ metadata:
 **Type:** Static web app — AI-powered cloud certification training platform  
 **Version:** 1.0.0 (package.json)  
 **Git:** Git repo, branch `main`, remote `origin` → `https://github.com/sumon9007/training-hub`
-**Last context sync:** 2026-06-13 (session 9)
+**Last context sync:** 2026-06-14 (session 10)
 **CLAUDE.md:** ✅ exists at project root
 
 **Brand name:** BD Cloud Academy (renamed from "Training Hub" — all 32 user-facing files updated 2026-06-12)  
@@ -201,13 +201,28 @@ All HTML pages reference `/src/brand/logo/favicon.svg` as the `<link rel="icon">
 
 ## Hub Page — Landing Page Design
 
-Redesigned to a full-dark product-first theme (2026-06-13). Public-facing sections (no auth required):
-- **Hero** — full-dark gradient, outcome-first headline, dual CTAs (Sign Up indigo / Sign In violet), provider pill row
-- **Stats bar** — 4 metrics (certs, labs, modules, AI diagrams)
-- **"Why BD Cloud Academy" zigzag showcase** — three alternating feature rows, each backed by a real product visual: lab terminal with a validation step, exam-simulator question card with rationale, and an AI-generated hub-and-spoke architecture diagram. Images served from `src/brand/showcase/` (anonymous route). Followed by a comparison strip (typical video course vs BD Cloud Academy).
+Full-dark product-first theme. Public-facing sections (no auth required):
+- **Hero** — full-dark gradient, outcome-first headline, dual CTAs (Sign Up indigo / Sign In violet), provider pill row. Stats strip (2 certs / 17 labs / 7 modules / AI diagrams) is inlined at the bottom of the hero via a flex divider row — the separate stats bar section was removed (2026-06-14).
+- **"Why BD Cloud Academy"** — compact 3-column feature card grid (redesigned 2026-06-14 from the earlier zigzag two-column showcase rows). Cards: Labs (CLI snippet inline), Exam Simulator, AI Diagrams. Each card has an icon, title, description, micro-demo, and CTA link.
 - **Course cards** — gradient icon backgrounds, "Most Popular" ribbon on AZ-104, "Start course →" CTAs
 
 Header shows **Sign Up** (ghost) + **Sign In** (indigo/violet CTA) when unauthenticated; collapses to email + Sign out when authenticated. Footer copyright: BD Cloud Academy.
+
+## Presentation UI — Round 1 Polish (session 10, 2026-06-14)
+
+Custom UI layer added to `base.html` + `training.css` replacing Reveal.js built-in controls:
+
+| Element | ID / Class | Description |
+|---------|-----------|-------------|
+| Slide-type badge | `#slide-type-badge` | Top-left pill — LESSON / MODULE / EXAM / LAB / KNOWLEDGE CHECK / DIAGRAM |
+| Module HUD | `#module-hud` | Top-center — module number · name · slide N/M + mini progress bar |
+| Global progress | `#global-progress` | Top-right chip — overall % through the whole deck |
+| Bottom nav bar | `#bottom-nav` | Fixed 44px bar — prev/next arrows + one pill per module (`bnav-module` pills); active pill highlighted |
+
+Reveal.js `slideNumber`, `progress`, and `controls` are all disabled (`false`) — the custom layer replaces them.  
+`"Back to hub"` link repositioned to `bottom: 54px` to sit above the bottom nav bar.
+
+**AZ-104 title slide** redesigned (2026-06-14) to a two-column hero: left has eyebrow breadcrumb, AZ-104 code tag, gradient headline, meta chips (7 modules / ~18h / 65+ Qs / 5 lab suites), and "Press Space to begin" prompt; right panel holds a rotating cert badge and topic pills. Background: `#060D1A` with CSS grid lines + glow effect.
 
 ## Generate Commands
 

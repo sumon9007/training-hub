@@ -22,8 +22,35 @@
   </div>
 </div>
 
-<!-- Back to hub + user chip -->
-<div style="position:fixed;bottom:16px;left:16px;z-index:999;display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:11px">
+<!-- [R1-A] Slide-type badge -->
+<div id="slide-type-badge"></div>
+
+<!-- [R1-B] Module progress HUD (top-center) -->
+<div id="module-hud">
+  <span id="hud-module-num"></span>
+  <span class="hud-dot">·</span>
+  <span id="hud-module-name"></span>
+  <span class="hud-dot">·</span>
+  <span id="hud-slide"></span>
+  <div id="hud-bar-track"><div id="hud-bar-fill"></div></div>
+</div>
+
+<!-- [R1-Nav] Global progress chip (top-right) -->
+<div id="global-progress">
+  <span id="gp-label"></span>
+  <span id="gp-pct"></span>
+  <div id="gp-bar-track"><div id="gp-bar-fill"></div></div>
+</div>
+
+<!-- [R1-Nav] Bottom module navigation bar -->
+<div id="bottom-nav">
+  <button class="bnav-arrow" id="bnav-prev" aria-label="Previous slide">&#8592;</button>
+  <div class="bnav-modules" id="bnav-modules"></div>
+  <button class="bnav-arrow" id="bnav-next" aria-label="Next slide">&#8594;</button>
+</div>
+
+<!-- Back to hub + user chip — sits above bottom nav bar -->
+<div style="position:fixed;bottom:54px;left:16px;z-index:999;display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:11px">
   <a href="../../index.html" style="color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
   <span id="pres-user" style="display:none;color:#64748b;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
   <a href="/.auth/logout?post_logout_redirect_uri=/login.html" id="pres-logout" style="display:none;color:#f87171;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px">Sign out</a>
@@ -70,10 +97,9 @@
 
   Reveal.initialize({
     hash: true,
-    slideNumber: 'c/t',
-    progress: true,
-    controls: true,
-    controlsLayout: 'bottom-right',
+    slideNumber: false,
+    progress: false,
+    controls: false,
     transition: 'slide',
     transitionSpeed: 'default',
     backgroundTransition: 'fade',
@@ -318,6 +344,173 @@
     }
     // Pause the timer display when navigating away from an unfinished exam? No —
     // real exams keep counting; the badge stays visible until finished or expired.
+  });
+
+  // ── ROUND 1-A: Slide-type badge ──────────────────────────────────────────
+  const stBadge = document.getElementById('slide-type-badge');
+
+  function getSlideType(slide) {
+    if (!slide) return null;
+    const cl = slide.classList;
+    if (cl.contains('title-slide')) return null;
+    if (cl.contains('exam-intro') || cl.contains('exam-results') ||
+        cl.contains('exam-question') || cl.contains('exam-slide'))
+      return { label: 'EXAM', cls: 'type-exam' };
+    if (cl.contains('lab-slide'))
+      return { label: 'LAB', cls: 'type-lab' };
+    if (slide.querySelector('.quiz-container'))
+      return { label: 'KNOWLEDGE CHECK', cls: 'type-check' };
+    if (slide.querySelector('.diagram-container'))
+      return { label: 'DIAGRAM', cls: 'type-diagram' };
+    if (cl.contains('module-slide'))
+      return { label: 'MODULE', cls: 'type-module' };
+    return { label: 'LESSON', cls: 'type-lesson' };
+  }
+
+  function updateSlideBadge(slide) {
+    const type = getSlideType(slide);
+    stBadge.className = '';
+    if (!type) { stBadge.style.display = 'none'; return; }
+    stBadge.style.display = 'block';
+    stBadge.className = type.cls;
+    stBadge.textContent = type.label;
+  }
+
+  // ── ROUND 1-B: Module progress HUD ───────────────────────────────────────
+  const moduleHud  = document.getElementById('module-hud');
+  const hudNumEl   = document.getElementById('hud-module-num');
+  const hudNameEl  = document.getElementById('hud-module-name');
+  const hudSlideEl = document.getElementById('hud-slide');
+  const hudBarFill = document.getElementById('hud-bar-fill');
+  let moduleMap = [];
+
+  function buildModuleMap() {
+    moduleMap = [];
+    let running = 0;
+    document.querySelectorAll('.reveal .slides > section').forEach((outer, h) => {
+      const inner = Array.from(outer.querySelectorAll(':scope > section'));
+      const firstSlide = inner[0] || outer;
+      const h1 = firstSlide.querySelector('h1');
+      let name = h1 ? h1.textContent.trim() : ('Section ' + (h + 1));
+      name = name.replace(/^module\s+\d+[\s:–-]*/i, '').trim();
+      if (name.length > 32) name = name.slice(0, 32) + '…';
+      const count = Math.max(inner.length, 1);
+      moduleMap.push({ h, name, count, startGlobal: running });
+      running += count;
+    });
+  }
+
+  function updateHud(indices) {
+    const { h, v } = indices;
+    const m = moduleMap[h];
+    const currentSlide = Reveal.getCurrentSlide();
+    if (!m || moduleMap.length <= 1 || (currentSlide && currentSlide.classList.contains('title-slide'))) {
+      moduleHud.style.display = 'none'; return;
+    }
+    const timer = document.querySelector('.exam-timer');
+    if (timer && timer.style.display === 'block') { moduleHud.style.display = 'none'; return; }
+    const slideNum = (v || 0) + 1;
+    const total    = m.count;
+    const pct      = total > 1 ? Math.round((slideNum / total) * 100) : 100;
+    hudNumEl.textContent   = 'Module ' + (h + 1) + ' of ' + moduleMap.length;
+    hudNameEl.textContent  = m.name;
+    hudSlideEl.textContent = slideNum + ' / ' + total;
+    hudBarFill.style.width = pct + '%';
+    moduleHud.style.display = 'flex';
+  }
+
+  // ── ROUND 1-C: Exam-tip callout auto-classify ─────────────────────────────
+  function classifyExamTips() {
+    document.querySelectorAll('.reveal .callout').forEach(el => {
+      if (el.classList.contains('warning') || el.classList.contains('success') ||
+          el.classList.contains('exam-tip')) return;
+      if (el.textContent.includes('🎯')) el.classList.add('exam-tip');
+    });
+  }
+
+  // ── OPTION A: Bottom module navigation bar ────────────────────────────────
+  function buildBottomNav() {
+    const container = document.getElementById('bnav-modules');
+    if (!container) return;
+    container.innerHTML = '';
+    moduleMap.forEach((m, i) => {
+      const pill = document.createElement('div');
+      pill.className = 'bnav-module';
+      pill.dataset.title = 'Module ' + (i + 1) + ' — ' + m.name;
+      pill.innerHTML = '<div class="bnav-module-fill"></div><div class="bnav-module-label">M' + (i + 1) + '</div>';
+      pill.addEventListener('click', () => Reveal.slide(m.h, 0));
+      container.appendChild(pill);
+    });
+    document.getElementById('bnav-prev').addEventListener('click', () => Reveal.prev());
+    document.getElementById('bnav-next').addEventListener('click', () => Reveal.next());
+  }
+
+  function updateBottomNav(indices) {
+    const { h, v } = indices;
+    document.querySelectorAll('.bnav-module').forEach((pill, i) => {
+      const m = moduleMap[i];
+      if (!m) return;
+      const fill = pill.querySelector('.bnav-module-fill');
+      pill.classList.remove('active', 'completed');
+      if (i < h) {
+        pill.classList.add('completed');
+        if (fill) fill.style.width = '100%';
+      } else if (i === h) {
+        pill.classList.add('active');
+        const pct = m.count > 1 ? Math.round(((v || 0) + 1) / m.count * 100) : 100;
+        if (fill) fill.style.width = pct + '%';
+      } else {
+        if (fill) fill.style.width = '0%';
+      }
+    });
+    const prevBtn = document.getElementById('bnav-prev');
+    const nextBtn = document.getElementById('bnav-next');
+    if (prevBtn) prevBtn.disabled = Reveal.isFirstSlide();
+    if (nextBtn) nextBtn.disabled = Reveal.isLastSlide();
+  }
+
+  // ── Global progress chip (top-right) ─────────────────────────────────────
+  function updateGlobalProgress(indices) {
+    const gpEl  = document.getElementById('global-progress');
+    const gpPct = document.getElementById('gp-pct');
+    const gpBar = document.getElementById('gp-bar-fill');
+    const gpLbl = document.getElementById('gp-label');
+    if (!gpEl) return;
+    const timer = document.querySelector('.exam-timer');
+    const currentSlide = Reveal.getCurrentSlide();
+    const isTitle     = currentSlide && currentSlide.classList.contains('title-slide');
+    const examRunning = timer && timer.style.display === 'block';
+    if (isTitle || examRunning) { gpEl.style.display = 'none'; return; }
+    const { h, v } = indices;
+    const m = moduleMap[h];
+    if (!m) return;
+    const totalSlides   = moduleMap.reduce((s, mod) => s + mod.count, 0);
+    const currentGlobal = m.startGlobal + (v || 0) + 1;
+    const pct = Math.round((currentGlobal / totalSlides) * 100);
+    if (gpLbl) gpLbl.textContent = document.title.split(/[—:]/)[0].trim();
+    if (gpPct) gpPct.textContent = pct + '%';
+    if (gpBar) gpBar.style.width = pct + '%';
+    gpEl.style.display = 'flex';
+  }
+
+  // ── Wire everything up ────────────────────────────────────────────────────
+  Reveal.on('ready', () => {
+    buildModuleMap();
+    buildBottomNav();
+    classifyExamTips();
+    const idx = Reveal.getIndices();
+    updateSlideBadge(Reveal.getCurrentSlide());
+    updateHud(idx);
+    updateBottomNav(idx);
+    updateGlobalProgress(idx);
+  });
+
+  Reveal.on('slidechanged', e => {
+    const idx = Reveal.getIndices();
+    updateSlideBadge(e.currentSlide);
+    updateHud(idx);
+    updateBottomNav(idx);
+    updateGlobalProgress(idx);
   });
 </script>
 

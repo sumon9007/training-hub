@@ -19,22 +19,70 @@
   <div class="slides">
 
     
-    <section class="title-slide" data-background-gradient="radial-gradient(ellipse at top, #0F1E3A 0%, #0B1120 100%)">
-      <div style="margin-top: 12%">
-        <div class="course-badge">Microsoft Azure · Administrator</div>
-        <h1>Azure Administrator Associate (AZ-104)</h1>
-        <p class="subtitle">Hands-on preparation for the Microsoft Azure Administrator Associate certification (AZ-104). Covers managing Azure identities and governance, implementing storage and compute resources, deploying virtual networks, and monitoring Azure infrastructure. Aligned to the official AZ-104T00 instructor-led course and Microsoft's April 2026 skills list.</p>
-        <p class="subtitle" style="margin-top:0.3em;font-size:0.8em;color:#475569">
-          7 modules · ~18 hours · AZ-104
-        </p>
-        <div style="margin-top:2em;display:flex;gap:2em;font-size:0.45em;color:#475569">
-          <span>📋 Structured curriculum</span>
-          <span>📊 Interactive diagrams</span>
-          <span>✅ Knowledge checks</span>
-          <span>🗒️ Speaker notes</span>
+    <section class="title-slide" data-background-color="#060D1A">
+      <!-- Background effects -->
+      <div class="ts-grid"></div>
+      <div class="ts-glow"></div>
+
+      <!-- Two-column hero layout -->
+      <div class="ts-wrap">
+
+        <!-- Left: course identity -->
+        <div class="ts-left">
+          <div class="ts-eyebrow">
+            <span>Microsoft Azure</span>
+            <svg class="ts-chevron" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 4.5L1 10" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Administrator</span>
+            <svg class="ts-chevron" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 4.5L1 10" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="ts-eyebrow-hi">AZ-104</span>
+          </div>
+
+          <div class="ts-code-tag">AZ-104</div>
+
+          <h1 class="ts-h1">Azure Administrator<br><span class="ts-h1-grad">Associate</span></h1>
+
+          <p class="ts-sub">Master Azure infrastructure deployment, identity governance, networking, storage, and monitoring — aligned to the April 2026 exam objectives with hands-on labs and exam simulation.</p>
+
+          <div class="ts-meta">
+            <div class="ts-chip"><strong>7</strong><span>Modules</span></div>
+            <div class="ts-chip"><strong>~18h</strong><span>Study</span></div>
+            <div class="ts-chip"><strong>65+</strong><span>Exam Qs</span></div>
+            <div class="ts-chip"><strong>5</strong><span>Lab Suites</span></div>
+          </div>
+
+          <div class="ts-press">
+            <span class="ts-press-dot"></span>
+            Press <kbd class="ts-key">Space</kbd> or <kbd class="ts-key">→</kbd> to begin
+          </div>
         </div>
+
+        <!-- Right: rotating cert badge + topic pills -->
+        <div class="ts-right">
+          <div class="ts-ring">
+            <div class="ts-ring-face">
+              <!-- Simplified Azure "A" mark -->
+              <svg class="ts-azure-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="azL" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60A5FA"/><stop offset="100%" stop-color="#0078D4"/></linearGradient>
+                  <linearGradient id="azR" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38BDF8"/><stop offset="100%" stop-color="#0EA5E9"/></linearGradient>
+                </defs>
+                <path d="M38 8 L6 90 H26 L50 40 Z" fill="url(#azL)"/>
+                <path d="M50 40 L74 90 H94 L60 8 Z" fill="url(#azR)" opacity="0.85"/>
+                <path d="M38 8 L60 8 L50 40 Z" fill="#7DD3FC" opacity="0.6"/>
+              </svg>
+              <span class="ts-ring-code">AZ-104</span>
+              <span class="ts-ring-label">Administrator<br>Associate</span>
+            </div>
+          </div>
+          <span class="ts-pill ts-pill-a">Identity &amp; Governance</span>
+          <span class="ts-pill ts-pill-b">Virtual Networking</span>
+          <span class="ts-pill ts-pill-c">Compute &amp; VMs</span>
+          <span class="ts-pill ts-pill-d">Storage</span>
+          <span class="ts-pill ts-pill-e">Monitoring</span>
+        </div>
+
       </div>
-      <aside class="notes">Welcome everyone. This presentation covers Azure Administrator Associate (AZ-104). We have 7 modules to get through. Encourage questions throughout.</aside>
+      <aside class="notes">Welcome. AZ-104 Azure Administrator Associate. 7 modules — identities and governance, storage, compute, networking, and monitoring. Labs and an exam simulator are included throughout. Aligned to April 2026 skills list.</aside>
     </section>
 
 <section>
@@ -9016,8 +9064,35 @@ flowchart LR
   </div>
 </div>
 
-<!-- Back to hub -->
-<a href="../../index.html" style="position:fixed;bottom:16px;left:16px;z-index:999;font-family:Inter,sans-serif;font-size:11px;color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
+<!-- [R1-A] Slide-type badge -->
+<div id="slide-type-badge"></div>
+
+<!-- [R1-B] Module progress HUD -->
+<div id="module-hud">
+  <span id="hud-module-num"></span>
+  <span class="hud-dot">·</span>
+  <span id="hud-module-name"></span>
+  <span class="hud-dot">·</span>
+  <span id="hud-slide"></span>
+  <div id="hud-bar-track"><div id="hud-bar-fill"></div></div>
+</div>
+
+<!-- [OA] Global progress chip -->
+<div id="global-progress" style="display:none">
+  <span id="gp-label"></span>
+  <div id="gp-bar-track"><div id="gp-bar-fill"></div></div>
+  <span id="gp-pct"></span>
+</div>
+
+<!-- [OA] Bottom module navigation bar -->
+<div id="bottom-nav">
+  <button class="bnav-arrow" id="bnav-prev" title="Previous">&#8592;</button>
+  <div class="bnav-modules" id="bnav-modules"></div>
+  <button class="bnav-arrow" id="bnav-next" title="Next">&#8594;</button>
+</div>
+
+<!-- Back to hub — sits above bottom nav bar -->
+<a href="../../index.html" style="position:fixed;bottom:54px;left:16px;z-index:999;font-family:Inter,sans-serif;font-size:11px;color:#475569;text-decoration:none;background:rgba(15,23,42,0.9);border:1px solid #1E293B;padding:5px 10px;border-radius:6px;transition:color 0.2s" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#475569'">← Hub</a>
 
 <!-- Reveal.js -->
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
@@ -9050,10 +9125,9 @@ flowchart LR
 
   Reveal.initialize({
     hash: true,
-    slideNumber: 'c/t',
-    progress: true,
-    controls: true,
-    controlsLayout: 'bottom-right',
+    slideNumber: false,
+    progress: false,
+    controls: false,
     transition: 'slide',
     transitionSpeed: 'default',
     backgroundTransition: 'fade',
@@ -9298,6 +9372,173 @@ flowchart LR
     }
     // Pause the timer display when navigating away from an unfinished exam? No —
     // real exams keep counting; the badge stays visible until finished or expired.
+  });
+
+  // ── ROUND 1-A: Slide-type badge ──────────────────────────────────────────
+  const stBadge = document.getElementById('slide-type-badge');
+
+  function getSlideType(slide) {
+    if (!slide) return null;
+    const cl = slide.classList;
+    if (cl.contains('title-slide')) return null;
+    if (cl.contains('exam-intro') || cl.contains('exam-results') ||
+        cl.contains('exam-question') || cl.contains('exam-slide'))
+      return { label: 'EXAM', cls: 'type-exam' };
+    if (cl.contains('lab-slide'))
+      return { label: 'LAB', cls: 'type-lab' };
+    if (slide.querySelector('.quiz-container'))
+      return { label: 'KNOWLEDGE CHECK', cls: 'type-check' };
+    if (slide.querySelector('.diagram-container'))
+      return { label: 'DIAGRAM', cls: 'type-diagram' };
+    if (cl.contains('module-slide'))
+      return { label: 'MODULE', cls: 'type-module' };
+    return { label: 'LESSON', cls: 'type-lesson' };
+  }
+
+  function updateSlideBadge(slide) {
+    const type = getSlideType(slide);
+    stBadge.className = '';
+    if (!type) { stBadge.style.display = 'none'; return; }
+    stBadge.style.display = 'block';
+    stBadge.className = type.cls;
+    stBadge.textContent = type.label;
+  }
+
+  // ── ROUND 1-B: Module progress HUD ───────────────────────────────────────
+  const moduleHud  = document.getElementById('module-hud');
+  const hudNumEl   = document.getElementById('hud-module-num');
+  const hudNameEl  = document.getElementById('hud-module-name');
+  const hudSlideEl = document.getElementById('hud-slide');
+  const hudBarFill = document.getElementById('hud-bar-fill');
+  let moduleMap = [];
+
+  function buildModuleMap() {
+    moduleMap = [];
+    let running = 0;
+    document.querySelectorAll('.reveal .slides > section').forEach((outer, h) => {
+      const inner = Array.from(outer.querySelectorAll(':scope > section'));
+      const firstSlide = inner[0] || outer;
+      const h1 = firstSlide.querySelector('h1');
+      let name = h1 ? h1.textContent.trim() : ('Section ' + (h + 1));
+      name = name.replace(/^module\s+\d+[\s:–-]*/i, '').trim();
+      if (name.length > 32) name = name.slice(0, 32) + '…';
+      const count = Math.max(inner.length, 1);
+      moduleMap.push({ h, name, count, startGlobal: running });
+      running += count;
+    });
+  }
+
+  function updateHud(indices) {
+    const { h, v } = indices;
+    const m = moduleMap[h];
+    const currentSlide = Reveal.getCurrentSlide();
+    if (!m || moduleMap.length <= 1 || (currentSlide && currentSlide.classList.contains('title-slide'))) {
+      moduleHud.style.display = 'none'; return;
+    }
+    const timer = document.querySelector('.exam-timer');
+    if (timer && timer.style.display === 'block') { moduleHud.style.display = 'none'; return; }
+    const slideNum = (v || 0) + 1;
+    const total    = m.count;
+    const pct      = total > 1 ? Math.round((slideNum / total) * 100) : 100;
+    hudNumEl.textContent   = 'Module ' + (h + 1) + ' of ' + moduleMap.length;
+    hudNameEl.textContent  = m.name;
+    hudSlideEl.textContent = slideNum + ' / ' + total;
+    hudBarFill.style.width = pct + '%';
+    moduleHud.style.display = 'flex';
+  }
+
+  // ── ROUND 1-C: Exam-tip callout auto-classify ─────────────────────────────
+  function classifyExamTips() {
+    document.querySelectorAll('.reveal .callout').forEach(el => {
+      if (el.classList.contains('warning') || el.classList.contains('success') ||
+          el.classList.contains('exam-tip')) return;
+      if (el.textContent.includes('🎯')) el.classList.add('exam-tip');
+    });
+  }
+
+  // ── OPTION A: Bottom module navigation bar ────────────────────────────────
+  function buildBottomNav() {
+    const container = document.getElementById('bnav-modules');
+    if (!container) return;
+    container.innerHTML = '';
+    moduleMap.forEach((m, i) => {
+      const pill = document.createElement('div');
+      pill.className = 'bnav-module';
+      pill.dataset.title = 'Module ' + (i + 1) + ' — ' + m.name;
+      pill.innerHTML = '<div class="bnav-module-fill"></div><div class="bnav-module-label">M' + (i + 1) + '</div>';
+      pill.addEventListener('click', () => Reveal.slide(m.h, 0));
+      container.appendChild(pill);
+    });
+    document.getElementById('bnav-prev').addEventListener('click', () => Reveal.prev());
+    document.getElementById('bnav-next').addEventListener('click', () => Reveal.next());
+  }
+
+  function updateBottomNav(indices) {
+    const { h, v } = indices;
+    document.querySelectorAll('.bnav-module').forEach((pill, i) => {
+      const m = moduleMap[i];
+      if (!m) return;
+      const fill = pill.querySelector('.bnav-module-fill');
+      pill.classList.remove('active', 'completed');
+      if (i < h) {
+        pill.classList.add('completed');
+        if (fill) fill.style.width = '100%';
+      } else if (i === h) {
+        pill.classList.add('active');
+        const pct = m.count > 1 ? Math.round(((v || 0) + 1) / m.count * 100) : 100;
+        if (fill) fill.style.width = pct + '%';
+      } else {
+        if (fill) fill.style.width = '0%';
+      }
+    });
+    const prevBtn = document.getElementById('bnav-prev');
+    const nextBtn = document.getElementById('bnav-next');
+    if (prevBtn) prevBtn.disabled = Reveal.isFirstSlide();
+    if (nextBtn) nextBtn.disabled = Reveal.isLastSlide();
+  }
+
+  // ── Global progress chip (top-right) ─────────────────────────────────────
+  function updateGlobalProgress(indices) {
+    const gpEl  = document.getElementById('global-progress');
+    const gpPct = document.getElementById('gp-pct');
+    const gpBar = document.getElementById('gp-bar-fill');
+    const gpLbl = document.getElementById('gp-label');
+    if (!gpEl) return;
+    const timer = document.querySelector('.exam-timer');
+    const currentSlide = Reveal.getCurrentSlide();
+    const isTitle     = currentSlide && currentSlide.classList.contains('title-slide');
+    const examRunning = timer && timer.style.display === 'block';
+    if (isTitle || examRunning) { gpEl.style.display = 'none'; return; }
+    const { h, v } = indices;
+    const m = moduleMap[h];
+    if (!m) return;
+    const totalSlides   = moduleMap.reduce((s, mod) => s + mod.count, 0);
+    const currentGlobal = m.startGlobal + (v || 0) + 1;
+    const pct = Math.round((currentGlobal / totalSlides) * 100);
+    if (gpLbl) gpLbl.textContent = 'AZ-104';
+    if (gpPct) gpPct.textContent = pct + '%';
+    if (gpBar) gpBar.style.width = pct + '%';
+    gpEl.style.display = 'flex';
+  }
+
+  // ── Wire everything up ────────────────────────────────────────────────────
+  Reveal.on('ready', () => {
+    buildModuleMap();
+    buildBottomNav();
+    classifyExamTips();
+    const idx = Reveal.getIndices();
+    updateSlideBadge(Reveal.getCurrentSlide());
+    updateHud(idx);
+    updateBottomNav(idx);
+    updateGlobalProgress(idx);
+  });
+
+  Reveal.on('slidechanged', e => {
+    const idx = Reveal.getIndices();
+    updateSlideBadge(e.currentSlide);
+    updateHud(idx);
+    updateBottomNav(idx);
+    updateGlobalProgress(idx);
   });
 </script>
 

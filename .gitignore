@@ -31,3 +31,5 @@ Thumbs.db
 *.bak.html
 .ipynb_checkpoints/
 coverage/
+venv/
+env/
