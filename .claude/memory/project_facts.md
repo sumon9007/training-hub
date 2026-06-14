@@ -12,7 +12,7 @@ metadata:
 **Type:** Static web app — AI-powered cloud certification training platform  
 **Version:** 1.0.0 (package.json)  
 **Git:** Git repo, branch `main`, remote `origin` → `https://github.com/sumon9007/training-hub`
-**Last context sync:** 2026-06-14 (session 10)
+**Last context sync:** 2026-06-14 (session 11)
 **CLAUDE.md:** ✅ exists at project root
 
 **Brand name:** BD Cloud Academy (renamed from "Training Hub" — all 32 user-facing files updated 2026-06-12)  
@@ -223,6 +223,17 @@ Reveal.js `slideNumber`, `progress`, and `controls` are all disabled (`false`) �
 `"Back to hub"` link repositioned to `bottom: 54px` to sit above the bottom nav bar.
 
 **AZ-104 title slide** redesigned (2026-06-14) to a two-column hero: left has eyebrow breadcrumb, AZ-104 code tag, gradient headline, meta chips (7 modules / ~18h / 65+ Qs / 5 lab suites), and "Press Space to begin" prompt; right panel holds a rotating cert badge and topic pills. Background: `#060D1A` with CSS grid lines + glow effect.
+
+## Presentation UI — Round 2: unified dark content theme (session 11, 2026-06-14, ADR-015)
+
+Round 1 darkened only the *chrome* (nav/HUD/badges) + divider-slide backgrounds, leaving slide *content* on the original light theme — and divider headings near-invisible (near-black `#0F172A` on dark `#080E1C`). Round 2 appends a **"UNIFIED DARK CONTENT THEME"** block to `src/theme/training.css` (~127 lines) converting the whole deck to the title hero's aesthetic:
+
+- **Canvas:** `.reveal-viewport` → dark gradient + faint azure grid + corner glow (shows through every content slide that has no solid `data-background-color`).
+- **Type:** light defaults (`#F0F6FF` headings, `#C7D2E0` body, `#60A5FA` h2); divider-slide headings/body fixed to light + accent corner glow via `::after`.
+- **Surfaces → glass:** cards, callouts, code/`pre`, quiz options, exam options, diagram panels, lab steps, expected-output, validate — all translucent-white-on-dark.
+- Old-style AZ-900 `.title-slide h1` given a light gradient; print/PDF keeps a dark slide bg so light type stays legible.
+
+CSS-only — both live courses + all future generated courses inherit it automatically; no `presentation.html` regen. The generator's existing dark `data-background-color` attributes are unchanged. **Landing page** (`index.html`, Tailwind) and **lab pages** (`courses/az104/labs/*.html`, inline styles) don't link `training.css`, so they're unaffected. Verified across title / module / lesson / cards / quiz / lab / exam / diagram (PNG + Mermaid) slides via Playwright screenshots.
 
 ## Generate Commands
 

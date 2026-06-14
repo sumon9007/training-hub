@@ -962,3 +962,519 @@
 .ts-pill-c { bottom: 26%; right: 4%; }
 .ts-pill-d { bottom: 8%; left: 50%;  transform: translateX(-50%); }
 .ts-pill-e { top: 52%;   left: 2%;   }
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 2 — UNIFIED DARK CONTENT THEME
+   Finishes the dark migration started in Round 1 (chrome was darkened; slide
+   CONTENT was not). Brings every slide into the same premium developer-platform
+   visual language as the redesigned title hero: dark gradient canvas + subtle
+   grid + radial glow, light type, and glassy translucent surfaces.
+   Append-only — these rules intentionally win over the light defaults above.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Canvas: dark gradient + faint azure grid + corner glow (shows through
+      every content slide that has no solid data-background-color) ── */
+.reveal-viewport {
+  background-color: #060B16 !important;
+  background-image:
+    linear-gradient(rgba(0,120,212,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,120,212,0.045) 1px, transparent 1px),
+    radial-gradient(ellipse 70% 55% at 75% 0%, rgba(0,120,212,0.16), transparent 60%),
+    linear-gradient(180deg, #0B1424 0%, #070D1A 65%, #05090F 100%) !important;
+  background-size: 54px 54px, 54px 54px, 100% 100%, 100% 100% !important;
+  background-attachment: fixed !important;
+}
+
+/* ── Type: light on dark ── */
+.reveal, .reveal p, .reveal li, .reveal blockquote { color: #C7D2E0; }
+.reveal h1, .reveal h4, .reveal h5, .reveal h6 { color: #F0F6FF; }
+.reveal h2 { color: #60A5FA; }
+.reveal h3 { color: #7C8AA5; }
+.reveal strong { color: #FFFFFF; }
+.reveal a, .reveal .controls { color: #38BDF8; }
+
+/* ── Divider slides (module / lab / exam headers): fix invisible dark text,
+      add a soft accent glow so they read as premium chapter breaks ── */
+.reveal .module-slide h1 { color: #F0F6FF; }
+.reveal .module-slide p  { color: #94A3B8; }
+.reveal .module-slide .module-number { color: #38BDF8; }
+.reveal .lab-slide h1 { color: #FFF7ED; }
+.reveal .lab-slide h2 { color: #FBBF24; }
+.reveal .lab-slide p  { color: #B9A78F; }
+.reveal .lab-slide .lab-number { color: #FBBF24; }
+.reveal .module-slide::after,
+.reveal .lab-slide::after,
+.reveal .exam-slide.exam-intro::after {
+  content: ''; position: absolute; top: -10%; right: 6%;
+  width: 460px; height: 460px; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(0,120,212,0.18) 0%, transparent 65%);
+  filter: blur(60px);
+}
+.reveal .lab-slide::after  { background: radial-gradient(circle, rgba(217,119,6,0.16) 0%, transparent 65%); }
+.reveal .exam-slide.exam-intro::after { background: radial-gradient(circle, rgba(220,38,38,0.16) 0%, transparent 65%); }
+.reveal .module-slide > *, .reveal .lab-slide > * { position: relative; z-index: 1; }
+
+/* ── Old-style title slide (AZ-900 deck) — light gradient headline ── */
+.reveal .title-slide h1 {
+  background: linear-gradient(90deg, #F0F6FF 0%, #38BDF8 70%, #60A5FA 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.reveal .title-slide .subtitle { color: #94A3B8; }
+
+/* ── Content cards → glass ── */
+.reveal .card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 2px 14px rgba(0,0,0,0.32);
+}
+.reveal .card h4 { color: #F0F6FF; }
+.reveal .card p  { color: #94A3B8; }
+
+/* ── Objectives ── */
+.reveal .objectives li { border-bottom-color: rgba(255,255,255,0.07); }
+.reveal .objectives li::before { color: #38BDF8; }
+.reveal .lab-slide .objectives li::before { color: #FBBF24; }
+
+/* ── Numbered lab steps ── */
+.reveal .steps li { color: #CBD5E1; border-bottom-color: rgba(245,158,11,0.18); }
+
+/* ── Callouts ── */
+.reveal .callout          { background: rgba(0,120,212,0.10); border-left-color: #38BDF8; color: #BFDBFE; }
+.reveal .callout.warning  { background: rgba(217,119,6,0.12); border-left-color: #F59E0B; color: #FCD34D; }
+.reveal .callout.success  { background: rgba(5,150,105,0.12); border-left-color: #10B981; color: #6EE7B7; }
+.reveal .callout.exam-tip { background: linear-gradient(135deg, rgba(217,119,6,0.16), rgba(217,119,6,0.08)); border-left-color: #F59E0B; color: #FCD34D; box-shadow: none; }
+
+/* ── Code ── */
+.reveal code { background: rgba(56,189,248,0.12); color: #7DD3FC; border: 1px solid rgba(56,189,248,0.25); }
+.reveal pre  { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 2px 14px rgba(0,0,0,0.35); }
+.reveal pre code { color: #D6E2F0; }
+.reveal .code-copy-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #94A3B8; }
+.reveal .code-copy-btn:hover { color: #F0F6FF; border-color: rgba(255,255,255,0.3); }
+.reveal .code-copy-btn.copied { color: #34D399; border-color: #34D399; }
+
+/* ── Quiz options ── */
+.reveal .quiz-option { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: #C7D2E0; box-shadow: none; }
+.reveal .quiz-option:hover     { background: rgba(0,120,212,0.16); border-color: #38BDF8; color: #FFFFFF; }
+.reveal .quiz-option.correct   { background: rgba(5,150,105,0.18); border-color: #10B981; color: #A7F3D0; }
+.reveal .quiz-option.incorrect { background: rgba(220,38,38,0.16); border-color: #F87171; color: #FCA5A5; }
+.reveal .quiz-option .option-key { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); color: #CBD5E1; }
+.reveal .quiz-explanation { background: rgba(5,150,105,0.12); border: 1px solid rgba(16,185,129,0.4); color: #A7F3D0; }
+.reveal .quiz-why-wrong { border-top-color: rgba(16,185,129,0.3); color: #94A3B8; }
+.reveal .quiz-why-wrong li strong { color: #F87171; }
+
+/* ── Diagram containers ── */
+.reveal .diagram-container,
+.reveal .diagram-container.arch-diagram { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); }
+.reveal .diagram-caption { color: #94A3B8; }
+
+/* ── Lab expected-output + validation ── */
+.reveal .expected-output { background: rgba(5,150,105,0.10); border-left-color: #10B981; color: #A7F3D0; }
+.reveal .expected-output::before { color: #34D399; }
+.reveal .lab-slide .validate > li { border-bottom-color: rgba(245,158,11,0.18); color: #CBD5E1; }
+
+/* ── Exam simulator ── */
+.reveal .exam-slide .exam-stem { color: #E2E8F0; }
+.reveal .exam-option { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: #C7D2E0; box-shadow: none; }
+.reveal .exam-option:hover    { background: rgba(220,38,38,0.14); border-color: #F87171; color: #FFFFFF; }
+.reveal .exam-option.selected { background: rgba(99,102,241,0.20); border-color: #818CF8; color: #C7D2FE; }
+.reveal .exam-option .option-key { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); color: #CBD5E1; }
+.reveal button.exam-retake { background: rgba(255,255,255,0.06); color: #CBD5E1; border: 1px solid rgba(255,255,255,0.18); }
+.reveal .exam-score .verdict { color: #94A3B8; }
+.reveal .exam-review-row { border-bottom-color: rgba(255,255,255,0.08); }
+.reveal .exam-review-row .q { color: #F0F6FF; }
+.reveal .exam-review-row .a { color: #94A3B8; }
+
+/* ── Print / PDF: keep dark canvas so light type stays legible ── */
+@media print {
+  .reveal .slide-background { background: #070D1A !important; }
+  .reveal-viewport { background: #070D1A !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 3 — ENGAGEMENT & POLISH
+   Elevates recurring content components (cards, objectives, steps, code,
+   callouts, quiz/exam options, diagrams, module headers) to the title-hero
+   visual language so every slide is as eye-catching as slide 1. Pure CSS on
+   existing markup — patterns sourced from Linear / Vercel / Pitch / Gamma /
+   Brilliant. Append-only; intentionally wins over Round 2.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── [R3] Canvas: multi-blob ambient mesh + faint grid + deep vignette ── */
+.reveal-viewport {
+  background-color: #05090F !important;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px),
+    radial-gradient(55% 50% at 15% 6%,  rgba(0,120,212,0.18), transparent 60%),
+    radial-gradient(46% 46% at 88% 16%, rgba(56,189,248,0.13), transparent 62%),
+    radial-gradient(60% 60% at 80% 98%, rgba(0,120,212,0.10), transparent 66%),
+    linear-gradient(180deg, #0A1322 0%, #070E1B 58%, #05090F 100%) !important;
+  background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%, 100% 100%, 100% 100% !important;
+  background-attachment: fixed !important;
+}
+
+/* ── [R3] Content cards → top-lit "spotlight" surfaces ── */
+.reveal .card {
+  position: relative; overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(56,189,248,0.07), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018)) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 18px 42px -30px rgba(0,0,0,0.9) !important;
+  transition: transform .3s cubic-bezier(.2,0,.38,.9), border-color .3s, box-shadow .3s;
+}
+.reveal .card::before {
+  content: ''; position: absolute; top: 0; left: 14%; right: 14%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56,189,248,0.7), transparent);
+}
+.reveal .card:hover {
+  transform: translateY(-4px); border-color: rgba(56,189,248,0.42) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 28px 64px -26px rgba(0,0,0,0.92),
+              0 0 32px -8px rgba(56,189,248,0.38) !important;
+}
+/* emoji/icon → gradient icon chip */
+.reveal .card .card-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.1em; height: 2.1em; font-size: 1.05em; margin-bottom: 0.55em;
+  border-radius: 12px; line-height: 1;
+  background: linear-gradient(135deg, rgba(0,120,212,0.22), rgba(56,189,248,0.12));
+  border: 1px solid rgba(56,189,248,0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 14px -6px rgba(0,120,212,0.5);
+}
+
+/* ── [R3] Objectives → glowing gradient diamond markers ── */
+.reveal .objectives li::before {
+  content: ''; width: 9px; height: 9px; border-radius: 2px;
+  transform: rotate(45deg); margin-top: 0.55em;
+  background: linear-gradient(135deg, #0078D4, #38BDF8);
+  box-shadow: 0 0 10px -1px rgba(56,189,248,0.75);
+}
+.reveal .lab-slide .objectives li::before {
+  background: linear-gradient(135deg, #D97706, #FBBF24);
+  box-shadow: 0 0 10px -1px rgba(251,191,36,0.7);
+}
+
+/* ── [R3] Numbered steps → glowing chip + vertical connector timeline ── */
+.reveal .steps li::before {
+  border-radius: 9px;
+  background: linear-gradient(135deg, #D97706, #F59E0B);
+  box-shadow: 0 0 12px -2px rgba(245,158,11,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.reveal .steps li::after {
+  content: ''; position: absolute; left: 0.72em; top: 2.05em; bottom: -0.15em;
+  width: 2px; background: linear-gradient(rgba(245,158,11,0.5), transparent);
+}
+.reveal .steps li:last-child::after { display: none; }
+
+/* ── [R3] Code blocks → terminal-window chrome (traffic-light dots) ── */
+.reveal pre { padding-top: 2.5em !important; }
+.reveal pre::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.75em;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px 8px 0 0;
+}
+.reveal pre::after {
+  content: ''; position: absolute; top: 0.62em; left: 0.95em;
+  width: 0.62em; height: 0.62em; border-radius: 50%; background: #FF5F56;
+  box-shadow: 1em 0 0 #FFBD2E, 2em 0 0 #27C93F;
+}
+.reveal .code-copy-btn { top: 0.38em; z-index: 2; }
+
+/* ── [R3] Callouts → soft inner glow + brighter accent bar ── */
+.reveal .callout {
+  border-left-width: 4px; border-radius: 4px 12px 12px 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 28px -24px rgba(0,0,0,0.8);
+}
+
+/* ── [R3] Quiz / exam options → key chips + glow + reward pulse ── */
+.reveal .quiz-option, .reveal .exam-option { transition: all .2s cubic-bezier(.2,0,.38,.9); }
+.reveal .quiz-option .option-key, .reveal .exam-option .option-key {
+  background: linear-gradient(135deg, rgba(0,120,212,0.2), rgba(56,189,248,0.1)) !important;
+  border: 1px solid rgba(56,189,248,0.3) !important; color: #BAE6FD !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.reveal .exam-option .option-key {
+  background: linear-gradient(135deg, rgba(220,38,38,0.22), rgba(248,113,113,0.1)) !important;
+  border-color: rgba(248,113,113,0.32) !important; color: #FECACA !important;
+}
+.reveal .quiz-option.correct {
+  box-shadow: 0 0 26px -6px rgba(16,185,129,0.55) !important;
+  animation: r3-pulse-ok 0.55s ease;
+}
+.reveal .quiz-option.incorrect { animation: r3-shake 0.4s ease; }
+@keyframes r3-pulse-ok { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); } 100% { box-shadow: 0 0 0 16px rgba(16,185,129,0); } }
+@keyframes r3-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+/* ── [R3] Diagram panels → subtle framed glow ── */
+.reveal .diagram-container, .reveal .diagram-container.arch-diagram {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 0 56px -22px rgba(0,120,212,0.35) !important;
+}
+
+/* ── [R3] Module headers → gradient headline + accent underline ── */
+.reveal .module-slide h1 {
+  background: linear-gradient(92deg, #F0F6FF 0%, #BAE0FF 55%, #60A5FA 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: inline-block;
+}
+.reveal .module-slide h1::after {
+  content: ''; display: block; width: 64px; height: 4px; margin-top: 0.28em;
+  border-radius: 99px; background: linear-gradient(90deg, #0078D4, #38BDF8);
+  box-shadow: 0 0 14px -2px rgba(56,189,248,0.7);
+}
+.reveal .lab-slide h1::after {
+  content: ''; display: block; width: 64px; height: 4px; margin-top: 0.28em;
+  border-radius: 99px; background: linear-gradient(90deg, #D97706, #FBBF24);
+  box-shadow: 0 0 14px -2px rgba(251,191,36,0.6);
+}
+
+/* ── [R3] Respect reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal .card, .reveal .quiz-option, .reveal .exam-option { transition: none !important; }
+  .reveal .quiz-option.correct, .reveal .quiz-option.incorrect { animation: none !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 4 — INTERACTIVE NAVIGATION
+   Makes the bottom nav bar dimensional and tactile. The nav JS re-adds the
+   .active class on every slidechanged (base.html updateNav), so a one-shot
+   keyframe on .bnav-module.active replays on EVERY navigation — a real
+   click→animation with zero JS. Arrows get a springy press + glow on click.
+   Append-only; wins over the Round-1 dark nav theme. CSS-only → live on all
+   existing decks immediately.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Prev / Next arrows: dimensional, hover-glow, springy press ── */
+.bnav-arrow {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #A3BAD4 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1),
+              background .18s, color .18s, border-color .18s, box-shadow .18s !important;
+}
+.bnav-arrow:hover {
+  background: linear-gradient(180deg, rgba(0,120,212,0.32), rgba(0,120,212,0.16)) !important;
+  color: #7DD3FC !important; border-color: rgba(56,189,248,0.5) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 18px -3px rgba(56,189,248,0.55) !important;
+}
+#bnav-prev:hover { transform: translateY(-1px) translateX(-3px); }
+#bnav-next:hover { transform: translateY(-1px) translateX(3px); }
+/* Click: punch in + bright glow ring, then spring back on release */
+.bnav-arrow:active {
+  transform: scale(0.8) !important;
+  background: linear-gradient(180deg, rgba(56,189,248,0.55), rgba(0,120,212,0.4)) !important;
+  color: #ffffff !important; border-color: #38BDF8 !important;
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.28), 0 0 24px -2px rgba(56,189,248,0.8) !important;
+  transition: transform .07s ease, box-shadow .07s ease, background .07s ease !important;
+}
+/* Click ripple flash from centre */
+.bnav-arrow::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,211,252,0.7), transparent 70%);
+  transform: translate(-50%,-50%) scale(0); opacity: 0; pointer-events: none;
+}
+.bnav-arrow:active::after { animation: bnav-ripple .55s ease-out; }
+@keyframes bnav-ripple {
+  0%   { transform: translate(-50%,-50%) scale(0);   opacity: .75; }
+  100% { transform: translate(-50%,-50%) scale(6.5); opacity: 0; }
+}
+
+/* ── Module pills: dimensional + hover lift ── */
+.bnav-module {
+  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02)) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  transition: border-color .18s, box-shadow .18s,
+              transform .22s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.bnav-module:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56,189,248,0.45) !important;
+  box-shadow: 0 5px 16px -6px rgba(56,189,248,0.6) !important;
+}
+/* Active pill — one-shot pop + glow fires on EVERY navigation */
+.bnav-module.active {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.22), 0 0 18px -4px rgba(56,189,248,0.6) !important;
+  animation: bnav-pop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes bnav-pop {
+  0%   { transform: scale(0.88); }
+  55%  { transform: scale(1.14);
+         box-shadow: 0 0 0 4px rgba(56,189,248,0.32), 0 0 28px -2px rgba(56,189,248,0.9) !important; }
+  100% { transform: scale(1); }
+}
+/* Animated sheen across the active progress fill */
+.bnav-module.active .bnav-module-fill {
+  background: linear-gradient(90deg, #0078D4, #38BDF8, #0078D4) !important;
+  background-size: 200% 100% !important;
+  animation: bnav-sheen 3s linear infinite;
+}
+@keyframes bnav-sheen { to { background-position: -200% 0; } }
+
+/* ── Respect reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .bnav-arrow, .bnav-module { transition: none !important; }
+  .bnav-arrow:active::after,
+  .bnav-module.active,
+  .bnav-module.active .bnav-module-fill { animation: none !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 5 — FIRST-RUN NAVIGATION HINT
+   New viewers don't know the deck is click-to-advance. While the TITLE slide
+   is showing, the Next arrow pulses and a coach bubble points at it. Reveal
+   adds .present to the current section and #bottom-nav is a later sibling of
+   .reveal, so :has() + ~ scopes the hint to the title slide only — it auto-
+   dismisses the instant the user advances. Pure CSS, no JS, live on all decks.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Pulsing, nudging glow on the Next arrow while on the title slide */
+.reveal:has(.title-slide.present) ~ #bottom-nav #bnav-next {
+  background: linear-gradient(180deg, rgba(0,120,212,0.45), rgba(0,120,212,0.22)) !important;
+  color: #BAE6FD !important;
+  border-color: #38BDF8 !important;
+  animation: bnav-hint 1.4s ease-in-out infinite;
+}
+@keyframes bnav-hint {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 0 rgba(56,189,248,0.55); transform: translateX(0); }
+  50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 7px rgba(56,189,248,0), 0 0 24px -2px rgba(56,189,248,0.85); transform: translateX(3px); }
+}
+
+/* Coach bubble above the Next arrow */
+.reveal:has(.title-slide.present) ~ #bottom-nav::after {
+  content: "Click or press Space  \2192";
+  position: absolute; right: 8px; bottom: calc(100% + 13px);
+  background: linear-gradient(135deg, #0078D4, #0EA5E9);
+  color: #ffffff; font: 600 12px/1 'Inter', sans-serif; letter-spacing: 0.02em;
+  padding: 9px 14px; border-radius: 9px; white-space: nowrap;
+  pointer-events: none; z-index: 1002;
+  box-shadow: 0 10px 26px -6px rgba(0,120,212,0.75), inset 0 0 0 1px rgba(56,189,248,0.45);
+  animation: bnav-coach-bob 1.4s ease-in-out infinite;
+}
+/* Bubble tail pointing down at the arrow */
+.reveal:has(.title-slide.present) ~ #bottom-nav::before {
+  content: ""; position: absolute; right: 24px; bottom: calc(100% + 8px);
+  width: 11px; height: 11px; background: #0EA5E9; transform: rotate(45deg);
+  z-index: 1002; pointer-events: none;
+  box-shadow: 3px 3px 8px -2px rgba(0,120,212,0.6);
+  animation: bnav-coach-bob 1.4s ease-in-out infinite;
+}
+@keyframes bnav-coach-bob {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-4px) rotate(var(--rot, 0deg)); }
+}
+.reveal:has(.title-slide.present) ~ #bottom-nav::before { --rot: 45deg; }
+
+/* Reduced motion: keep the bubble (it still teaches) but stop the movement */
+@media (prefers-reduced-motion: reduce) {
+  .reveal:has(.title-slide.present) ~ #bottom-nav #bnav-next,
+  .reveal:has(.title-slide.present) ~ #bottom-nav::after,
+  .reveal:has(.title-slide.present) ~ #bottom-nav::before { animation: none !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 6 — PROMINENT HUB BUTTON
+   The "← Hub" link was tiny gray text in the bottom-left cluster. Lift it to
+   a bright branded button at the top-left and shift the slide-type badge to
+   its right so they don't collide. Targets the link by its exact href, so it
+   overrides the inline styles on every deck (existing + future) with no regen.
+   The user chip + sign-out stay in the bottom-left cluster.
+   ════════════════════════════════════════════════════════════════════════ */
+
+.reveal ~ div > a[href="../../index.html"],
+a[href="../../index.html"] {
+  position: fixed !important;
+  top: 12px !important; left: 16px !important; bottom: auto !important;
+  z-index: 1001 !important;
+  display: inline-flex !important; align-items: center; gap: 6px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important; font-weight: 600 !important; letter-spacing: 0.01em;
+  color: #BAE6FD !important;
+  background: linear-gradient(180deg, rgba(0,120,212,0.34), rgba(0,120,212,0.16)) !important;
+  border: 1px solid rgba(56,189,248,0.5) !important;
+  border-radius: 8px !important;
+  padding: 7px 14px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 16px -4px rgba(0,120,212,0.55) !important;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), background .18s, color .18s, border-color .18s, box-shadow .18s !important;
+}
+a[href="../../index.html"]:hover {
+  color: #ffffff !important;
+  background: linear-gradient(180deg, rgba(0,120,212,0.52), rgba(0,120,212,0.3)) !important;
+  border-color: #38BDF8 !important;
+  transform: translateY(-1px) translateX(-2px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 0 20px -2px rgba(56,189,248,0.65) !important;
+}
+
+/* Stack the slide-type badge directly under the Hub button (clear of content) */
+#slide-type-badge { top: 50px !important; left: 16px !important; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   ROUND 7 — VERTICAL (UP / DOWN) NAVIGATION  (glow-up)
+   Compact stacked ↑/↓ control left of the Next arrow. Wired to Reveal.up()/
+   down(); greyed when no vertical route. Made interesting + animated:
+   periodic directional "hop" hint at rest, directional nudge + grow on hover,
+   springy press + ripple flash on click — mirroring the Round-4 arrow feel.
+   ════════════════════════════════════════════════════════════════════════ */
+.bnav-vstack {
+  display: flex; flex-direction: column; gap: 2px;
+  flex-shrink: 0; margin: 0 4px;
+}
+.bnav-varrow {
+  position: relative; overflow: hidden;
+  width: 32px; height: 14px; padding: 0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+  color: #AEC4DC; cursor: pointer; user-select: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1),
+              background .18s, color .18s, border-color .18s, box-shadow .18s;
+}
+/* Round corners on the outer edges so the pair reads as one stepper */
+#bnav-up   { border-radius: 6px 6px 3px 3px; }
+#bnav-down { border-radius: 3px 3px 6px 6px; }
+
+/* Idle: subtle periodic directional hop to signal they're clickable */
+#bnav-up:not(:disabled)   { animation: bnav-hop-up   2.6s ease-in-out infinite; }
+#bnav-down:not(:disabled) { animation: bnav-hop-down 2.6s ease-in-out infinite; }
+@keyframes bnav-hop-up   { 0%, 76%, 100% { transform: translateY(0); } 87% { transform: translateY(-2.5px); } }
+@keyframes bnav-hop-down { 0%, 76%, 100% { transform: translateY(0); } 87% { transform: translateY(2.5px); } }
+
+/* Hover: stop the idle hop, nudge in-direction + grow + glow */
+.bnav-varrow:hover { animation: none !important;
+  background: linear-gradient(180deg, rgba(0,120,212,0.34), rgba(0,120,212,0.16));
+  color: #7DD3FC; border-color: rgba(56,189,248,0.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 14px -3px rgba(56,189,248,0.6);
+}
+#bnav-up:not(:disabled):hover   { transform: translateY(-2px) scale(1.06); }
+#bnav-down:not(:disabled):hover { transform: translateY(2px) scale(1.06); }
+
+/* Press: punch in + bright glow ring + ripple flash */
+.bnav-varrow:active { animation: none !important;
+  background: linear-gradient(180deg, rgba(56,189,248,0.55), rgba(0,120,212,0.38));
+  color: #ffffff; border-color: #38BDF8;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.28), 0 0 18px -2px rgba(56,189,248,0.8);
+  transition: transform .07s ease, box-shadow .07s ease, background .07s ease;
+}
+#bnav-up:active, #bnav-down:active { transform: scale(0.78) !important; }
+.bnav-varrow::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,211,252,0.75), transparent 70%);
+  transform: translate(-50%,-50%) scale(0); opacity: 0; pointer-events: none;
+}
+.bnav-varrow:active::after { animation: bnav-ripple .55s ease-out; }
+
+.bnav-varrow:disabled { opacity: 0.26; cursor: default; pointer-events: none; animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bnav-varrow { transition: none !important; }
+  #bnav-up, #bnav-down { animation: none !important; }
+  .bnav-varrow:active::after { animation: none !important; }
+}

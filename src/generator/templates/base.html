@@ -46,6 +46,10 @@
 <div id="bottom-nav">
   <button class="bnav-arrow" id="bnav-prev" aria-label="Previous slide">&#8592;</button>
   <div class="bnav-modules" id="bnav-modules"></div>
+  <div class="bnav-vstack">
+    <button class="bnav-varrow" id="bnav-up" aria-label="Previous slide in module">&#8593;</button>
+    <button class="bnav-varrow" id="bnav-down" aria-label="Next slide in module">&#8595;</button>
+  </div>
   <button class="bnav-arrow" id="bnav-next" aria-label="Next slide">&#8594;</button>
 </div>
 
@@ -443,6 +447,10 @@
     });
     document.getElementById('bnav-prev').addEventListener('click', () => Reveal.prev());
     document.getElementById('bnav-next').addEventListener('click', () => Reveal.next());
+    const upBtn = document.getElementById('bnav-up');
+    const downBtn = document.getElementById('bnav-down');
+    if (upBtn) upBtn.addEventListener('click', () => Reveal.up());
+    if (downBtn) downBtn.addEventListener('click', () => Reveal.down());
   }
 
   function updateBottomNav(indices) {
@@ -467,6 +475,11 @@
     const nextBtn = document.getElementById('bnav-next');
     if (prevBtn) prevBtn.disabled = Reveal.isFirstSlide();
     if (nextBtn) nextBtn.disabled = Reveal.isLastSlide();
+    const routes = Reveal.availableRoutes();
+    const upB = document.getElementById('bnav-up');
+    const downB = document.getElementById('bnav-down');
+    if (upB) upB.disabled = !routes.up;
+    if (downB) downB.disabled = !routes.down;
   }
 
   // ── Global progress chip (top-right) ─────────────────────────────────────

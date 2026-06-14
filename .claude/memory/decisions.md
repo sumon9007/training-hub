@@ -233,3 +233,23 @@ A dedicated Playwright test file (`tests/design-assessment.spec.js`) runs automa
 - Contrast walker bails out on `background-image` (gradients) rather than producing false negatives — hero section is excluded by design, verified visually via screenshots.
 - Token check verifies `tokens.css` is linked and its CSS custom properties resolve on the landing page.
 - `webServer` in `playwright.config.js` auto-starts `http-server` — no manual `npm start` needed before running tests.
+
+## ADR-015: Unified dark content theme for presentations (Round 2)
+
+**Date:** 2026-06-14
+**Status:** Accepted
+
+### Decision
+Finish the dark-theme migration that Round 1 started. Round 1 darkened only the presentation *chrome* (bottom nav, module HUD, global-progress chip, slide-type badge, exam timer) and gave module/lab/exam divider slides dark `data-background-color`s — but left all slide *content* on the original light theme. Round 2 appends a "UNIFIED DARK CONTENT THEME" block to `src/theme/training.css` that converts the whole deck to the same premium developer-platform aesthetic as the redesigned title hero: dark gradient canvas + faint azure grid + corner glow, light type, and glassy translucent surfaces (cards, callouts, code, quiz/exam options, diagram panels).
+
+### Rationale
+- **Fixes broken slides** — divider slides had near-black headings (`#0F172A`) on dark backgrounds (`#080E1C`), rendering them nearly invisible. Round 2 sets divider headings/body to light.
+- **Removes the light↔dark flip-flop** — content slides (lessons, cards, quizzes, lab steps) previously rendered on the light `#F8FAFF` theme with white cards, clashing with the dark title hero and dark chrome. All surfaces are now glass-on-dark.
+- **CSS-only, shared stylesheet** — both live courses (AZ-900, AZ-104) and every future generated course link `training.css`, so the change is inherited automatically with no presentation.html regeneration. The dark `data-background-color` attributes the generator already emits are unchanged.
+- **Append-only** — follows the file's established convention; the new rules intentionally win over the light defaults rather than rewriting them, minimising risk to deployed selectors.
+- Azure-icon PNG diagrams (rendered dark per ADR-002) and client-side Mermaid diagrams both read correctly on the dark glass diagram panel; verified via Playwright screenshots.
+- Old-style title slide (AZ-900 deck, `.title-slide h1`) gets a light gradient headline so it reads on the dark canvas.
+- Print/PDF override keeps a dark slide background so light type stays legible in handouts.
+
+### Scope note
+Landing page (`index.html`, Tailwind + `tokens.css`) and standalone lab pages (`courses/az104/labs/*.html`, own inline styles) do **not** link `training.css` and are unaffected.

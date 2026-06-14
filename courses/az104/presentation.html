@@ -9088,6 +9088,10 @@ flowchart LR
 <div id="bottom-nav">
   <button class="bnav-arrow" id="bnav-prev" title="Previous">&#8592;</button>
   <div class="bnav-modules" id="bnav-modules"></div>
+  <div class="bnav-vstack">
+    <button class="bnav-varrow" id="bnav-up" title="Up (within module)">&#8593;</button>
+    <button class="bnav-varrow" id="bnav-down" title="Down (within module)">&#8595;</button>
+  </div>
   <button class="bnav-arrow" id="bnav-next" title="Next">&#8594;</button>
 </div>
 
@@ -9471,6 +9475,10 @@ flowchart LR
     });
     document.getElementById('bnav-prev').addEventListener('click', () => Reveal.prev());
     document.getElementById('bnav-next').addEventListener('click', () => Reveal.next());
+    const upBtn = document.getElementById('bnav-up');
+    const downBtn = document.getElementById('bnav-down');
+    if (upBtn) upBtn.addEventListener('click', () => Reveal.up());
+    if (downBtn) downBtn.addEventListener('click', () => Reveal.down());
   }
 
   function updateBottomNav(indices) {
@@ -9495,6 +9503,11 @@ flowchart LR
     const nextBtn = document.getElementById('bnav-next');
     if (prevBtn) prevBtn.disabled = Reveal.isFirstSlide();
     if (nextBtn) nextBtn.disabled = Reveal.isLastSlide();
+    const routes = Reveal.availableRoutes();
+    const upB = document.getElementById('bnav-up');
+    const downB = document.getElementById('bnav-down');
+    if (upB) upB.disabled = !routes.up;
+    if (downB) downB.disabled = !routes.down;
   }
 
   // ── Global progress chip (top-right) ─────────────────────────────────────
