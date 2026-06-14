@@ -12,6 +12,36 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
     :root { --course-color: #6366F1; --course-accent: #A5B4FC; }
   </style>
+<style>
+/* ── AZ-104 indigo course accent override ── */
+:root { --r-link-color:#818CF8; --r-link-color-hover:#4F46E5; }
+.reveal h2 { color:#818CF8 !important; }
+.reveal .progress span { background:#818CF8 !important; }
+.reveal .module-number { color:#818CF8 !important; }
+.reveal .objectives li::before { background:#818CF8 !important; }
+.reveal .callout { border-left-color:#818CF8 !important; }
+.reveal .quiz-option:hover { border-color:#818CF8 !important; }
+.reveal .controls button { color:#818CF8 !important; }
+/* HUD bars */
+#hud-bar-fill { background:linear-gradient(90deg,#818CF8,#4F46E5) !important; }
+#gp-bar-fill  { background:linear-gradient(90deg,#818CF8,#A5B4FC) !important; }
+/* Bottom nav — module pills */
+.bnav-module.active       { border-color:#818CF8 !important; box-shadow:0 0 0 2px rgba(129,140,248,.25) !important; }
+.bnav-module.active .bnav-module-fill     { background:linear-gradient(90deg,#818CF8,#4F46E5) !important; }
+.bnav-module.completed .bnav-module-fill  { background:linear-gradient(90deg,rgba(129,140,248,.4),rgba(129,140,248,.2)) !important; }
+.bnav-module.completed .bnav-module-label { color:#A5B4FC !important; }
+.bnav-module:hover { border-color:rgba(129,140,248,.45) !important; }
+.bnav-arrow:hover { background:rgba(129,140,248,.18) !important; color:#818CF8 !important; border-color:rgba(129,140,248,.5) !important; }
+/* Hub pill */
+.bnav-hub { border-color:rgba(129,140,248,.38) !important; background:linear-gradient(135deg,rgba(129,140,248,.14),rgba(129,140,248,.07)) !important; color:#818CF8 !important; }
+.bnav-hub:hover { background:linear-gradient(135deg,rgba(129,140,248,.30),rgba(129,140,248,.20)) !important; border-color:#A5B4FC !important; color:#fff !important; box-shadow:0 0 18px -3px rgba(129,140,248,.60) !important; }
+@keyframes hub-idle-glow { 0%,100%{box-shadow:0 0 0 0 rgba(129,140,248,0);border-color:rgba(129,140,248,.38)} 50%{box-shadow:0 0 10px -2px rgba(129,140,248,.42);border-color:rgba(129,140,248,.68)} }
+/* Slide-type badge */
+#slide-type-badge.type-module { background:rgba(129,140,248,.18) !important; color:#A5B4FC !important; border-color:rgba(129,140,248,.35) !important; }
+#slide-type-badge.type-check  { background:rgba(129,140,248,.12) !important; color:#818CF8 !important; border-color:rgba(129,140,248,.30) !important; }
+/* Module divider accent glow */
+.module-slide::after { background:rgba(129,140,248,.12) !important; }
+</style>
 </head>
 <body>
 

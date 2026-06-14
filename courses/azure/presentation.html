@@ -12,6 +12,36 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
     :root { --course-color: #10b981; --course-accent: #34d399; }
   </style>
+<style>
+/* ── AZ-900 sky course accent override ── */
+:root { --r-link-color:#38BDF8; --r-link-color-hover:#0EA5E9; }
+.reveal h2 { color:#38BDF8 !important; }
+.reveal .progress span { background:#38BDF8 !important; }
+.reveal .module-number { color:#38BDF8 !important; }
+.reveal .objectives li::before { background:#38BDF8 !important; }
+.reveal .callout { border-left-color:#38BDF8 !important; }
+.reveal .quiz-option:hover { border-color:#38BDF8 !important; }
+.reveal .controls button { color:#38BDF8 !important; }
+/* HUD bars */
+#hud-bar-fill { background:linear-gradient(90deg,#38BDF8,#0EA5E9) !important; }
+#gp-bar-fill  { background:linear-gradient(90deg,#38BDF8,#7DD3FC) !important; }
+/* Bottom nav — module pills */
+.bnav-module.active       { border-color:#38BDF8 !important; box-shadow:0 0 0 2px rgba(56,189,248,.25) !important; }
+.bnav-module.active .bnav-module-fill     { background:linear-gradient(90deg,#38BDF8,#0EA5E9) !important; }
+.bnav-module.completed .bnav-module-fill  { background:linear-gradient(90deg,rgba(56,189,248,.4),rgba(56,189,248,.2)) !important; }
+.bnav-module.completed .bnav-module-label { color:#7DD3FC !important; }
+.bnav-module:hover { border-color:rgba(56,189,248,.45) !important; }
+.bnav-arrow:hover { background:rgba(56,189,248,.18) !important; color:#38BDF8 !important; border-color:rgba(56,189,248,.5) !important; }
+/* Hub pill */
+.bnav-hub { border-color:rgba(56,189,248,.38) !important; background:linear-gradient(135deg,rgba(56,189,248,.14),rgba(56,189,248,.07)) !important; color:#38BDF8 !important; }
+.bnav-hub:hover { background:linear-gradient(135deg,rgba(56,189,248,.30),rgba(56,189,248,.20)) !important; border-color:#7DD3FC !important; color:#fff !important; box-shadow:0 0 18px -3px rgba(56,189,248,.60) !important; }
+@keyframes hub-idle-glow { 0%,100%{box-shadow:0 0 0 0 rgba(56,189,248,0);border-color:rgba(56,189,248,.38)} 50%{box-shadow:0 0 10px -2px rgba(56,189,248,.42);border-color:rgba(56,189,248,.68)} }
+/* Slide-type badge */
+#slide-type-badge.type-module { background:rgba(56,189,248,.18) !important; color:#7DD3FC !important; border-color:rgba(56,189,248,.35) !important; }
+#slide-type-badge.type-check  { background:rgba(56,189,248,.12) !important; color:#38BDF8 !important; border-color:rgba(56,189,248,.30) !important; }
+/* Module divider accent glow */
+.module-slide::after { background:rgba(56,189,248,.12) !important; }
+</style>
 </head>
 <body>
 
